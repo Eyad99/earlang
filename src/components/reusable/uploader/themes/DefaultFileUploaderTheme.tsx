@@ -1,7 +1,9 @@
 import uploadFileIcon from '@/assets/img/others/upload.svg';
 import FileLists from '../FileLists';
+import { Label } from '@/components/ui/label';
 
-const DefaultFileUploaderTheme = ({ getRootProps, getInputProps, files, fileSize, removeFile, style }: any) => {
+const DefaultFileUploaderTheme = ({ getRootProps, getInputProps, files, fileSize, removeFile, style, placeholder, errors, error }: any) => {
+	console.log('error', error, errors);
 	return (
 		<section>
 			<div {...getRootProps({ style })} className='mb-2 cursor-pointer'>
@@ -17,6 +19,8 @@ const DefaultFileUploaderTheme = ({ getRootProps, getInputProps, files, fileSize
 					</span>
 				</div>
 			</div>
+			{error && <Label className='ml-1.5 text-red-500'>{errors}</Label>}
+
 			<FileLists files={files} />
 		</section>
 	);

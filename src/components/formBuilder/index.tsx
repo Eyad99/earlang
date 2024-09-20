@@ -5,6 +5,7 @@ import { Button } from '../ui/button';
 import TextField from '../reusable/fields/TextField';
 import PasswordField from '../reusable/fields/PasswordField';
 import Uploader from '../reusable/uploader/inex';
+import SelectField from '../reusable/fields/SelectField';
 
 export type FormBuilderProps = {
 	initialValues: any;
@@ -41,6 +42,8 @@ const FormBuilder: FC<FormBuilderProps> = ({
 		validationSchema: validationSchema,
 	});
 
+	console.log('valuesvaluesvalues', values);
+
 	const renderInputField = (x: any) => {
 		return (
 			<TextField
@@ -73,7 +76,34 @@ const FormBuilder: FC<FormBuilderProps> = ({
 	};
 
 	const renderFilesField = (x: any) => {
-		return <Uploader onChange={(files: any) => setFieldValue(x.name, files)} fileTypes={x.fileTypes} />;
+		return (
+			<Uploader
+				onChange={(files: any) => setFieldValue(x.name, files)}
+				fileTypes={x.fileTypes}
+				errors={errors[x.name] as any}
+				error={!!touched[x.name] && !!errors[x.name]}
+			/>
+		);
+	};
+
+	console.log('errorserrors', errors);
+
+	const renderSelectField = (x: any) => {
+		return (
+			<SelectField
+				name={x.name}
+				value={values[x.name]}
+				label={x.label}
+				elements={x.elements}
+				onChange={(files: any) => setFieldValue(x.name, files)}
+				errors={errors[x.name] as any}
+				error={!!touched[x.name] && !!errors[x.name]}
+				helperText={touched[x.name] && errors[x.name]}
+				disabled={x.disabled || false}
+				triggerClassName={x.triggerClassName}
+				placeholder={x.placeholder}
+			/>
+		);
 	};
 
 	const itemToRendererMap: any = {
@@ -86,6 +116,7 @@ const FormBuilder: FC<FormBuilderProps> = ({
 		'datetime-local': renderInputField,
 		password: renderPasswordField,
 		file: renderFilesField,
+		select: renderSelectField,
 	};
 
 	const render = (x: any) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import UploaderAsFormData from './UploaderAsFormData';
 
-const Uploader = ({ onChange, singleFile, theme, fileTypes, fileSize, placeholder, value, buttonText, buttonIcon, buttonColor }: any) => {
+const Uploader = ({ onChange, singleFile, fileTypes, fileSize, placeholder, value, errors, error }: any) => {
 	const baseStyle = {
 		display: 'flex',
 		flexDirection: 'column',
@@ -37,11 +37,9 @@ const Uploader = ({ onChange, singleFile, theme, fileTypes, fileSize, placeholde
 			fileSize={fileSize}
 			singleFile={singleFile}
 			placeholder={placeholder}
+			errors={errors}
+			error={error}
 			value={value}
-			theme={theme}
-			buttonText={buttonText}
-			buttonIcon={buttonIcon}
-			buttonColor={buttonColor}
 		/>
 	);
 };

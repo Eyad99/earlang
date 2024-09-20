@@ -6,6 +6,5 @@ export interface Users_Res {
 }
 
 export interface Update_Role_To_User {
-	id: number;
-	role: string;
+ 	role: string;
 }

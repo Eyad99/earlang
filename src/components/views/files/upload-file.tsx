@@ -58,6 +58,8 @@ const UploadFile = () => {
 			.positive('Service Level must be a positive number')
 			.integer('Service Level must be an integer')
 			.min(1, 'Service Level must be greater than 0'),
+
+		file: yup.array().min(1, `you need to provide one file at least!`).required(`file field is required`),
 	});
 
 	const submitHandler = (values: Files_Req) => {

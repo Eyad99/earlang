@@ -13,7 +13,7 @@ const UserEditor = () => {
 	user = user ? JSON.parse(user) : {};
 
 	const updateUserMutate = useMutateData({
-		mutationFn: (data) => userApi.updateUser(data),
+		mutationFn: (data) => userApi.updateUser(data, userId),
 		invalidateKeys: ['updateUser', userId],
 		displaySuccess: true,
 	});
@@ -40,6 +40,11 @@ const UserEditor = () => {
 				name: 'role',
 				type: 'select',
 				label: `Role`,
+				elements: [
+					{ id: 'SuperAdmin', name: 'superadmin' },
+					{ id: 'Admin', name: 'admin' },
+					{ id: 'Customer', name: 'customer' },
+				],
 			},
 		],
 	};

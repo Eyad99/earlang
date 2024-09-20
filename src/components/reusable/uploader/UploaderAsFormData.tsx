@@ -8,10 +8,14 @@ const UploaderAsFormData = ({
 	activeStyle,
 	acceptStyle,
 	rejectStyle,
+
 	onChange,
 	fileTypes,
 	fileSize = 5000,
 	singleFile,
+	placeholder,
+	errors,
+	error,
 	value = [],
 }: any) => {
 	const [files, setFiles] = useState(value);
@@ -63,6 +67,9 @@ const UploaderAsFormData = ({
 				fileSize={fileSize}
 				removeFile={null}
 				style={style}
+				placeholder={placeholder}
+				errors={errors}
+				error={error}
 			/>
 		</React.Fragment>
 	);

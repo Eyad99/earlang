@@ -39,7 +39,7 @@ const AdminRoutes = [
 
 	{
 		layout: '/admin',
-		path: '/user/:userId',
+		path: '/users/:userId',
 		component: <UserEditor />,
 		invisible: true,
 	},
