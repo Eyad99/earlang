@@ -42,8 +42,6 @@ const FormBuilder: FC<FormBuilderProps> = ({
 		validationSchema: validationSchema,
 	});
 
-	console.log('valuesvaluesvalues', values);
-
 	const renderInputField = (x: any) => {
 		return (
 			<TextField
@@ -85,8 +83,6 @@ const FormBuilder: FC<FormBuilderProps> = ({
 			/>
 		);
 	};
-
-	console.log('errorserrors', errors);
 
 	const renderSelectField = (x: any) => {
 		return (

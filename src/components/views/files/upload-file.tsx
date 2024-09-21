@@ -1,11 +1,10 @@
-import Cookies from 'js-cookie';
-import React from 'react';
-import FormBuilder from '@/components/formBuilder';
-import * as yup from 'yup';
 import { useMutateData } from '@/hooks/useMutateData';
-import { fileApi } from '@/core/services/files';
 import { useNavigate } from 'react-router-dom';
 import { Files_Req } from '@/core';
+import { fileApi } from '@/core/services/files';
+import FormBuilder from '@/components/formBuilder';
+import Cookies from 'js-cookie';
+import * as yup from 'yup';
 
 const UploadFile = () => {
 	const navigate = useNavigate();

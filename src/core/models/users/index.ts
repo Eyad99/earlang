@@ -43,3 +43,10 @@ export interface Staff_Res {
 	created_at: string;
 	updated_at: string;
 }
+
+export interface Staff_Req {
+	email: string;
+	fullname: string;
+	password: string;
+	password2: string;
+}
