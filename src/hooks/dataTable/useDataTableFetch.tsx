@@ -30,8 +30,8 @@ useDataTableFetchProps) {
 		queryKey: [queryKey, page, search, filter, filterByDate],
 		queryFn: async () => {
 			const info = {
-				page: page,
-				pageSize: DEFULT_ITEMS_PER_PAGE,
+				// page: page,
+				// pageSize: DEFULT_ITEMS_PER_PAGE,
 				// ...(search && { [searchKey]: search }),
 				// ...(filterByDate && { date: filterByDate }),
 				// ...(filter && Object.fromEntries(Object.keys(filter).map((el: any) => [filter[el].queryParamName, filter[el].value]))),
@@ -40,7 +40,7 @@ useDataTableFetchProps) {
 			const res = await dataTableApi.getData(url, info);
 			// if (res.data.meta) {
 			// 	setTotalPages(res.data.meta.totalPages);
-			// 	setPage(res.data.meta.currentPage);	
+			// 	setPage(res.data.meta.currentPage);
 			// }
 			console.log('resssss', res);
 			return res.data.data as any[];

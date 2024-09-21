@@ -3,7 +3,7 @@ import CustomerRoutes from '@/routes/customer';
 import StaffRoutes from '@/routes/staff';
 import Cookies from 'js-cookie';
 
-export const RoutesByRole = () => {
+export const RoutesByRole = (): Array<any> => {
 	let user: any = Cookies.get('user');
 	user = user ? JSON.parse(user) : {};
 

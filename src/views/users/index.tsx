@@ -7,7 +7,6 @@ export const UsersList = () => {
 		fetchUrl: 'auth/users/',
 		queryKey: 'users',
 		columns: [
-			{ header: 'Id', accessor: 'id' },
 			{ header: 'Name', accessor: 'fullname' },
 			{ header: 'Email', accessor: 'email' },
 			{ header: 'Role', accessor: 'role' },

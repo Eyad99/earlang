@@ -9,8 +9,12 @@ import Formula4 from '@/views/formulas/formula-4';
 import Formula5 from '@/views/formulas/formula-5';
 import Profile from '@/views/profile';
 import { UsersList } from '@/views/users';
-import { Calculator, LayoutDashboard, Pi, Settings, Users } from 'lucide-react';
+import { Calculator, Headset, LayoutDashboard, Pi, Settings, Users } from 'lucide-react';
 import UserEditor from '@/views/users/editor';
+import { CallCentersList } from '@/views/admin/call-centers';
+import AllStaffsCallCenter from '@/views/admin/call-centers/staffs';
+import UserFiles from '@/views/users/files';
+import CAllCenterFiles from '@/views/admin/call-centers/files';
 
 const AdminRoutes = [
 	{
@@ -35,6 +39,36 @@ const AdminRoutes = [
 		icon: <Users />,
 		path: '/users',
 		component: <UsersList />,
+	},
+
+	{
+		name: 'Call Centers',
+		layout: '/admin',
+		icon: <Headset />,
+		path: '/call-centers',
+		component: <CallCentersList />,
+	},
+
+	{
+		name: 'Files',
+		layout: '/admin',
+		path: '/call-centers/:callCenterId/files',
+		component: <CAllCenterFiles />,
+		invisible: true,
+	},
+
+	{
+		layout: '/admin',
+		path: '/call-centers/:callCenterId/staffs',
+		component: <AllStaffsCallCenter />,
+		invisible: true,
+	},
+
+	{
+		layout: '/admin',
+		path: '/call-centers/:callCenterId/staffs/:userId/files',
+		component: <UserFiles />,
+		invisible: true,
 	},
 
 	{

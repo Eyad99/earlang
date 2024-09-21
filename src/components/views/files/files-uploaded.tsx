@@ -1,31 +1,35 @@
 import DataTable from '@/components/dataTable/DataTable';
-import Cookies from 'js-cookie';
-import { DataTableProps } from '@/core';
 import { Button } from '@/components/ui/button';
+import { DataTableProps, Files_By_User_Res } from '@/core';
+import { FC } from 'react';
 
-const MyFiles = () => {
-	let user: any = Cookies.get('user');
-	user = user ? JSON.parse(user) : {};
+interface FilesUploadedProps {
+	url: string;
+	queryKey: string;
+}
 
-	const tableProps: DataTableProps<any> = {
-		fetchUrl: user?.role === 'customer' ? 'api/callcenter/my_xl_filedata/' : 'api/my_user_upload_xls/',
-		queryKey: 'my-xls-files',
+const FilesUploaded: FC<FilesUploadedProps> = ({ url, queryKey }) => {
+	const tableProps: DataTableProps<Files_By_User_Res> = {
+		fetchUrl: url,
+		queryKey: queryKey,
 		columns: [
+			{ header: 'User Name', accessor: 'user.fullname' },
+			{ header: 'Call Center Name', accessor: 'callcenter.name' },
 			{ header: 'Period in Minutes', accessor: 'period_in_m' },
 			{ header: 'Time a Call Has to Wait (in seconds)', accessor: 'tat_in_s' },
 			{ header: 'Average Handled Time (in seconds)', accessor: 'aht_in_s' },
 			{ header: 'Service Level', accessor: 'sla' },
 		],
 		actions: {
-			add: {},
 			custom: {
 				component: (rowData: any) => {
-					// rowData.row.origina
+					console.log('rowData', rowData.row.origin);
 					return <Button onClick={() => {}}>View Chart</Button>;
 				},
 			},
 		},
 	};
+
 	return (
 		<div className='mt-5 grid h-full grid-cols-1 gap-5  md:grid-cols-1'>
 			<DataTable {...tableProps} />
@@ -33,4 +37,4 @@ const MyFiles = () => {
 	);
 };
 
-export default MyFiles;
+export default FilesUploaded;
