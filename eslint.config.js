@@ -19,13 +19,14 @@ export default tseslint.config(
 		},
 		rules: {
 			...reactHooks.configs.recommended.rules,
-			"no-empty-interface": false,
-			"@typescript-eslint/no-explicit-any": "off",
-			"@typescript-eslint/no-unused-vars": ["error"],
-			"no-unused-vars": "off",
+			'no-empty-interface': false,
+			'@typescript-eslint/no-explicit-any': 'off',
+			'@typescript-eslint/no-unused-vars': ['error'],
+			'no-unused-vars': 'off',
 			'react-hooks/rules-of-hooks': 'off', // Checks rules of Hooks
 			'react-hooks/exhaustive-deps': 'off', // Checks effect dependencies
 			'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+			// "@typescript-eslint/no-unused-vars": "off"
 		},
 	}
 );

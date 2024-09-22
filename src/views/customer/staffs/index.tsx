@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 export const MyStaffs = () => {
 	const navigate = useNavigate();
 
-	const tableProps: DataTableProps<Users_Res> = {
+	// const tableProps: DataTableProps<Users_Res> = {
+	const tableProps: DataTableProps = {
 		fetchUrl: 'auth/users/',
 		queryKey: 'my-staffs',
 		columns: [

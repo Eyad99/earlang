@@ -7,7 +7,8 @@ const AllStaffsCallCenter = () => {
 	const { callCenterId } = useParams();
 	const navigate = useNavigate();
 
-	const tableProps: DataTableProps<Staff_Res> = {
+	// const tableProps: DataTableProps<Staff_Res> = {
+	const tableProps: DataTableProps = {
 		fetchUrl: `auth/callcenter/${callCenterId}/staff/`,
 		queryKey: `staffs-by-callcenter-${callCenterId}`,
 		columns: [

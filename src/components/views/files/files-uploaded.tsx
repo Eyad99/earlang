@@ -9,7 +9,8 @@ interface FilesUploadedProps {
 }
 
 const FilesUploaded: FC<FilesUploadedProps> = ({ url, queryKey }) => {
-	const tableProps: DataTableProps<Files_By_User_Res> = {
+	// const tableProps: DataTableProps<Files_By_User_Res> = {
+	const tableProps: DataTableProps = {
 		fetchUrl: url,
 		queryKey: queryKey,
 		columns: [

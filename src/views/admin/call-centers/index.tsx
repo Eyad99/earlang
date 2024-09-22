@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 export const CallCentersList = () => {
 	const navigate = useNavigate();
-	const tableProps: DataTableProps<CallCenter_Res> = {
+	// const tableProps: DataTableProps<CallCenter_Res> = {
+	const tableProps: DataTableProps = {
 		fetchUrl: 'auth/callcenters/',
 		queryKey: 'callcenters',
 		columns: [

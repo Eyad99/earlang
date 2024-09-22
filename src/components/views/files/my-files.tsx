@@ -7,7 +7,8 @@ const MyFiles = () => {
 	let user: any = Cookies.get('user');
 	user = user ? JSON.parse(user) : {};
 
-	const tableProps: DataTableProps<any> = {
+	// const tableProps: DataTableProps<any> = {
+	const tableProps: DataTableProps = {
 		fetchUrl: user?.role === 'customer' ? 'api/callcenter/my_xl_filedata/' : 'api/my_user_upload_xls/',
 		queryKey: 'my-xls-files',
 		columns: [
@@ -20,7 +21,7 @@ const MyFiles = () => {
 			add: {},
 			custom: {
 				component: (rowData: any) => {
-					// rowData.row.origina
+					console.log('rowData.row.origina', rowData.row.origina);
 					return <Button onClick={() => {}}>View Chart</Button>;
 				},
 			},

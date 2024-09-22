@@ -2,7 +2,17 @@ import uploadFileIcon from '@/assets/img/others/upload.svg';
 import FileLists from '../FileLists';
 import { Label } from '@/components/ui/label';
 
-const DefaultFileUploaderTheme = ({ getRootProps, getInputProps, files, fileSize, removeFile, style, placeholder, errors, error }: any) => {
+const DefaultFileUploaderTheme = ({
+	getRootProps,
+	getInputProps,
+	files,
+	fileSize,
+	// removeFile,
+	style,
+	// placeholder,
+	errors,
+	error,
+}: any) => {
 	console.log('error', error, errors);
 	return (
 		<section>

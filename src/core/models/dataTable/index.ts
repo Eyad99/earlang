@@ -1,4 +1,5 @@
-export interface DataTableProps<T> {
+// export interface DataTableProps<T> {
+export interface DataTableProps {
 	fetchUrl: string  ;
 	queryKey: string;
 	columns: { header: string; accessor: string; formatter?: any }[];

@@ -3,7 +3,8 @@ import { DataTableProps } from '@/core';
 import { Users_Res } from '@/core/models/users';
 
 export const UsersList = () => {
-	const tableProps: DataTableProps<Users_Res> = {
+	// const tableProps: DataTableProps<Users_Res> = {
+	const tableProps: DataTableProps = {
 		fetchUrl: 'auth/users/',
 		queryKey: 'users',
 		columns: [

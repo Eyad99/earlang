@@ -10,7 +10,8 @@ import DataTablePagination from './DataTablePagination';
 import DataTableSearchArea from './DataTableSearchArea';
 import Card from '../reusable/card';
 
-export const DataTable: <T>(p: DataTableProps<T>) => React.ReactElement<DataTableProps<T>> = ({
+// export const DataTable: <T>(p: DataTableProps<T>) => React.ReactElement<DataTableProps<T>> = ({
+export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps> = ({
 	fetchUrl,
 	queryKey,
 	columns,
