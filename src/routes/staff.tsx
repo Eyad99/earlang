@@ -1,4 +1,5 @@
 import Dashboard from '@/views/admin/dashboard';
+import OrderAsAStaff from '@/views/customer/staffs/order';
 import Profile from '@/views/profile';
 import StaffDashboard from '@/views/staff/dashboard';
 import MyFilesAsAStaff from '@/views/staff/files';
@@ -33,6 +34,13 @@ const StaffRoutes = [
 		layout: '/staff',
 		path: '/my-files/:staffId',
 		component: <UploadFilesAsAStaff />,
+		invisible: true,
+	},
+
+	{
+		layout: '/staff',
+		path: '/my-files/order/:orderId',
+		component: <OrderAsAStaff />,
 		invisible: true,
 	},
 ];

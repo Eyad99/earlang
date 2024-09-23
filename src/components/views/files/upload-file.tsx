@@ -16,8 +16,8 @@ const UploadFile = () => {
 		mutationFn: (data) => fileApi.addFiles(data),
 		invalidateKeys: ['my-xls-files'],
 		displaySuccess: true,
-		onSuccessFn: () => {
-			navigate(-1);
+		onSuccessFn: ({ data }) => {
+			navigate(`/${user?.role == 'customer' ? 'customer' : user?.role == 'staff' ? 'staff' : 'admin'}/my-files/order/${data?.data?.id}`);
 		},
 	});
 

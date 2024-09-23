@@ -1,13 +1,21 @@
+import EControlledDialog from '@/components/reusable/dialog/controlled-dialog';
 import DataTable from '@/components/dataTable/DataTable';
 import moment from 'moment';
-import { Button } from '@/components/ui/button';
-import { DataTableProps } from '@/core';
+import Chart from './chart';
 import { DEFAULT_DATE_TIME } from '@/variables/constants';
-import { useNavigate, useParams } from 'react-router-dom';
+import { DataTableProps } from '@/core';
+import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 const Order = () => {
-	const navigate = useNavigate();
 	const { orderId } = useParams();
+	const [isOpen, setIsOpen] = useState(false);
+	const [fileId, setFileId] = useState('');
+
+	const handleOpenDialog = () => {
+		setIsOpen(true);
+	};
 
 	const tableProps: DataTableProps = {
 		fetchUrl: `api/get_fiels_xls/${orderId}`,
@@ -20,7 +28,14 @@ const Order = () => {
 			custom: {
 				component: (rowData: any) => {
 					return (
-						<Button variant={'blueOutline'} size={'sm'} onClick={() => {}}>
+						<Button
+							variant={'blueOutline'}
+							size={'sm'}
+							onClick={() => {
+								handleOpenDialog();
+								setFileId(rowData?.row?.original?.id);
+							}}
+						>
 							View Chart
 						</Button>
 					);
@@ -31,6 +46,12 @@ const Order = () => {
 
 	return (
 		<div className='mt-5 grid h-full grid-cols-1 gap-5  md:grid-cols-1'>
+			<EControlledDialog
+				contentClassName='max-w-[1500px] overflow-y-auto max-h-screen'
+				isOpen={isOpen}
+				setOpen={setIsOpen}
+				dialogBody={<Chart fileId={fileId} />}
+			/>
 			<DataTable {...tableProps} />
 		</div>
 	);

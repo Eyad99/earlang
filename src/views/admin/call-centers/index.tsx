@@ -22,6 +22,8 @@ export const CallCentersList = () => {
 					return (
 						<div className='flex gap-4'>
 							<Button
+								variant={'blueOutline'}
+								size={'sm'}
 								onClick={() => {
 									navigate(`/admin/call-centers/${rowData.row.original.id}/staffs`);
 								}}
@@ -30,6 +32,8 @@ export const CallCentersList = () => {
 							</Button>
 
 							<Button
+								variant={'blueOutline'}
+								size={'sm'}
 								onClick={() => {
 									navigate(`/admin/call-centers/${rowData.row.original.id}/files`);
 								}}

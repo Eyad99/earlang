@@ -15,6 +15,7 @@ import { CallCentersList } from '@/views/admin/call-centers';
 import AllStaffsCallCenter from '@/views/admin/call-centers/staffs';
 import UserFiles from '@/views/users/files';
 import CAllCenterFiles from '@/views/admin/call-centers/files';
+import Order from '@/components/views/files/order';
 
 const AdminRoutes = [
 	{
@@ -58,6 +59,14 @@ const AdminRoutes = [
 	},
 
 	{
+		name: 'Files',
+		layout: '/admin',
+		path: '/call-centers/:callCenterId/files/order/:orderId',
+		component: <Order />,
+		invisible: true,
+	},
+
+	{
 		layout: '/admin',
 		path: '/call-centers/:callCenterId/staffs',
 		component: <AllStaffsCallCenter />,
@@ -73,49 +82,56 @@ const AdminRoutes = [
 
 	{
 		layout: '/admin',
+		path: '/call-centers/:callCenterId/staffs/:userId/files/order/:orderId',
+		component: <Order />,
+		invisible: true,
+	},
+
+	{
+		layout: '/admin',
 		path: '/users/:userId',
 		component: <UserEditor />,
 		invisible: true,
 	},
 
-	{
-		name: 'Formulas',
-		path: '/formula-1',
-		icon: <Pi />,
-		collapse: true,
-		items: [
-			{
-				name: 'Formula 1',
-				layout: '/admin',
-				path: '/formula-1',
-				component: <Formula1 />,
-			},
-			{
-				name: 'Formula 2',
-				layout: '/admin',
-				path: '/formula-2',
-				component: <Formula2 />,
-			},
-			{
-				name: 'Formula 3',
-				layout: '/admin',
-				path: '/formula-3',
-				component: <Formula3 />,
-			},
-			{
-				name: 'Formula 4',
-				layout: '/admin',
-				path: '/formula-4',
-				component: <Formula4 />,
-			},
-			{
-				name: 'Formula 5',
-				layout: '/admin',
-				path: '/formula-5',
-				component: <Formula5 />,
-			},
-		],
-	},
+	// {
+	// 	name: 'Formulas',
+	// 	path: '/formula-1',
+	// 	icon: <Pi />,
+	// 	collapse: true,
+	// 	items: [
+	// 		{
+	// 			name: 'Formula 1',
+	// 			layout: '/admin',
+	// 			path: '/formula-1',
+	// 			component: <Formula1 />,
+	// 		},
+	// 		{
+	// 			name: 'Formula 2',
+	// 			layout: '/admin',
+	// 			path: '/formula-2',
+	// 			component: <Formula2 />,
+	// 		},
+	// 		{
+	// 			name: 'Formula 3',
+	// 			layout: '/admin',
+	// 			path: '/formula-3',
+	// 			component: <Formula3 />,
+	// 		},
+	// 		{
+	// 			name: 'Formula 4',
+	// 			layout: '/admin',
+	// 			path: '/formula-4',
+	// 			component: <Formula4 />,
+	// 		},
+	// 		{
+	// 			name: 'Formula 5',
+	// 			layout: '/admin',
+	// 			path: '/formula-5',
+	// 			component: <Formula5 />,
+	// 		},
+	// 	],
+	// },
 
 	{
 		name: 'Calculators',

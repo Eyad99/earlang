@@ -21,6 +21,8 @@ const AllStaffsCallCenter = () => {
 				component: (rowData: any) => {
 					return (
 						<Button
+							variant={'blueOutline'}
+							size={'sm'}
 							onClick={() => {
 								navigate(`/admin/call-centers/${rowData.row.original.id}/staffs/${rowData.row.original.user.id}/files`);
 							}}

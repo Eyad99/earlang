@@ -72,7 +72,8 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 					<div className='flex gap-2'>
 						{actions?.edit && (
 							<Button
-								variant={'default'}
+								variant={'blueOutline'}
+								size={'sm'}
 								onClick={() => {
 									navigate(`${location.pathname}/${info?.row?.original?.id}`);
 								}}
@@ -133,6 +134,7 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 		return (
 			<div>
 				{toast.error('An unexpected serror occurred')}
+
 				<span className='flex justify-center text-center text-xl font-bold'>An unexpected error occurred</span>
 			</div>
 		);
