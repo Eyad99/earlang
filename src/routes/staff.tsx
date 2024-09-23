@@ -22,25 +22,18 @@ const StaffRoutes = [
 	},
 
 	{
-		name: 'Files',
-		path: '/my-files',
+		name: 'My Files',
+		layout: '/staff',
 		icon: <Files />,
-		collapse: true,
-		items: [
-			{
-				name: 'My Files',
-				layout: '/staff',
-				path: '/my-files',
-				component: <MyFilesAsAStaff />,
-			},
+		path: '/my-files',
+		component: <MyFilesAsAStaff />,
+	},
 
-			{
-				layout: '/staff',
-				path: '/my-files/:staffId',
-				component: <UploadFilesAsAStaff />,
-				invisible: true,
-			},
-		],
+	{
+		layout: '/staff',
+		path: '/my-files/:staffId',
+		component: <UploadFilesAsAStaff />,
+		invisible: true,
 	},
 ];
 export default StaffRoutes;

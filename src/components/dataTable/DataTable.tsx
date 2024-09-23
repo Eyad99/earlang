@@ -9,6 +9,9 @@ import { toast } from 'react-toastify';
 import DataTablePagination from './DataTablePagination';
 import DataTableSearchArea from './DataTableSearchArea';
 import Card from '../reusable/card';
+import withLoading from '@/hooks/withLoader';
+
+const BoxWithLoading = withLoading(Card);
 
 // export const DataTable: <T>(p: DataTableProps<T>) => React.ReactElement<DataTableProps<T>> = ({
 export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps> = ({
@@ -125,7 +128,7 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 		});
 	};
 
-	if (isLoading) return <>Loading...</>;
+	if (isLoading) return <BoxWithLoading loading={isLoading}></BoxWithLoading>;
 	if (isError)
 		return (
 			<div>
@@ -135,81 +138,83 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 		);
 
 	return (
-		<Card extra={'w-full h-full sm:overflow-auto px-6 '}>
-			{/* - - - - - - - - Search Area - - - - - - - - */}
-			<DataTableSearchArea
-				data={{
-					searchQuery,
-					selectArray,
-					actions,
-					//  filterByDate
-				}}
-				handlers={{ handleSearch, handleFilter, handleFiterByDate }}
-			/>
+		<BoxWithLoading loading={isFetching}>
+			<Card extra={'w-full h-full sm:overflow-auto px-6 '}>
+				{/* - - - - - - - - Search Area - - - - - - - - */}
+				<DataTableSearchArea
+					data={{
+						searchQuery,
+						selectArray,
+						actions,
+						//  filterByDate
+					}}
+					handlers={{ handleSearch, handleFilter, handleFiterByDate }}
+				/>
 
-			{/* - - - - - - - - Table Container - - - - - - - - */}
-			<div className=' overflow-x-auto'>
-				{/* - - - - - - - - Table - - - - - - - - */}
-				<table className='w-full'>
-					{/* - - - - - - - - THead - - - - - - - - */}
-					<thead>
-						{table.getHeaderGroups().map((headerGroup) => (
-							<tr key={headerGroup.id} className='!border-px !border-gray-400'>
-								{headerGroup.headers.map((header) => {
+				{/* - - - - - - - - Table Container - - - - - - - - */}
+				<div className=' overflow-x-auto'>
+					{/* - - - - - - - - Table - - - - - - - - */}
+					<table className='w-full'>
+						{/* - - - - - - - - THead - - - - - - - - */}
+						<thead>
+							{table.getHeaderGroups().map((headerGroup) => (
+								<tr key={headerGroup.id} className='!border-px !border-gray-400'>
+									{headerGroup.headers.map((header) => {
+										return (
+											<th
+												key={header.id}
+												colSpan={header.colSpan}
+												onClick={header.column.getToggleSortingHandler()}
+												className='cursor-pointer border-b-[1px] border-gray-200 pb-2 pr-4 pt-4 text-start'
+											>
+												<div className='items-center justify-between text-xs text-gray-200'>
+													{flexRender(header.column.columnDef.header, header.getContext())}
+													{{
+														asc: '',
+														desc: '',
+													}[header.column.getIsSorted() as string] ?? null}
+												</div>
+											</th>
+										);
+									})}
+								</tr>
+							))}
+						</thead>
+						{/* - - - - - - - - TBody - - - - - - - - */}
+						<tbody>
+							{table.getRowModel().rows?.length == 0 ? (
+								<tr key={`emptyRow`}>
+									<td
+										key={'1'}
+										colSpan={table.getHeaderGroups()?.map((el) => el.headers?.length)[0]}
+										className='w-full border-white/0 py-3 pr-4  text-center'
+									>
+										No Data
+									</td>
+								</tr>
+							) : (
+								table.getRowModel().rows.map((row) => {
 									return (
-										<th
-											key={header.id}
-											colSpan={header.colSpan}
-											onClick={header.column.getToggleSortingHandler()}
-											className='cursor-pointer border-b-[1px] border-gray-200 pb-2 pr-4 pt-4 text-start'
-										>
-											<div className='items-center justify-between text-xs text-gray-200'>
-												{flexRender(header.column.columnDef.header, header.getContext())}
-												{{
-													asc: '',
-													desc: '',
-												}[header.column.getIsSorted() as string] ?? null}
-											</div>
-										</th>
+										<tr key={row.id}>
+											{row.getVisibleCells().map((cell) => {
+												return (
+													<td key={cell.id} className='min-w-[150px] border-white/0 py-3  pr-4'>
+														{flexRender(cell.column.columnDef.cell, cell.getContext())}
+													</td>
+												);
+											})}
+										</tr>
 									);
-								})}
-							</tr>
-						))}
-					</thead>
-					{/* - - - - - - - - TBody - - - - - - - - */}
-					<tbody>
-						{table.getRowModel().rows?.length == 0 ? (
-							<tr key={`emptyRow`}>
-								<td
-									key={'1'}
-									colSpan={table.getHeaderGroups()?.map((el) => el.headers?.length)[0]}
-									className='w-full border-white/0 py-3 pr-4  text-center'
-								>
-									No Data
-								</td>
-							</tr>
-						) : (
-							table.getRowModel().rows.map((row) => {
-								return (
-									<tr key={row.id}>
-										{row.getVisibleCells().map((cell) => {
-											return (
-												<td key={cell.id} className='min-w-[150px] border-white/0 py-3  pr-4'>
-													{flexRender(cell.column.columnDef.cell, cell.getContext())}
-												</td>
-											);
-										})}
-									</tr>
-								);
-							})
-						)}
-					</tbody>
-				</table>
+								})
+							)}
+						</tbody>
+					</table>
 
-				{/* - - - - - - - - Table Pagingation - - - - - - - - */}
-				{/* {totalPages !== 0 && <DataTablePagination handleChangePage={handleChangePage} page={page} count={totalPages} />} */}
-			</div>
-		</Card>
+					{/* - - - - - - - - Table Pagingation - - - - - - - - */}
+					{/* {totalPages !== 0 && <DataTablePagination handleChangePage={handleChangePage} page={page} count={totalPages} />} */}
+				</div>
+			</Card>
+		</BoxWithLoading>
 	);
 };
 

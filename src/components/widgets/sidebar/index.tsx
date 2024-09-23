@@ -7,14 +7,20 @@ import { RoutesByRole } from '@/utils';
 import { PanelRightClose, PanelRightOpen } from 'lucide-react';
 
 function SidebarHorizon(props: { open: boolean; onClose: React.MouseEventHandler<HTMLSpanElement>; variant?: string; [x: string]: any }) {
-	const { open, onClose, variant, setMini, mini, hovered, setHovered } = props;
+	const { open, onClose, variant, setMini, mini, hovered = true, setHovered } = props;
+	console.log('ssssss m', mini);
 	return (
 		<div
 			className={`sm:none ${
 				mini === false ? 'w-[285px]' : mini === true && hovered === true ? 'w-[285px]' : 'w-[285px] xl:!w-[120px]'
-			} duration-175 linear fixed !z-50 min-h-full transition-all md:!z-50 lg:!z-50 xl:!z-0 ${
-				variant === 'auth' ? 'xl:hidden' : 'xl:block'
+			} duration-175 linear fixed !z-50 min-h-full transition-all md:!z-50 lg:!z-50 xl:!z-0 xl:block ${
+				mini ? `` : `sm-max:hidden sm:hidden`
 			} ${open ? '' : '-translate-x-[105%]'}`}
+			// className={`sm:none ${
+			// 	mini === false ? 'w-[285px]' : mini === true && hovered === true ? 'w-[285px]' : 'w-[285px] xl:!w-[120px]'
+			// } duration-175 linear fixed !z-50 min-h-full transition-all md:!z-50 lg:!z-50 xl:!z-0 ${
+			// 	variant === 'auth' ? 'xl:hidden' : 'xl:block'
+			// } ${open ? '' : '-translate-x-[105%]'}`}
 			// onMouseEnter={() => setHovered(true)}
 			// onMouseLeave={() => setHovered(false)}
 		>
@@ -37,7 +43,7 @@ function SidebarHorizon(props: { open: boolean; onClose: React.MouseEventHandler
 											mini === false ? 'block' : mini === true && hovered === true ? 'block' : 'hidden'
 										}`}
 									>
-										Erland
+										Erlang
 									</div>
 									<div
 										className={`font-poppins text-[26px] font-bold uppercase text-navy-700 dark:text-white ${

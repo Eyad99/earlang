@@ -21,11 +21,7 @@ export const MyStaffs = () => {
 			custom: {
 				component: (rowData: any) => {
 					return (
-						<Button
-							onClick={() => {
-								navigate(`/custoemr/staffs/${rowData.row.original.id}/files`);
-							}}
-						>
+						<Button variant={'blueOutline'} size={'sm'} onClick={() => navigate(`/customer/staffs/${rowData.row.original.id}/files`)}>
 							View Files
 						</Button>
 					);

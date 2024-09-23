@@ -6,6 +6,8 @@ import Profile from '@/views/profile';
 import { Files, LayoutDashboard, Users } from 'lucide-react';
 import { MyStaffs } from '@/views/customer/staffs';
 import StaffFiles from '@/views/customer/staffs/files';
+import OrderAsCustomer from '@/views/customer/files/order';
+import OrderAsAStaff from '@/views/customer/staffs/order';
 
 const CustomerRoutes = [
 	{
@@ -39,6 +41,13 @@ const CustomerRoutes = [
 	},
 
 	{
+		layout: '/customer',
+		path: '/my-files/order/:orderId',
+		component: <OrderAsCustomer />,
+		invisible: true,
+	},
+
+	{
 		name: 'Staffs',
 		layout: '/customer',
 		icon: <Users />,
@@ -47,11 +56,17 @@ const CustomerRoutes = [
 	},
 
 	{
-		name: 'Staffs',
 		layout: '/customer',
-		icon: <Users />,
 		path: '/staffs/:userId/files',
 		component: <StaffFiles />,
+		invisible: true,
+	},
+
+	{
+		layout: '/customer',
+		path: '/staffs/:userId/files/order/:orderId',
+		component: <OrderAsAStaff />,
+		invisible: true,
 	},
 
 	{

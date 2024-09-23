@@ -2,6 +2,7 @@ import DataTable from '@/components/dataTable/DataTable';
 import { Button } from '@/components/ui/button';
 import { DataTableProps, Files_By_User_Res } from '@/core';
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface FilesUploadedProps {
 	url: string;
@@ -9,6 +10,8 @@ interface FilesUploadedProps {
 }
 
 const FilesUploaded: FC<FilesUploadedProps> = ({ url, queryKey }) => {
+	const navigate = useNavigate();
+
 	// const tableProps: DataTableProps<Files_By_User_Res> = {
 	const tableProps: DataTableProps = {
 		fetchUrl: url,
@@ -24,8 +27,11 @@ const FilesUploaded: FC<FilesUploadedProps> = ({ url, queryKey }) => {
 		actions: {
 			custom: {
 				component: (rowData: any) => {
-					console.log('rowData', rowData.row.origin);
-					return <Button onClick={() => {}}>View Chart</Button>;
+					return (
+						<Button variant={'blueOutline'} size={'sm'} onClick={() => navigate(`order/${rowData.row.original?.id}`)}>
+							View Details
+						</Button>
+					);
 				},
 			},
 		},

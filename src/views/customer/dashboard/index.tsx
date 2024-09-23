@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CustomerDashboard = () => {
-	return <div className='bg-red-300'>CustomerDashboard</div>;
+	return <div className=' '>CustomerDashboard</div>;
 };
 
 export default CustomerDashboard;
