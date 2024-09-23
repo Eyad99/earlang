@@ -3,7 +3,8 @@ import { KEY_TOKEN_COOKIE } from '@/variables/constants';
 import { ObjToFormData } from '../helpers';
 import Cookies from 'js-cookie';
 
-const baseURL = 'https://erlang4insights.pythonanywhere.com/';
+// const baseURL = 'https://erlang4insights.pythonanywhere.com/';
+const baseURL = import.meta.env.VITE_BASE_URL;
 export interface ApiResponse<T = any> {
 	data: T;
 	code: number;

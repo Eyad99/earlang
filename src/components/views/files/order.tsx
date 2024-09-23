@@ -7,11 +7,13 @@ import { DataTableProps } from '@/core';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import downloadFile from '@/utils/helpers/downloadFile';
 
 const Order = () => {
 	const { orderId } = useParams();
 	const [isOpen, setIsOpen] = useState(false);
 	const [fileId, setFileId] = useState('');
+	const [fileUrl, setFileUrl] = useState('');
 
 	const handleOpenDialog = () => {
 		setIsOpen(true);
@@ -28,16 +30,28 @@ const Order = () => {
 			custom: {
 				component: (rowData: any) => {
 					return (
-						<Button
-							variant={'blueOutline'}
-							size={'sm'}
-							onClick={() => {
-								handleOpenDialog();
-								setFileId(rowData?.row?.original?.id);
-							}}
-						>
-							View Chart
-						</Button>
+						<div className='flex gap-4'>
+							<Button
+								variant={'blueOutline'}
+								size={'sm'}
+								onClick={() => {
+									handleOpenDialog();
+									setFileId(rowData?.row?.original?.id);
+									setFileUrl(import.meta.env.VITE_BASE_URL + rowData?.row?.original?.xlfile.replace(/^\//, ''));
+								}}
+							>
+								View Chart
+							</Button>
+							<Button
+								variant={'greenOutline'}
+								size={'sm'}
+								onClick={() => {
+									downloadFile(import.meta.env.VITE_BASE_URL + rowData?.row?.original?.xlfile.replace(/^\//, ''));
+								}}
+							>
+								Download
+							</Button>
+						</div>
 					);
 				},
 			},
@@ -50,7 +64,7 @@ const Order = () => {
 				contentClassName='max-w-[1500px] overflow-y-auto max-h-screen'
 				isOpen={isOpen}
 				setOpen={setIsOpen}
-				dialogBody={<Chart fileId={fileId} />}
+				dialogBody={<Chart fileId={fileId} fileUrl={fileUrl} />}
 			/>
 			<DataTable {...tableProps} />
 		</div>

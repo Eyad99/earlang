@@ -1,11 +1,11 @@
 import withLoading from '@/hooks/withLoader';
 import Card from '@/components/reusable/card';
-import { useFetchDataRQ } from '@/hooks/useFetchDataRQ';
-import { fileApi } from '@/core/services/files';
-import { FC } from 'react';
-import { Line } from 'react-chartjs-2';
-import { Chart_Res } from '@/core';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { useFetchDataRQ } from '@/hooks/useFetchDataRQ';
+import { Chart_Res } from '@/core';
+import { fileApi } from '@/core/services/files';
+import { Line } from 'react-chartjs-2';
+import { FC } from 'react';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -119,6 +119,8 @@ const Charts: FC<ChartsProps> = ({ fileId }) => {
 
 	const options = {
 		responsive: true,
+		// maintainAspectRatio: false, // Disable default aspect ratio
+		// height: 500, // Set desired height
 		plugins: {
 			legend: {
 				position: 'top',
@@ -126,7 +128,7 @@ const Charts: FC<ChartsProps> = ({ fileId }) => {
 		},
 	} as any;
 
-	if (isLoading) return <BoxWithLoading loading={isLoading}></BoxWithLoading>;
+	if (isLoading) return <BoxWithLoading loading={isLoading} size={32}></BoxWithLoading>;
 
 	{
 		/* 7 6 5 2 */

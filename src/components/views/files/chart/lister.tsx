@@ -1,6 +1,8 @@
-import DataTable from '@/components/dataTable/DataTable';
+import { DEFAULT_DATE_TIME } from '@/variables/constants';
 import { DataTableProps } from '@/core';
 import { FC } from 'react';
+import DataTable from '@/components/dataTable/DataTable';
+import moment from 'moment';
 
 interface ChartListerProps {
 	fileId: string;
@@ -11,29 +13,29 @@ const ChartLister: FC<ChartListerProps> = ({ fileId }) => {
 		fetchUrl: `api/get_erlangc_xls/${fileId}`,
 		queryKey: `file-details-${fileId}`,
 		columns: [
-			{ header: 'datecalavg', accessor: 'datecalavg' },
-			{ header: 'from_time', accessor: 'from_time' },
-			{ header: 'to_time', accessor: 'to_time' },
-			{ header: 'totall_Offered', accessor: 'totall_Offered' },
-			{ header: 'totall_answered', accessor: 'totall_answered' },
-			{ header: 'totall_abandoned', accessor: 'totall_abandoned' },
-			{ header: 'sl_xpercentage', accessor: 'sl_xpercentage' },
-			{ header: 'sl_xseconds', accessor: 'sl_xseconds' },
-			{ header: 'callavg_talk_time', accessor: 'callavg_talk_time' },
-			{ header: 'callavg_after_call_work', accessor: 'callavg_after_call_work' },
-			{ header: 'callavg_abandom', accessor: 'callavg_abandom' },
-			{ header: 'aggent_scheduled', accessor: 'aggent_scheduled' },
-			{ header: 'aggent_logged_in', accessor: 'aggent_logged_in' },
-			{ header: 'aggent_available', accessor: 'aggent_available' },
-			{ header: 'agents', accessor: 'agents' },
-			{ header: 'sl', accessor: 'sl' },
-			{ header: 'sl_target', accessor: 'sl_target' },
-			{ header: 'asa', accessor: 'asa' },
-			{ header: 'imm_answ', accessor: 'imm_answ' },
-			{ header: 'pw', accessor: 'pw' },
-			{ header: 'occ', accessor: 'occ' },
-			{ header: 'max_call', accessor: 'max_call' },
-			{ header: 'created_at', accessor: 'created_at' },
+			{ header: 'Datecalavg', accessor: 'datecalavg', formatter: (value: any) => moment(value).format(DEFAULT_DATE_TIME) },
+			{ header: 'From Time', accessor: 'from_time' },
+			{ header: 'To Time', accessor: 'to_time' },
+			{ header: 'Total Offered', accessor: 'totall_Offered' },
+			{ header: 'Total Answered', accessor: 'totall_answered' },
+			{ header: 'Total Abandoned', accessor: 'totall_abandoned' },
+			{ header: 'Sl Xpercentage', accessor: 'sl_xpercentage' },
+			{ header: 'Sl xseconds', accessor: 'sl_xseconds' },
+			{ header: 'Callavg Talk Time', accessor: 'callavg_talk_time' },
+			{ header: 'Callavg After Call Work', accessor: 'callavg_after_call_work' },
+			{ header: 'Callavg Abandom', accessor: 'callavg_abandom' },
+			{ header: 'Aggent Scheduled', accessor: 'aggent_scheduled' },
+			{ header: 'Aggent Logged_in', accessor: 'aggent_logged_in' },
+			{ header: 'Aggent Available', accessor: 'aggent_available' },
+			{ header: 'Agents', accessor: 'agents' },
+			{ header: 'Service Level', accessor: 'sl' },
+			{ header: 'Service Level Target', accessor: 'sl_target' },
+			{ header: 'Asa', accessor: 'asa' },
+			{ header: 'Imm Answ', accessor: 'imm_answ' },
+			{ header: 'Pw', accessor: 'pw' },
+			{ header: 'Occ', accessor: 'occ' },
+			{ header: 'Max Call', accessor: 'max_call' },
+			{ header: 'Created At', accessor: 'created_at', formatter: (value: any) => moment(value).format(DEFAULT_DATE_TIME) },
 		],
 	};
 	return (
