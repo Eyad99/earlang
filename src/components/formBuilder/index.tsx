@@ -13,9 +13,9 @@ export type FormBuilderProps = {
 	validationSchema: any;
 	formSchema: any[];
 	submitButtonText?: string;
-	mode?: string;
-	multiple?: boolean;
 	loading?: boolean;
+	gridClassName?: string;
+	buttonClassName?: string;
 };
 
 const FormBuilder: FC<FormBuilderProps> = ({
@@ -24,9 +24,9 @@ const FormBuilder: FC<FormBuilderProps> = ({
 	validationSchema,
 	formSchema,
 	submitButtonText = 'submit',
-	// mode,
-	// multiple,
 	loading = false,
+	gridClassName = 'grid-cols-2',
+	buttonClassName,
 }) => {
 	const {
 		values,
@@ -125,7 +125,7 @@ const FormBuilder: FC<FormBuilderProps> = ({
 
 	return (
 		<form onSubmit={handleSubmitFormik} className='bg-white p-4 rounded-md'>
-			<div className='grid grid-cols-2 gap-3 '>
+			<div className={`grid ${gridClassName} gap-3 `}>
 				{formSchema.map((x) => {
 					const element = render(x);
 					if (!element) return null; // Skip rendering if `element` is null
@@ -137,7 +137,7 @@ const FormBuilder: FC<FormBuilderProps> = ({
 				})}
 			</div>
 			<div className='mt-4 flex justify-end'>
-				<Button variant={'blue'} className='mt-4' disabled={loading}>
+				<Button variant={'blue'} className={`mt-4 ${buttonClassName}`} disabled={loading}>
 					{loading ? (
 						<div className='flex gap-2'>
 							<span>{submitButtonText ?? 'submit'}</span>

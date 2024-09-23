@@ -43,7 +43,7 @@ function SidebarHorizon(props: { open: boolean; onClose: React.MouseEventHandler
 											mini === false ? 'block' : mini === true && hovered === true ? 'block' : 'hidden'
 										}`}
 									>
-										Erlang
+										ErlangC
 									</div>
 									<div
 										className={`font-poppins text-[26px] font-bold uppercase text-navy-700 dark:text-white ${
@@ -54,11 +54,11 @@ function SidebarHorizon(props: { open: boolean; onClose: React.MouseEventHandler
 									</div>
 								</div>
 								{/* open and close sidebar */}
-								{mini ? (
+								{/* {mini ? (
 									<PanelRightClose className='cursor-pointer' onClick={() => props.setMini(!props.mini)} />
 								) : (
 									<PanelRightOpen className='cursor-pointer' onClick={() => props.setMini(!props.mini)} />
-								)}
+								)} */}
 							</div>
 
 							<div className='mb-7 mt-[44px] h-px bg-gray-200 dark:bg-white/10' />

@@ -37,7 +37,6 @@ const Navbar = (props: { onOpenSidenav: () => void; brandText: string; secondary
 
 	let user: any = Cookies.get(KEY_USER_COOKIE);
 	user = user ? JSON.parse(user) : {};
-	console.log('mimmmm', mini);
 	return (
 		<nav
 			className={`z-10 duration-175 linear fixed right-3 top-3 flex flex-row   items-center justify-between rounded-xl bg-white/30 transition-all ${

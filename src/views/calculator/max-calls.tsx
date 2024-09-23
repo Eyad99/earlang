@@ -1,7 +1,11 @@
 import { useMutateData } from '@/hooks/useMutateData';
 import { calculatorApi, Earlang_Calculator_Max_Calls } from '@/core';
 import FormBuilder from '@/components/formBuilder';
+import withLoading from '@/hooks/withLoader';
+import Card from '@/components/reusable/card';
 import * as yup from 'yup';
+
+const BoxWithLoading = withLoading(Card);
 
 const MaxCalls = () => {
 	const earlangMaxCallsMutate = useMutateData({
@@ -64,6 +68,8 @@ const MaxCalls = () => {
 		handleSubmit: submitHandler,
 		validationSchema: validationSchema,
 		loading: earlangMaxCallsMutate?.isPending,
+		gridClassName: 'grid-cols-1',
+		buttonClassName: 'w-full',
 		formSchema: [
 			{
 				name: 'Agents',
@@ -98,24 +104,34 @@ const MaxCalls = () => {
 	};
 
 	return (
-		<div className='flex flex-col gap-2'>
-			<div>{<FormBuilder {...formBuilderArgs} />}</div>
-			{earlangMaxCallsMutate?.data?.data?.data?.Max_call && (
-				<div className='flex flex-col items-center justify-center bg-white w-1/3 m-auto'>
-					<span>Result</span>
-					<span>
-						<span className='font-bold'>Max call: </span> {earlangMaxCallsMutate?.data?.data?.data?.Max_call}
+		<div className='flex md:flex-row flex-col wrap gap-2'>
+			<div className='md:w-1/2 w-full'>{<FormBuilder {...formBuilderArgs} />}</div>
+			<div className='md:w-1/2 w-full bg-white flex items-center justify-center text-center p-6'>
+				{earlangMaxCallsMutate?.isPending ? (
+					<BoxWithLoading loading={earlangMaxCallsMutate?.isPending}>
+						<span className='font-bold text-xl '>"The calculation is being processed."</span>{' '}
+					</BoxWithLoading>
+				) : earlangMaxCallsMutate?.data?.data?.data?.Max_call ? (
+					<div className='flex flex-col items-center justify-center '>
+						<span className='font-bold text-xl '>The final result is</span>
+						<span>
+							<span className='font-bold'>Max call: </span> {earlangMaxCallsMutate?.data?.data?.data?.Max_call}
+						</span>
+						<span>
+							<span className='font-bold'>Numbe calls: </span>
+							{earlangMaxCallsMutate?.data?.data?.data?.N_calls}
+						</span>
+						<span>
+							<span className='font-bold'>Sl: </span>
+							{earlangMaxCallsMutate?.data?.data?.data?.SL}
+						</span>
+					</div>
+				) : (
+					<span className='font-bold text-xl '>
+						"Fill the fields to see the result, which will be updated automatically after calculation."
 					</span>
-					<span>
-						<span className='font-bold'>Numbe calls: </span>
-						{earlangMaxCallsMutate?.data?.data?.data?.N_calls}
-					</span>
-					<span>
-						<span className='font-bold'>Sl: </span>
-						{earlangMaxCallsMutate?.data?.data?.data?.SL}
-					</span>
-				</div>
-			)}{' '}
+				)}
+			</div>
 		</div>
 	);
 };

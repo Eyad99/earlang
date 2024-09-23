@@ -1,7 +1,11 @@
 import { useMutateData } from '@/hooks/useMutateData';
 import { calculatorApi, Earlang_Calculator_Normal } from '@/core';
 import FormBuilder from '@/components/formBuilder';
+import withLoading from '@/hooks/withLoader';
+import Card from '@/components/reusable/card';
 import * as yup from 'yup';
+
+const BoxWithLoading = withLoading(Card);
 
 const Agent = () => {
 	const earlangAgentMutate = useMutateData({
@@ -64,6 +68,8 @@ const Agent = () => {
 		handleSubmit: submitHandler,
 		validationSchema: validationSchema,
 		loading: earlangAgentMutate?.isPending,
+		gridClassName: 'grid-cols-1',
+		buttonClassName: 'w-full',
 		formSchema: [
 			{
 				name: 'NCalls',
@@ -97,40 +103,50 @@ const Agent = () => {
 		],
 	};
 	return (
-		<div className='flex flex-col gap-2'>
-			<div>{<FormBuilder {...formBuilderArgs} />}</div>
-			{earlangAgentMutate?.data?.data?.data?.Agents && (
-				<div className='flex flex-col items-center justify-center bg-white w-1/3 m-auto'>
-					<span>Result</span>
-					<span>
-						<span className='font-bold'>ASA: </span> {earlangAgentMutate?.data?.data?.data?.ASA}
+		<div className='flex md:flex-row flex-col wrap gap-2'>
+			<div className='md:w-1/2 w-full'>{<FormBuilder {...formBuilderArgs} />}</div>
+			<div className='md:w-1/2 w-full bg-white flex items-center justify-center text-center p-6'>
+				{earlangAgentMutate?.isPending ? (
+					<BoxWithLoading loading={earlangAgentMutate?.isPending}>
+						<span className='font-bold text-xl '>"The calculation is being processed."</span>{' '}
+					</BoxWithLoading>
+				) : earlangAgentMutate?.data?.data?.data?.Agents ? (
+					<div className='flex flex-col items-center justify-center '>
+						<span className='font-bold text-xl '>The final result is</span>
+						<span>
+							<span className='font-bold'>ASA: </span> {earlangAgentMutate?.data?.data?.data?.ASA}
+						</span>
+						<span>
+							<span className='font-bold'>Agents: </span>
+							{earlangAgentMutate?.data?.data?.data?.Agents}
+						</span>
+						<span>
+							<span className='font-bold'>Pw: </span>
+							{earlangAgentMutate?.data?.data?.data?.Pw}
+						</span>
+						<span>
+							<span className='font-bold'>SL: </span>
+							{earlangAgentMutate?.data?.data?.data?.SL}
+						</span>
+						<span>
+							<span className='font-bold'>Service Level: </span>
+							{earlangAgentMutate?.data?.data?.data?.ServiceLevel}
+						</span>
+						<span>
+							<span className='font-bold'>imm answ: </span>
+							{earlangAgentMutate?.data?.data?.data?.imm_answ}
+						</span>
+						<span>
+							<span className='font-bold'>Occ: </span>
+							{earlangAgentMutate?.data?.data?.data?.occ}
+						</span>
+					</div>
+				) : (
+					<span className='font-bold text-xl '>
+						"Fill the fields to see the result, which will be updated automatically after calculation."
 					</span>
-					<span>
-						<span className='font-bold'>Agents: </span>
-						{earlangAgentMutate?.data?.data?.data?.Agents}
-					</span>
-					<span>
-						<span className='font-bold'>Pw: </span>
-						{earlangAgentMutate?.data?.data?.data?.Pw}
-					</span>
-					<span>
-						<span className='font-bold'>SL: </span>
-						{earlangAgentMutate?.data?.data?.data?.SL}
-					</span>
-					<span>
-						<span className='font-bold'>Service Level: </span>
-						{earlangAgentMutate?.data?.data?.data?.ServiceLevel}
-					</span>
-					<span>
-						<span className='font-bold'>imm answ: </span>
-						{earlangAgentMutate?.data?.data?.data?.imm_answ}
-					</span>
-					<span>
-						<span className='font-bold'>Occ: </span>
-						{earlangAgentMutate?.data?.data?.data?.occ}
-					</span>
-				</div>
-			)}{' '}
+				)}
+			</div>
 		</div>
 	);
 };

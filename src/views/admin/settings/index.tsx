@@ -54,6 +54,8 @@ const SettingsList = () => {
 		handleSubmit: submitHandler,
 		validationSchema: validationSchema,
 		loading: addSettingMutate?.isPending || updateSettingMutate?.isPending,
+		gridClassName: 'm-auto flex justify-center grid-cols-1 md:w-1/2 w-full',
+		buttonClassName: 'm-auto flex justify-center md:w-1/2 w-full',
 		formSchema: [
 			{
 				name: 'count_users',
@@ -71,7 +73,11 @@ const SettingsList = () => {
 
 	if (isLoading) return <>Loading ...</>;
 
-	return <FormBuilder {...formBuilderArgs} />;
+	return (
+		<div className=''>
+			<FormBuilder {...formBuilderArgs} />
+		</div>
+	);
 };
 
 export default SettingsList;
