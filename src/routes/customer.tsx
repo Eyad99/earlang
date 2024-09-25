@@ -8,6 +8,8 @@ import { MyStaffs } from '@/views/customer/staffs';
 import StaffFiles from '@/views/customer/staffs/files';
 import OrderAsCustomer from '@/views/customer/files/order';
 import OrderAsAStaff from '@/views/customer/staffs/order';
+import Chart from '@/components/views/files/chart';
+import Report from '@/views/report';
 
 const CustomerRoutes = [
 	{
@@ -44,6 +46,13 @@ const CustomerRoutes = [
 		layout: '/customer',
 		path: '/my-files/order/:orderId',
 		component: <OrderAsCustomer />,
+		invisible: true,
+	},
+
+	{
+		layout: '/customer',
+		path: '/my-files/order/:orderId/report/:fileId',
+		component: <Report />,
 		invisible: true,
 	},
 

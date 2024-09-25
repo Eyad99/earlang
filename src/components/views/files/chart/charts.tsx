@@ -6,20 +6,31 @@ import { Chart_Res } from '@/core';
 import { fileApi } from '@/core/services/files';
 import { Line } from 'react-chartjs-2';
 import { FC } from 'react';
+import { useParams } from 'react-router-dom';
+import moment from 'moment';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 interface ChartsProps {
-	fileId: string;
+	data: any;
 }
-const BoxWithLoading = withLoading(Card);
 
-const Charts: FC<ChartsProps> = ({ fileId }) => {
-	const { data, isLoading, isFetching } = useFetchDataRQ({
-		queryKey: [`file-details-${fileId}`],
-		queryFn: () => fileApi.getFileDetails(fileId),
-	});
+const Charts: FC<ChartsProps> = ({ data }) => {
+	const generateHalfHourLabels = (fromTime: any, toTime: any) => {
+		// Convert `fromTime` and `toTime` to moment objects
+		const start = moment(fromTime, 'HH:mm');
+		const end = moment(toTime, 'HH:mm');
+		const labels = [];
 
+		// Generate half-hour intervals
+		while (start.isBefore(end)) {
+			const nextTime = start.clone().add(30, 'minutes');
+			labels.push(`${start.format('HH:mm')} - ${nextTime.format('HH:mm')}`);
+			start.add(30, 'minutes');
+		}
+
+		return labels;
+	};
 	const timeToSeconds = (timeString: any) => {
 		if (!timeString || timeString === '') return 0; // Handle empty string
 		const [hours, minutes, seconds] = timeString.split(':');
@@ -27,35 +38,37 @@ const Charts: FC<ChartsProps> = ({ fileId }) => {
 	};
 
 	const chartOne = {
-		labels: data?.data ? data?.data.map((item: Chart_Res) => `${item.from_time} - ${item.to_time}`) : [],
+		// labels: data ? data?.map((item: Chart_Res) => `${item.from_time} - ${item.to_time}`) : [],
+		labels: data ? data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)) : [],
 		datasets: [
 			{
 				label: 'Time To obvious',
-				data: data?.data ? data?.data.map((item: Chart_Res) => item.totall_abandoned) : [],
+				data: data ? data?.map((item: Chart_Res) => item.totall_abandoned) : [],
 				borderColor: 'blue',
 			},
 		],
 	};
 
 	const chartTow = {
-		labels: data?.data ? data?.data.map((item: Chart_Res) => `${item.from_time} - ${item.to_time}`) : [],
+		labels: data ? data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)) : [],
+
 		datasets: [
 			{
 				label: 'SL',
-				data: data?.data ? data?.data.map((item: Chart_Res) => item.sl * 100) : [],
+				data: data ? data?.map((item: Chart_Res) => item.sl * 100) : [],
 				borderColor: 'blue',
 				backgroundColor: 'rgba(0, 0, 255, 0.1)',
 			},
 			{
 				label: 'Call Avg Abandon',
-				data: data?.data ? data?.data.map((item: Chart_Res) => timeToSeconds(item.callavg_abandom)) : [],
+				data: data ? data?.map((item: Chart_Res) => timeToSeconds(item.callavg_abandom)) : [],
 				borderColor: 'orange',
 				backgroundColor: 'rgba(255, 165, 0, 0.1)',
 			},
 			{
 				label: 'AHT (Avg Handle Time)',
-				data: data?.data
-					? data?.data.map((item: Chart_Res) => timeToSeconds(item.callavg_talk_time) + timeToSeconds(item.callavg_after_call_work))
+				data: data
+					? data.map((item: Chart_Res) => timeToSeconds(item.callavg_talk_time) + timeToSeconds(item.callavg_after_call_work))
 					: [],
 				borderColor: 'green',
 				backgroundColor: 'rgba(0, 255, 0, 0.1)',
@@ -64,29 +77,29 @@ const Charts: FC<ChartsProps> = ({ fileId }) => {
 	};
 
 	const chartThree = {
-		labels: data?.data ? data?.data.map((item: Chart_Res) => `${item.from_time} - ${item.to_time}`) : [],
+		labels: data ? data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)) : [],
 		datasets: [
 			{
 				label: 'Total Answered',
-				data: data?.data ? data?.data.map((item: Chart_Res) => item.totall_answered) : [],
+				data: data ? data?.map((item: Chart_Res) => item.totall_answered) : [],
 				borderColor: 'blue',
 				backgroundColor: 'rgba(0, 0, 255, 0.1)',
 			},
 			{
 				label: 'Total Abandoned',
-				data: data?.data ? data?.data.map((item: Chart_Res) => item.totall_abandoned) : [],
+				data: data ? data?.map((item: Chart_Res) => item.totall_abandoned) : [],
 				borderColor: 'red',
 				backgroundColor: 'rgba(255, 0, 0, 0.1)',
 			},
 			{
 				label: 'SL',
-				data: data?.data ? data?.data.map((item: Chart_Res) => item.sl * 100) : [],
+				data: data ? data?.map((item: Chart_Res) => item.sl * 100) : [],
 				borderColor: 'purple',
 				backgroundColor: 'rgba(128, 0, 128, 0.1)',
 			},
 			{
 				label: 'SL X Seconds',
-				data: data?.data ? data?.data.map((item: Chart_Res) => item.sl_xseconds) : [],
+				data: data ? data?.map((item: Chart_Res) => item.sl_xseconds) : [],
 				borderColor: 'orange',
 				backgroundColor: 'rgba(255, 165, 0, 0.1)',
 			},
@@ -94,23 +107,23 @@ const Charts: FC<ChartsProps> = ({ fileId }) => {
 	};
 
 	const chartFour = {
-		labels: data?.data ? data?.data.map((item: Chart_Res) => `${item.from_time} - ${item.to_time}`) : [],
+		labels: data ? data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)) : [],
 		datasets: [
 			{
 				label: 'Total Answered',
-				data: data?.data ? data?.data.map((item: Chart_Res) => item.totall_answered) : [],
+				data: data ? data?.map((item: Chart_Res) => item.totall_answered) : [],
 				borderColor: 'blue',
 				backgroundColor: 'rgba(0, 0, 255, 0.1)',
 			},
 			{
 				label: 'Total Abandoned',
-				data: data?.data ? data?.data.map((item: Chart_Res) => item.totall_abandoned) : [],
+				data: data ? data?.map((item: Chart_Res) => item.totall_abandoned) : [],
 				borderColor: 'red',
 				backgroundColor: 'rgba(255, 0, 0, 0.1)',
 			},
 			{
 				label: 'Occupancy (occ)',
-				data: data?.data ? data?.data.map((item: Chart_Res) => item.occ * 100) : [], // Assuming occ is a decimal and we convert it to percentage
+				data: data ? data?.map((item: Chart_Res) => item.occ * 100) : [], // Assuming occ is a decimal and we convert it to percentage
 				borderColor: 'green',
 				backgroundColor: 'rgba(0, 255, 0, 0.1)',
 			},
@@ -136,8 +149,6 @@ const Charts: FC<ChartsProps> = ({ fileId }) => {
 			},
 		},
 	} as any;
-
-	if (isLoading) return <BoxWithLoading loading={isLoading} size={32}></BoxWithLoading>;
 
 	{
 		/* 7 6 5 2 */

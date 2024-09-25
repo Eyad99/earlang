@@ -13,8 +13,8 @@ function Default(props: { maincard: JSX.Element }) {
 						<div
 							className={`absolute flex h-full w-full items-end justify-center bg-gradient-to-br from-brand-400 to-brand-600 bg-cover bg-center lg:rounded-bl-[120px] xl:rounded-bl-[200px]`}
 						>
-							<div className='relative bottom-[225px]'>
-								<img src={insightsImg} />
+							<div className='relative bottom-[270px]'>
+								<img src={insightsImg} width={500} />
 							</div>
 							{/* <div className='relative flex h-full w-full'>
 								<div style={{ backgroundImage: `url(${insightsImg})` }} className='h-full w-full flex bg-cover' />

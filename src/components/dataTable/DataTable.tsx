@@ -22,6 +22,7 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 	selectArray,
 	searchKey = 'search',
 	// filterByDate,
+	cardClassName,
 }) => {
 	const columnHelper = createColumnHelper();
 
@@ -141,7 +142,7 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 
 	return (
 		<BoxWithLoading loading={isFetching}>
-			<Card extra={'w-full h-full sm:overflow-auto px-6 '}>
+			<Card extra={`w-full h-full sm:overflow-auto px-6 ${cardClassName} `}>
 				{/* - - - - - - - - Search Area - - - - - - - - */}
 				<DataTableSearchArea
 					data={{

@@ -7,6 +7,7 @@ export interface DataTableProps {
 	selectArray?: SelectArray;
 	searchKey?: string;
  	filterByDate?: boolean;
+	 cardClassName?:string
 }
 
 interface ActionDetails {

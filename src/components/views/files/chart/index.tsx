@@ -29,7 +29,7 @@ const Chart: FC<ChartProps> = ({ fileId, fileUrl }) => {
 					Download
 				</Button>
 			</div>
-			{!listMode ? <ChartLister fileId={fileId} /> : <Charts fileId={fileId} />}
+			{/* {!listMode ? <ChartLister fileId={fileId} /> : <Charts fileId={fileId} />} */}
 		</div>
 	);
 };

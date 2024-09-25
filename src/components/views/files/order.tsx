@@ -4,13 +4,14 @@ import moment from 'moment';
 import Chart from './chart';
 import { DEFAULT_DATE_TIME } from '@/variables/constants';
 import { DataTableProps } from '@/core';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import downloadFile from '@/utils/helpers/downloadFile';
 
 const Order = () => {
 	const { orderId } = useParams();
+	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
 	const [fileId, setFileId] = useState('');
 	const [fileUrl, setFileUrl] = useState('');
@@ -34,22 +35,14 @@ const Order = () => {
 							<Button
 								variant={'blueOutline'}
 								size={'sm'}
-								onClick={() => {
-									handleOpenDialog();
-									setFileId(rowData?.row?.original?.id);
-									setFileUrl(import.meta.env.VITE_BASE_URL + rowData?.row?.original?.xlfile.replace(/^\//, ''));
-								}}
+								// onClick={() => {
+								// 	handleOpenDialog();
+								// 	setFileId(rowData?.row?.original?.id);
+								// 	setFileUrl(import.meta.env.VITE_BASE_URL + rowData?.row?.original?.xlfile.replace(/^\//, ''));
+								// }}
+								onClick={() => navigate(`report/${rowData?.row?.original?.id}`)}
 							>
-								View Chart
-							</Button>
-							<Button
-								variant={'greenOutline'}
-								size={'sm'}
-								onClick={() => {
-									downloadFile(import.meta.env.VITE_BASE_URL + rowData?.row?.original?.xlfile.replace(/^\//, ''));
-								}}
-							>
-								Download
+								View Report
 							</Button>
 						</div>
 					);

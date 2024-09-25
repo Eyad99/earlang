@@ -1,7 +1,11 @@
-import React from 'react';
+import StatisticsCard from './statistics-card';
 
-const CustomerDashboard = () => {
-	return <div className=' '>CustomerDashboard</div>;
+const Dashboard = () => {
+	return (
+		<div className='flex flex-col gap-4'>
+			<StatisticsCard />
+		</div>
+	);
 };
 
-export default CustomerDashboard;
+export default Dashboard;
