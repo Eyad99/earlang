@@ -4,3 +4,4 @@ export * from './calculators';
 export * from './dataTable';
 export * from './users';
 export * from './files';
+export * from './dashboards';
