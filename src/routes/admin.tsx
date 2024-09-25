@@ -16,6 +16,7 @@ import AllStaffsCallCenter from '@/views/admin/call-centers/staffs';
 import UserFiles from '@/views/users/files';
 import CAllCenterFiles from '@/views/admin/call-centers/files';
 import Order from '@/components/views/files/order';
+import Report from '@/views/report';
 
 const AdminRoutes = [
 	{
@@ -68,6 +69,13 @@ const AdminRoutes = [
 
 	{
 		layout: '/admin',
+		path: '/call-centers/:callCenterId/files/order/:orderId/report/:fileId',
+		component: <Report />,
+		invisible: true,
+	},
+
+	{
+		layout: '/admin',
 		path: '/call-centers/:callCenterId/staffs',
 		component: <AllStaffsCallCenter />,
 		invisible: true,
@@ -77,6 +85,13 @@ const AdminRoutes = [
 		layout: '/admin',
 		path: '/call-centers/:callCenterId/staffs/:userId/files',
 		component: <UserFiles />,
+		invisible: true,
+	},
+
+	{
+		layout: '/admin',
+		path: '/call-centers/:callCenterId/staffs/:userId/files/report/:fileId',
+		component: <Report />,
 		invisible: true,
 	},
 

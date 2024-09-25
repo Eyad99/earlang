@@ -12,6 +12,7 @@ interface ChartProps {
 }
 
 const Chart: FC<ChartProps> = ({ fileId, fileUrl }) => {
+	console.log('fileId', fileId);
 	const [listMode, setListMode] = useState(false);
 
 	return (
