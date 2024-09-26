@@ -8,7 +8,6 @@ import { MyStaffs } from '@/views/customer/staffs';
 import StaffFiles from '@/views/customer/staffs/files';
 import OrderAsCustomer from '@/views/customer/files/order';
 import OrderAsAStaff from '@/views/customer/staffs/order';
-import Chart from '@/components/views/files/chart';
 import Report from '@/views/report';
 
 const CustomerRoutes = [
