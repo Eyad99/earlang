@@ -1,12 +1,7 @@
-import withLoading from '@/hooks/withLoader';
-import Card from '@/components/reusable/card';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { useFetchDataRQ } from '@/hooks/useFetchDataRQ';
 import { Chart_Res } from '@/core';
-import { fileApi } from '@/core/services/files';
 import { Line } from 'react-chartjs-2';
 import { FC } from 'react';
-import { useParams } from 'react-router-dom';
 import moment from 'moment';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -15,6 +10,7 @@ interface ChartsProps {
 	data: any;
 }
 
+// CountFilesAllCallCentersSkeleton
 const Charts: FC<ChartsProps> = ({ data }) => {
 	const generateHalfHourLabels = (fromTime: any, toTime: any) => {
 		// Convert `fromTime` and `toTime` to moment objects
@@ -154,67 +150,33 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 		/* 7 6 5 2 */
 	}
 	return (
-		<div className='flex flex-col gap-4'>
-			<div className='flex lg:flex-row sm:flex-col sm-max:flex-col gap-4 wrap '>
-				<div className='md:w-1/2 w-full '>
-					<Line
-						data={chartOne}
-						options={{
-							...options,
-							plugins: {
-								title: {
-									display: true,
-									text: 'Average Time To Abandon (seconds)',
-								},
-							},
-						}}
-					/>
+		<div className='grid grid-cols-2 gap-5 md:grid-cols-2 3xl:grid-cols-1'>
+			<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-5px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
+				<div>
+					<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Average Time To Abandon (seconds)</h2>
 				</div>
-
-				<div className='md:w-1/2 w-full '>
-					<Line
-						data={chartTow}
-						options={{
-							...options,
-							plugins: {
-								title: {
-									display: true,
-									text: 'SL, Call Avg Abandon, AHT',
-								},
-							},
-						}}
-					/>
-				</div>
+				<Line data={chartOne} options={options} />
 			</div>
-			<div className='flex lg:flex-row sm:flex-col sm-max:flex-col gap-4 wrap '>
-				<div className='md:w-1/2 w-full '>
-					<Line
-						data={chartThree}
-						options={{
-							...options,
-							plugins: {
-								title: {
-									display: true,
-									text: 'Total Answered, SL, SL X Seconds',
-								},
-							},
-						}}
-					/>
+
+			<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-5px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
+				<div>
+					<h2 className='text-lg font-bold text-navy-700 dark:text-white'>SL, Call Avg Abandon, AHT</h2>
 				</div>
-				<div className='md:w-1/2 w-full '>
-					<Line
-						data={chartFour}
-						options={{
-							...options,
-							plugins: {
-								title: {
-									display: true,
-									text: 'Total Answered,Total Abandon, Occupancy',
-								},
-							},
-						}}
-					/>
+				<Line data={chartTow} options={options} />
+			</div>
+
+			<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-5px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
+				<div>
+					<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Total Answered, SL, SL X Seconds</h2>
 				</div>
+				<Line data={chartThree} options={options} />
+			</div>
+
+			<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-5px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
+				<div>
+					<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Total Answered,Total Abandon, Occupancy</h2>
+				</div>
+				<Line data={chartFour} options={options} />
 			</div>
 		</div>
 	);

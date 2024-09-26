@@ -1,13 +1,13 @@
 // export interface DataTableProps<T> {
 export interface DataTableProps {
-	fetchUrl: string  ;
+	fetchUrl: string;
 	queryKey: string;
 	columns: { header: string; accessor: string; formatter?: any }[];
 	actions?: TableActions;
 	selectArray?: SelectArray;
 	searchKey?: string;
- 	filterByDate?: boolean;
-	 cardClassName?:string
+	filterByDate?: boolean;
+	cardClassName?: string;
 }
 
 interface ActionDetails {

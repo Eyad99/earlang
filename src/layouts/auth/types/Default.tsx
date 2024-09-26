@@ -1,5 +1,5 @@
 import Footer from '@/components/widgets/footer';
-import insightsImg from '@/assets/img/others/insights-white.png';
+import insightsWhiteImg from '@/assets/img/others/insights-white.png';
 
 function Default(props: { maincard: JSX.Element }) {
 	const { maincard } = props;
@@ -14,7 +14,7 @@ function Default(props: { maincard: JSX.Element }) {
 							className={`absolute flex h-full w-full items-end justify-center bg-gradient-to-br from-brand-400 to-brand-600 bg-cover bg-center lg:rounded-bl-[120px] xl:rounded-bl-[200px]`}
 						>
 							<div className='relative bottom-[270px]'>
-								<img src={insightsImg} width={500} />
+								<img src={insightsWhiteImg} width={500} />
 							</div>
 							{/* <div className='relative flex h-full w-full'>
 								<div style={{ backgroundImage: `url(${insightsImg})` }} className='h-full w-full flex bg-cover' />

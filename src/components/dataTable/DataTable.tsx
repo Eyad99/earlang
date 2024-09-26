@@ -10,6 +10,7 @@ import DataTablePagination from './DataTablePagination';
 import DataTableSearchArea from './DataTableSearchArea';
 import Card from '../reusable/card';
 import withLoading from '@/hooks/withLoader';
+import TableSkeleton from '@/utils/skeletons/table-skeleton';
 
 const BoxWithLoading = withLoading(Card);
 
@@ -60,7 +61,7 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 				const value = info.getValue() as any;
 				const formattedValue = column.formatter ? column.formatter(value) : value;
 
-				return <p className='text-[14px] text-navy-700 dark:text-white'>{formattedValue}</p>;
+				return <p className='text-[14px] text-navy-700 dark:text-white '>{formattedValue}</p>;
 			},
 		});
 	});
@@ -130,7 +131,8 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 		});
 	};
 
-	if (isLoading) return <BoxWithLoading loading={isLoading}></BoxWithLoading>;
+	// if (isLoading) return <BoxWithLoading loading={isLoading}></BoxWithLoading>;
+	if (isLoading) return <TableSkeleton />;
 	if (isError)
 		return (
 			<div>
@@ -141,8 +143,8 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 		);
 
 	return (
-		<BoxWithLoading loading={isFetching}>
-			<Card extra={`w-full h-full sm:overflow-auto px-6 ${cardClassName} `}>
+		<BoxWithLoading loading={false}>
+			<Card extra={`w-full h-full sm:overflow-auto px-6  ${cardClassName} `}>
 				{/* - - - - - - - - Search Area - - - - - - - - */}
 				<DataTableSearchArea
 					data={{
@@ -155,13 +157,14 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 				/>
 
 				{/* - - - - - - - - Table Container - - - - - - - - */}
-				<div className=' overflow-x-auto'>
+				<div className={`overflow-x-auto `}>
 					{/* - - - - - - - - Table - - - - - - - - */}
-					<table className='w-full'>
+					<table className={`w-full `}>
 						{/* - - - - - - - - THead - - - - - - - - */}
 						<thead>
 							{table.getHeaderGroups().map((headerGroup) => (
-								<tr key={headerGroup.id} className='!border-px !border-gray-400'>
+								// <tr key={headerGroup.id} className='!border-[1px] !border-gray-400'>
+								<tr key={headerGroup.id}>
 									{headerGroup.headers.map((header) => {
 										return (
 											<th
@@ -201,7 +204,7 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 										<tr key={row.id}>
 											{row.getVisibleCells().map((cell) => {
 												return (
-													<td key={cell.id} className='min-w-[150px] border-white/0 py-3  pr-4'>
+													<td key={cell.id} className={`min-w-[150px] border-white/0 py-3 pr-4 ${''}`}>
 														{flexRender(cell.column.columnDef.cell, cell.getContext())}
 													</td>
 												);

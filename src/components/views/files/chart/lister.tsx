@@ -1,4 +1,4 @@
-import { DEFAULT_DATE, DEFAULT_DATE_TIME } from '@/variables/constants';
+import { DEFAULT_DATE } from '@/variables/constants';
 import { DataTableProps } from '@/core';
 import { FC } from 'react';
 import DataTable from '@/components/dataTable/DataTable';
@@ -15,9 +15,13 @@ const ChartLister: FC<ChartListerProps> = ({ fileId }) => {
 	const tableProps: DataTableProps = {
 		fetchUrl: `api/get_erlangc_xls/${fileId}`,
 		queryKey: `file-report-${fileId}`,
-		cardClassName: 'max-h-[550px] !no-scrollbar',
+		cardClassName: 'max-h-[450px] no-scrollbar-y ',
 		columns: [
-			{ header: 'Datecalavg', accessor: 'datecalavg', formatter: (value: any) => moment(value).format(DEFAULT_DATE) },
+			{
+				header: 'Datecalavg',
+				accessor: 'datecalavg',
+				formatter: (value: any) => moment(value).format(DEFAULT_DATE),
+			},
 			{ header: 'From Time', accessor: 'from_time' },
 			{ header: 'To Time', accessor: 'to_time' },
 			{ header: 'Total Offered', accessor: 'totall_Offered' },

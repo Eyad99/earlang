@@ -5,6 +5,7 @@ import { LoaderIcon } from 'lucide-react';
 import { useFormik } from 'formik';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import insightsImg from '@/assets/img/others/insights.png';
 import TextField from '@/components/reusable/fields/TextField';
 import Default from '@/layouts/auth/types/Default';
 import * as yup from 'yup';
@@ -42,8 +43,9 @@ function ForgetPassword() {
 		<Default
 			maincard={
 				<form onSubmit={handleSubmit}>
-					<div className='mb-16 mt-12 flex h-full w-full items-center justify-center px-2 md:mx-0 md:px-0 lg:mb-10 lg:items-center lg:justify-start'>
-						<div className='mt-[10vh] w-full max-w-full flex-col items-center md:pl-4 lg:pl-0 xl:max-w-[420px]'>
+					<div className='mb-16 md:mt-12 mt-0 flex h-full w-full items-center justify-center px-2 md:mx-0 md:px-0 lg:mb-10 lg:items-center lg:justify-start'>
+						<div className='md:mt-[10vh] mt-0 w-full max-w-full flex-col items-center md:pl-4 lg:pl-0 xl:max-w-[420px]'>
+							<img src={insightsImg} width={300} className='mb-10 m-auto md:hidden' />
 							<h3 className='mb-2.5 text-4xl font-bold text-navy-700 dark:text-white'>Forgot your password?</h3>
 							<p className='mb-9 ml-1 text-base text-gray-600'>
 								No problem. Just let us know your email address and we'll email you a password reset link that will allow you to choose a

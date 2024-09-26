@@ -80,6 +80,13 @@ const CustomerRoutes = [
 
 	{
 		layout: '/customer',
+		path: '/staffs/:userId/files/order/:orderId/report/:fileId',
+		component: <Report />,
+		invisible: true,
+	},
+
+	{
+		layout: '/customer',
 		path: '/staffs/:staffId',
 		component: <StaffEditor />,
 		invisible: true,

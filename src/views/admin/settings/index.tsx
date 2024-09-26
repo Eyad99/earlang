@@ -3,6 +3,10 @@ import { useFetchDataRQ } from '@/hooks/useFetchDataRQ';
 import { useMutateData } from '@/hooks/useMutateData';
 import { settingApi } from '@/core';
 import * as yup from 'yup';
+import Card from '@/components/reusable/card';
+import withLoading from '@/hooks/withLoader';
+
+const BoxWithLoading = withLoading(Card);
 
 const SettingsList = () => {
 	const { data, isLoading } = useFetchDataRQ({
@@ -71,7 +75,7 @@ const SettingsList = () => {
 		],
 	};
 
-	if (isLoading) return <>Loading ...</>;
+	if (isLoading) return <BoxWithLoading loading={isLoading}></BoxWithLoading>;
 
 	return (
 		<div className=''>
