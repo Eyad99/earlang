@@ -38,14 +38,16 @@ const SettingsList = () => {
 			.required('Number of users is required')
 			.positive('Number of users must be a positive number')
 			.integer('Number of users must be an integer')
-			.min(1, 'Number of users must be greater than 0'),
+			.min(1, 'Number of users must be greater than 0')
+			.max(5, 'Number of users must be less or equal than 5'),
 
 		count_files: yup
 			.number()
 			.required('Number of files is required')
 			.positive('Number of files must be a positive number')
 			.integer('Number of files must be an integer')
-			.min(1, 'Number of files must be greater than 0'),
+			.min(1, 'Number of files must be greater than 0')
+			.max(5, 'Number of users must be less or equal than 1000'),
 	});
 
 	const submitHandler = (values: any) => {

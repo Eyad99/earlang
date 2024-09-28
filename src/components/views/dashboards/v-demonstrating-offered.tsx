@@ -1,46 +1,39 @@
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { Call_Stats_Res } from '@/core';
-import { DEFAULT_DATE } from '@/variables/constants';
-import { Line } from 'react-chartjs-2';
 import React, { FC, useState } from 'react';
-import moment from 'moment';
-import { Maximize } from 'lucide-react';
-import EDialog from '@/components/reusable/dialog';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+
+import { Line } from 'react-chartjs-2';
 import EControlledDialog from '@/components/reusable/dialog/controlled-dialog';
+import { Maximize } from 'lucide-react';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-interface VCountFilesAllCallCentersProps {
-	statements: Call_Stats_Res;
+interface VDemonstratingOfferedProps {
+	statements?: any;
 }
 
-const VCallStats: FC<VCountFilesAllCallCentersProps> = ({ statements }) => {
+const VDemonstratingOffered: FC<VDemonstratingOfferedProps> = ({}) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const lineData = {
-		labels: statements?.labels.map((item) => moment(item).format(DEFAULT_DATE)),
+
+	const statementsData = {
+		labels: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'july', 'aug', 'sep', 'oct', 'nov', 'dec'],
+
 		datasets: [
 			{
-				label: 'Agents',
-				data: statements?.datasets?.agents,
+				label: 'Est. Call Volume',
+				data: [25500, 25600, 25700, 25800, 25900, 26000, 26100, 40100, 26300, 26400, 40000, 26600],
 				borderColor: 'blue',
 				backgroundColor: 'rgba(0, 0, 255, 0.1)',
 			},
 			{
-				label: 'Service Level',
-				data: statements?.datasets?.service_level,
-				borderColor: 'red',
-				backgroundColor: 'rgba(255, 0, 0, 0.1)',
+				label: 'Est. Email Volume',
+				data: [65500, 65600, 65700, 40000, 65900, 67000, 67100, 67200, 67300, 67400, 67500, 6700],
+				borderColor: 'orange',
+				backgroundColor: 'rgba(255, 165, 0, 0.1)',
 			},
 			{
-				label: 'Speed Of Answer',
-				data: statements?.datasets?.average_speed_of_answer,
+				label: 'Est. Other Volume',
+				data: [85500, 10000, 85700, 90000, 85900, 86000, 86100, 86300, 86400, 86500, 86600, 30000],
 				borderColor: 'green',
-				backgroundColor: 'rgba(0, 255, 0, 0.1)',
-			},
-			{
-				label: 'Occupancy',
-				data: statements?.datasets?.occupancy,
-				borderColor: 'yellow',
 				backgroundColor: 'rgba(0, 255, 0, 0.1)',
 			},
 		],
@@ -63,7 +56,8 @@ const VCallStats: FC<VCountFilesAllCallCentersProps> = ({ statements }) => {
 				position: 'top',
 			},
 		},
-	} as any;
+	};
+
 	return (
 		<React.Fragment>
 			<EControlledDialog
@@ -72,20 +66,20 @@ const VCallStats: FC<VCountFilesAllCallCentersProps> = ({ statements }) => {
 				contentClassName='!max-w-[1200px] sm:max-w-fit sm-max:max-w-fit'
 				dialogBody={
 					<div>
-						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Calls</h2>
-						<Line data={lineData} options={options} />
+						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Demonstrating Offered</h2>
+						<Line data={statementsData} options={options as any} />
 					</div>
 				}
 			/>
 			<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
 				<div className='flex justify-between'>
-					<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Calls</h2>
+					<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Demonstrating Offered</h2>
 					<Maximize className='cursor-pointer' onClick={() => setIsOpen(true)} />
 				</div>
-				<Line data={lineData} options={options} />
+				<Line data={statementsData} options={options as any} />
 			</div>
 		</React.Fragment>
 	);
 };
 
-export default VCallStats;
+export default VDemonstratingOffered;

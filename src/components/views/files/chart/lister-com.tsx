@@ -97,7 +97,7 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 						))
 					) : (
 						<TableRow>
-							<TableCell colSpan={data?.length} className='h-24 text-center'>
+							<TableCell colSpan={headers?.length} className='h-24 text-center'>
 								{'No results.'}
 							</TableCell>
 						</TableRow>

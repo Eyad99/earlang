@@ -8,7 +8,6 @@ import { PanelRightClose, PanelRightOpen } from 'lucide-react';
 
 function SidebarHorizon(props: { open: boolean; onClose: React.MouseEventHandler<HTMLSpanElement>; variant?: string; [x: string]: any }) {
 	const { open, onClose, variant, setMini, mini, hovered = true, setHovered } = props;
-	console.log('ssssss m', mini);
 	return (
 		<div
 			className={`sm:none ${

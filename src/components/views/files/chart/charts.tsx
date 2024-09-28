@@ -1,8 +1,10 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Chart_Res } from '@/core';
 import { Line } from 'react-chartjs-2';
-import { FC } from 'react';
+import React, { FC, useState } from 'react';
 import moment from 'moment';
+import { Maximize } from 'lucide-react';
+import EControlledDialog from '@/components/reusable/dialog/controlled-dialog';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -12,6 +14,8 @@ interface ChartsProps {
 
 // CountFilesAllCallCentersSkeleton
 const Charts: FC<ChartsProps> = ({ data }) => {
+	const [isOpen, setIsOpen] = useState<any>(null);
+
 	const generateHalfHourLabels = (fromTime: any, toTime: any) => {
 		// Convert `fromTime` and `toTime` to moment objects
 		const start = moment(fromTime, 'HH:mm');
@@ -27,6 +31,7 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 
 		return labels;
 	};
+
 	const timeToSeconds = (timeString: any) => {
 		if (!timeString || timeString === '') return 0; // Handle empty string
 		const [hours, minutes, seconds] = timeString.split(':');
@@ -151,35 +156,72 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 	}
 	// 3 / 4/ 8 / 11
 	return (
-		<div className='grid grid-cols-2 gap-5 md:grid-cols-2 3xl:grid-cols-1'>
-			<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
-				<div>
-					<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Average Time To Abandon (seconds)</h2>
+		<React.Fragment>
+			<EControlledDialog
+				isOpen={isOpen}
+				setOpen={setIsOpen}
+				contentClassName='!max-w-[1200px] sm:max-w-fit sm-max:max-w-fit'
+				dialogBody={
+					<div>
+						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>
+							{isOpen == 1
+								? 'Average Time To Abandon (seconds)'
+								: isOpen == 2
+								? 'SL, Call Avg Abandon, AHT'
+								: isOpen == 3
+								? 'Total Answered, SL, SL X Seconds'
+								: isOpen == 4
+								? 'Total Answered,Total Abandon, Occupancy'
+								: ''}
+							{isOpen == 1 ? (
+								<Line data={chartOne} options={options} />
+							) : isOpen == 2 ? (
+								<Line data={chartTow} options={options} />
+							) : isOpen == 3 ? (
+								<Line data={chartThree} options={options} />
+							) : isOpen == 4 ? (
+								<Line data={chartFour} options={options} />
+							) : (
+								''
+							)}
+						</h2>
+					</div>
+				}
+			/>
+			<div className='grid grid-cols-2 gap-5 md:grid-cols-2 sm:grid-cols-1 sm-max:grid-cols-1'>
+				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
+					<div className='flex justify-between'>
+						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Average Time To Abandon (seconds)</h2>
+						<Maximize className='cursor-pointer' onClick={() => setIsOpen(1)} />
+					</div>
+					<Line data={chartOne} options={options} />
 				</div>
-				<Line data={chartOne} options={options} />
-			</div>
 
-			<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
-				<div>
-					<h2 className='text-lg font-bold text-navy-700 dark:text-white'>SL, Call Avg Abandon, AHT</h2>
+				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
+					<div className='flex justify-between'>
+						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>SL, Call Avg Abandon, AHT</h2>
+						<Maximize className='cursor-pointer' onClick={() => setIsOpen(2)} />
+					</div>
+					<Line data={chartTow} options={options} />
 				</div>
-				<Line data={chartTow} options={options} />
-			</div>
 
-			<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
-				<div>
-					<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Total Answered, SL, SL X Seconds</h2>
+				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
+					<div className='flex justify-between'>
+						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Total Answered, SL, SL X Seconds</h2>
+						<Maximize className='cursor-pointer' onClick={() => setIsOpen(3)} />
+					</div>
+					<Line data={chartThree} options={options} />
 				</div>
-				<Line data={chartThree} options={options} />
-			</div>
 
-			<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
-				<div>
-					<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Total Answered,Total Abandon, Occupancy</h2>
+				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
+					<div className='flex justify-between'>
+						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Total Answered,Total Abandon, Occupancy</h2>
+						<Maximize className='cursor-pointer' onClick={() => setIsOpen(4)} />
+					</div>
+					<Line data={chartFour} options={options} />
 				</div>
-				<Line data={chartFour} options={options} />
 			</div>
-		</div>
+		</React.Fragment>
 	);
 };
 

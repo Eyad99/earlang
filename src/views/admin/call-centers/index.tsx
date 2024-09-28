@@ -18,11 +18,10 @@ export const CallCentersList = () => {
 		actions: {
 			custom: {
 				component: (rowData: any) => {
-					console.log('rowData.row.original', rowData.row.original);
 					return (
 						<div className='flex gap-4'>
 							<Button
-								variant={'blueOutline'}
+								variant={'defaultOutline'}
 								size={'sm'}
 								onClick={() => {
 									navigate(`/admin/call-centers/${rowData.row.original.id}/staffs`);
@@ -39,6 +38,16 @@ export const CallCentersList = () => {
 								}}
 							>
 								View Files
+							</Button>
+
+							<Button
+								variant={'greenOutline'}
+								size={'sm'}
+								onClick={() => {
+									navigate(`/admin/call-centers/${rowData.row.original.id}/statistics`);
+								}}
+							>
+								View Report
 							</Button>
 						</div>
 					);

@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { KEY_TOKEN_COOKIE } from '@/variables/constants';
+import { KEY_TOKEN_COOKIE, KEY_USER_COOKIE } from '@/variables/constants';
 import { ObjToFormData } from '../helpers';
 import Cookies from 'js-cookie';
 
@@ -23,8 +23,8 @@ api.interceptors.request.use(
 	(config: any) => {
 		config.headers['Authorization'] = Cookies.get(KEY_TOKEN_COOKIE) ? `Bearer ${Cookies.get(KEY_TOKEN_COOKIE)}` : undefined;
 
- 		if (Boolean(config.headers.formData)) {
- 			config.data = ObjToFormData(config.data, undefined, undefined);
+		if (Boolean(config.headers.formData)) {
+			config.data = ObjToFormData(config.data, undefined, undefined);
 			// Set Content-Type to undefined to let Axios set it automatically for FormData
 			delete config.headers['Content-Type'];
 		}
@@ -39,7 +39,9 @@ api.interceptors.response.use(
 	(error) => {
 		if (error.response) {
 			if (error.response.status === 401) {
-				window.location.href = '/401';
+				window.location.href = '/auth/sign-in';
+				window && Cookies.remove(KEY_TOKEN_COOKIE);
+				window && Cookies.remove(KEY_USER_COOKIE);
 			} else {
 				// Handle other response errors
 

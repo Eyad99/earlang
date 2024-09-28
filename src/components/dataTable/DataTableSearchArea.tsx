@@ -4,13 +4,16 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { Button } from '../ui/button';
 import TextField from '../reusable/fields/TextField';
+import { Label } from '@radix-ui/react-label';
+import { Input } from '../ui/input';
 
 interface DataTableSearchAreaProps {
 	data: { searchQuery: string; selectArray?: SelectArray; actions: TableActions; filterByDate?: boolean };
 	handlers: {
 		handleSearch: (text: string) => void;
 		handleFilter: (data: SelectType) => void;
-		handleFiterByDate: (data: Date) => void;
+		handleFilterByDate: (name: string, data: Date) => void;
+		handleFilterByDate1: (name: string, data: Date) => void;
 	};
 }
 const DataTableSearchArea: FC<DataTableSearchAreaProps> = ({ data, handlers }) => {
@@ -31,7 +34,7 @@ const DataTableSearchArea: FC<DataTableSearchAreaProps> = ({ data, handlers }) =
 				</div>
 			</div> */}
 
-			<div className='flex flex-wrap gap-2'>
+			<div className='flex flex-wrap items-center justify-center gap-2'>
 				{/* select */}
 				{data?.selectArray && (
 					<div className='flex flex-wrap gap-2'>
@@ -66,16 +69,30 @@ const DataTableSearchArea: FC<DataTableSearchAreaProps> = ({ data, handlers }) =
 					</div>
 				)}
 
-				{data.actions?.add && (
-					<div className='flex items-center justify-end rounded-xl'>
-						<Button variant={'blue'} onClick={() => navigate(`${location.pathname}/add`)}>
-							Add
-						</Button>
+				{data?.filterByDate && (
+					<div className='flex gap-2'>
+						<TextField
+							name='start_date'
+							type='date'
+							// label='Start Date'
+							divClassName='mb-0'
+							onChange={(event: any) => handlers.handleFilterByDate('start_date', event.target.value)}
+						/>
+
+						<TextField
+							name='end_date'
+							type='date'
+							// label='End Date'
+							divClassName='mb-0'
+							onChange={(event: any) => handlers.handleFilterByDate1('end_date', event.target.value)}
+						/>
 					</div>
 				)}
 
-				{data?.filterByDate && (
-					<TextField name='date' type='date' placeholder='date' onChange={(event: any) => handlers.handleFiterByDate(event.target.value)} />
+				{data.actions?.add && (
+					<Button variant={'blue'} onClick={() => navigate(`${location.pathname}/add`)}>
+						Add
+					</Button>
 				)}
 			</div>
 		</header>

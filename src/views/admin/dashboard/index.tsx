@@ -6,7 +6,7 @@ const Dashboard = () => {
 	return (
 		<div className='flex flex-col gap-4'>
 			<StatisticsCard />
-			<div className='grid grid-cols-2 gap-5 md:grid-cols-2 3xl:grid-cols-1'>
+			<div className='grid grid-cols-2 gap-5 md:grid-cols-2 sm:grid-cols-1 sm-max:grid-cols-1'>
 				<CallStats />
 				<CountFilesAllCallCenters />
 			</div>

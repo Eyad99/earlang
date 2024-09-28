@@ -83,6 +83,13 @@ const AdminRoutes = [
 
 	{
 		layout: '/admin',
+		path: '/call-centers/:callCenterId/statistics',
+		component: <Dashboard />,
+		invisible: true,
+	},
+
+	{
+		layout: '/admin',
 		path: '/call-centers/:callCenterId/staffs/:userId/files',
 		component: <UserFiles />,
 		invisible: true,

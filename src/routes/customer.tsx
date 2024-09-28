@@ -20,7 +20,7 @@ const CustomerRoutes = [
 	},
 	{
 		name: 'Dashboard',
-		layout: '/customer',
+		layout: '/customer',	
 		icon: <LayoutDashboard />,
 		path: '/dashboard',
 		component: <CustomerDashboard />,
