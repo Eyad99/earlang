@@ -28,14 +28,11 @@ const StatisticsCard = () => {
 	return (
 		<VStatisticsCard
 			items={[
-				{ name: 'Service Level', value: 80 + '%', icon: <Gauge strokeWidth={2.5} /> },
-				{ name: 'Abandons', value: 15, icon: <ChartColumn strokeWidth={2.5} /> },
-				{ name: 'Answers', value: 155, icon: <FolderSync strokeWidth={2.5} /> },
-				{ name: 'Offers', value: 15, icon: <ChartColumn strokeWidth={2.5} /> },
-			].concat([
-				{ name: 'Files', value: 200, icon: <Files strokeWidth={2.5} /> },
-				{ name: 'Staffs', value: 20, icon: <Users strokeWidth={2.5} /> },
-			])}
+				{ name: 'Offered Calls', value: 15, icon: <ChartColumn strokeWidth={2.5} /> },
+				{ name: 'Answered Calls', value: 155, icon: <FolderSync strokeWidth={2.5} /> },
+				{ name: 'Abandoned Calls', value: 15, icon: <ChartColumn strokeWidth={2.5} /> },
+				{ name: 'Average Service Level', value: 80 + '%', icon: <Gauge strokeWidth={2.5} /> },
+			].concat([{ name: 'Uploaded Files', value: 200, icon: <Files strokeWidth={2.5} /> }])}
 		/>
 	);
 };

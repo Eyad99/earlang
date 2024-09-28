@@ -28,14 +28,14 @@ const StatisticsCard = () => {
 	return (
 		<VStatisticsCard
 			items={[
-				{ name: 'Service Level', value: statsData?.data?.average_sl_percentage * 100 + '%', icon: <Gauge strokeWidth={2.5} /> },
-				{ name: 'Abandons', value: statsData?.data?.total_abandoned, icon: <ChartColumn strokeWidth={2.5} /> },
-				{ name: 'Answers', value: statsData?.data?.total_answered, icon: <FolderSync strokeWidth={2.5} /> },
-				{ name: 'Offers', value: statsData?.data?.total_offered, icon: <ChartColumn strokeWidth={2.5} /> },
+				{ name: 'Offered Calls', value: statsData?.data?.total_offered, icon: <ChartColumn strokeWidth={2.5} /> },
+				{ name: 'Answered Calls', value: statsData?.data?.total_answered, icon: <FolderSync strokeWidth={2.5} /> },
+				{ name: 'Abandoned Calls', value: statsData?.data?.total_abandoned, icon: <ChartColumn strokeWidth={2.5} /> },
+				{ name: 'Average Service Level', value: statsData?.data?.average_sl_percentage * 100 + '%', icon: <Gauge strokeWidth={2.5} /> },
 			].concat([
-				{ name: 'Call Centers', value: countsData?.data?.all_callcenter_count, icon: <Headset strokeWidth={2.5} /> },
-				{ name: 'Files', value: countsData?.data?.all_file_count, icon: <Files strokeWidth={2.5} /> },
-				{ name: 'Staffs', value: countsData?.data?.all_staff_count, icon: <Users strokeWidth={2.5} /> },
+				{ name: 'Call Centers (Clients)', value: countsData?.data?.all_callcenter_count, icon: <Headset strokeWidth={2.5} /> },
+				{ name: 'Total Call Centers (Staffs)', value: countsData?.data?.all_staff_count, icon: <Users strokeWidth={2.5} /> },
+				{ name: 'Uploaded Files', value: countsData?.data?.all_file_count, icon: <Files strokeWidth={2.5} /> },
 			])}
 		/>
 	);

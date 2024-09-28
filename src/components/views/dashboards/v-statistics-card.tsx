@@ -14,7 +14,7 @@ const VStatisticsCard: FC<VStatisticsCardProps> = ({ items }) => {
 			{items?.map((item: any, index: number) => (
 				<div
 					key={index}
-					className='relative flex rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center transform transition-transform duration-500 hover:translate-y-[-5px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '
+					className='relative flex rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '
 				>
 					<div className='ml-[18px] flex h-[90px] w-auto flex-row items-center'>
 						<div className='rounded-full bg-lightPrimary p-3 dark:bg-navy-700'>
