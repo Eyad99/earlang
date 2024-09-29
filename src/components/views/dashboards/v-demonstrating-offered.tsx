@@ -1,9 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
 import { Line } from 'react-chartjs-2';
 import EControlledDialog from '@/components/reusable/dialog/controlled-dialog';
 import { Maximize } from 'lucide-react';
+import ExportChartAsMultiTypes from '../charts/export-chart-as-multi-types';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -12,6 +13,8 @@ interface VDemonstratingOfferedProps {
 }
 
 const VDemonstratingOffered: FC<VDemonstratingOfferedProps> = ({}) => {
+	const chartRef = useRef(null);
+
 	const [isOpen, setIsOpen] = useState(false);
 
 	const statementsData = {
@@ -58,6 +61,12 @@ const VDemonstratingOffered: FC<VDemonstratingOfferedProps> = ({}) => {
 		},
 	};
 
+	const format = [
+		{ key: 'email_volume', value: '' },
+		{ key: 'call_volume', value: '' },
+		{ key: 'other_volume', value: '' },
+	];
+
 	return (
 		<React.Fragment>
 			<EControlledDialog
@@ -74,9 +83,24 @@ const VDemonstratingOffered: FC<VDemonstratingOfferedProps> = ({}) => {
 			<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
 				<div className='flex justify-between'>
 					<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Demonstrating Offered</h2>
-					<Maximize className='cursor-pointer' onClick={() => setIsOpen(true)} />
+					<div className='flex gap-2'>
+						<Maximize className='cursor-pointer' onClick={() => setIsOpen(true)} />
+						<ExportChartAsMultiTypes
+							chartRef={chartRef}
+							statements={{
+								labels: statementsData?.labels,
+								datasets: {
+									call_volume: [25500, 25600, 25700, 25800, 25900, 26000, 26100, 40100, 26300, 26400, 40000, 26600],
+									email_volume: [65500, 65600, 65700, 40000, 65900, 67000, 67100, 67200, 67300, 67400, 67500, 6700],
+									other_volume: [85500, 10000, 85700, 90000, 85900, 86000, 86100, 86300, 86400, 86500, 86600, 30000],
+								},
+							}}
+							format={format}
+							labelName='Callcenter Name'
+						/>
+					</div>{' '}
 				</div>
-				<Line data={statementsData} options={options as any} />
+				<Line data={statementsData} options={options as any} ref={chartRef} />
 			</div>
 		</React.Fragment>
 	);
