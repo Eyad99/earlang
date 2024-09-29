@@ -23,7 +23,6 @@ const App = () => {
 		'--color-800': '#190793',
 		'--color-900': '#11047A',
 	});
-	const [mini, setMini] = useState(false);
 
 	// When the theme state changes, this effect will update the CSS variables in the document's root element
 	useEffect(() => {
@@ -49,7 +48,7 @@ const App = () => {
 				path='admin/*'
 				element={
 					<PrivateRoute>
-						<AdminLayout setMini={setMini} mini={mini} theme={themeApp} setTheme={setThemeApp} />
+						<AdminLayout theme={themeApp} setTheme={setThemeApp} />
 					</PrivateRoute>
 				}
 			/>
@@ -57,7 +56,7 @@ const App = () => {
 				path='customer/*'
 				element={
 					<PrivateRoute>
-						<AdminLayout setMini={setMini} mini={mini} theme={themeApp} setTheme={setThemeApp} />
+						<AdminLayout theme={themeApp} setTheme={setThemeApp} />
 					</PrivateRoute>
 				}
 			/>
@@ -65,7 +64,7 @@ const App = () => {
 				path='staff/*'
 				element={
 					<PrivateRoute>
-						<AdminLayout setMini={setMini} mini={mini} theme={themeApp} setTheme={setThemeApp} />
+						<AdminLayout theme={themeApp} setTheme={setThemeApp} />
 					</PrivateRoute>
 				}
 			/>

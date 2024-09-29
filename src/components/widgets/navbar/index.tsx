@@ -2,31 +2,28 @@ import React from 'react';
 import Dropdown from '@/components/reusable/dropdown';
 import Cookies from 'js-cookie';
 import avatar from '@/assets/img/avatars/avatar.png';
-import { Link, useNavigate } from 'react-router-dom';
-import { KEY_TOKEN_COOKIE, KEY_USER_COOKIE } from '@/variables/constants';
 import { Bell, Moon, PanelRightClose, PanelRightOpen, Sun } from 'lucide-react';
+import { KEY_TOKEN_COOKIE, KEY_USER_COOKIE } from '@/variables/constants';
+import { Link, useNavigate } from 'react-router-dom';
 import { useMutateData } from '@/hooks/useMutateData';
 import { authApi } from '@/core';
 
-const Navbar = (props: { onOpenSidenav: () => void; brandText: string; secondary?: boolean | string; [x: string]: any }) => {
-	const {
-		onOpenSidenav,
-		brandText,
-		mini,
-		setMini,
-		// theme,
-		// setTheme,
-		hovered = true,
-	} = props;
+const Navbar = (props: { brandText: string; [x: string]: any }) => {
+	const { brandText, mini, hovered = true, open, handleOpenAndCloseSideBar } = props;
+	console.log('navvvvvvv mini', mini);
+
+	let user: any = Cookies.get(KEY_USER_COOKIE);
+	user = user ? JSON.parse(user) : {};
+
 	const [darkmode, setDarkmode] = React.useState(document.body.classList.contains('dark'));
 	const navigate = useNavigate();
 
+	// ------------ Logout Mutation ------------
 	const logoutMutate = useMutateData({
 		mutationFn: () => authApi.logout(),
 		onSuccessFn: () => {
 			Cookies.remove(KEY_TOKEN_COOKIE);
 			Cookies.remove(KEY_USER_COOKIE);
-
 			navigate('/auth/sign-in');
 		},
 	});
@@ -35,8 +32,6 @@ const Navbar = (props: { onOpenSidenav: () => void; brandText: string; secondary
 		logoutMutate.mutate({});
 	};
 
-	let user: any = Cookies.get(KEY_USER_COOKIE);
-	user = user ? JSON.parse(user) : {};
 	return (
 		<nav
 			className={`z-10 duration-175 linear fixed right-3 top-3 flex flex-row   items-center justify-between rounded-xl bg-white/30 transition-all ${
@@ -69,7 +64,7 @@ const Navbar = (props: { onOpenSidenav: () => void; brandText: string; secondary
 				{/* <Dropdown
 					button={
 						<p className='cursor-pointer'>
-							<Bell className='h-4 w-4 text-gray-600 dark:text-white' />
+							<Bell className='h-[18px] w-[18px] text-gray-600 dark:text-white' />
 						</p>
 					}
 					animation='origin-[65%_0%] md:origin-top-right transition-all duration-300 ease-in-out'
@@ -79,9 +74,15 @@ const Navbar = (props: { onOpenSidenav: () => void; brandText: string; secondary
 
 				{/* open and close sidebar */}
 				{mini ? (
-					<PanelRightClose className='cursor-pointer h-4 w-4 text-gray-600 dark:text-white' onClick={() => setMini(!mini)} />
+					<PanelRightClose
+						className='cursor-pointer h-[18px] w-[18px] text-gray-600 dark:text-white'
+						onClick={() => handleOpenAndCloseSideBar()}
+					/>
 				) : (
-					<PanelRightOpen className='cursor-pointer h-4 w-4 text-gray-600 dark:text-white' onClick={() => setMini(!mini)} />
+					<PanelRightOpen
+						className='cursor-pointer h-[18px] w-[18px] text-gray-600 dark:text-white'
+						onClick={() => handleOpenAndCloseSideBar()}
+					/>
 				)}
 
 				{/* Dark Mood And light Mood  */}
@@ -98,21 +99,11 @@ const Navbar = (props: { onOpenSidenav: () => void; brandText: string; secondary
 					}}
 				>
 					{darkmode ? (
-						<Sun className='h-4 w-4 text-gray-600 dark:text-white' />
+						<Sun className='h-[18px] w-[18px] text-gray-600 dark:text-white' />
 					) : (
-						<Moon className='h-4 w-4 text-gray-600 dark:text-white' />
+						<Moon className='h-[18px] w-[18px] text-gray-600 dark:text-white' />
 					)}
 				</div>
-
-				{/* Configurator */}
-				{/* <Configurator
-					mini={props.mini}
-					setMini={props.setMini}
-					theme={props.theme}
-					setTheme={props.setTheme}
-					darkmode={darkmode}
-					setDarkmode={setDarkmode}
-				/> */}
 
 				<Dropdown
 					button={<img className='h-10 w-10 rounded-full' src={avatar} alt='Elon Musk' />}

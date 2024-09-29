@@ -10,7 +10,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 interface VCountFilesUploadedProps {
 	statements?: [];
 }
-const VCountFilesUploaded: FC<VCountFilesUploadedProps> = ({ statements }) => {
+const VCountFilesUploaded: FC<VCountFilesUploadedProps> = ({}) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const data = {

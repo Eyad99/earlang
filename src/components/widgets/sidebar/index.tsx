@@ -1,25 +1,31 @@
 import Links from './components/Links';
-
-import { renderThumb, renderTrack, renderView, renderViewMini } from '@/components/reusable/scrollbar/Scrollbar';
-import { Scrollbars } from 'react-custom-scrollbars-2';
 import Card from '@/components/reusable/card';
-import { RoutesByRole } from '@/utils';
+import { renderThumb, renderTrack, renderView, renderViewMini } from '@/components/reusable/scrollbar/Scrollbar';
 import { PanelRightClose, PanelRightOpen } from 'lucide-react';
+import { RoutesByRole } from '@/utils';
+import { Scrollbars } from 'react-custom-scrollbars-2';
 
-function SidebarHorizon(props: { open: boolean; onClose: React.MouseEventHandler<HTMLSpanElement>; variant?: string; [x: string]: any }) {
-	const { open, onClose, variant, setMini, mini, hovered = true, setHovered } = props;
+function SidebarHorizon(props: { open: boolean; [x: string]: any }) {
+	const { open, mini, hovered = false, handleOpenAndCloseSideBar } = props;
+
+	console.log('sidebarrr mini', mini);
 	return (
 		<div
-			className={`sm:none ${
-				mini === false ? 'w-[285px]' : mini === true && hovered === true ? 'w-[285px]' : 'w-[285px] xl:!w-[120px]'
+			// className={`sm:none ${
+			// 	mini === false ? 'w-[285px]' : mini === true && hovered === true ? 'w-[285px]' : 'w-[285px] xl:!w-[120px]'
+			// } duration-175 linear fixed !z-50 min-h-full transition-all md:!z-50 lg:!z-50 xl:!z-0 xl:block ${
+			// 	mini ? `` : `sm-max:hidden sm:hidden`
+			// } ${open ? '' : '-translate-x-[105%]'}`}
+
+			className={`${
+				mini === false ? 'w-[285px]' : 'w-[285px] xl:!w-[120px]'
 			} duration-175 linear fixed !z-50 min-h-full transition-all md:!z-50 lg:!z-50 xl:!z-0 xl:block ${
 				mini ? `` : `sm-max:hidden sm:hidden`
 			} ${open ? '' : '-translate-x-[105%]'}`}
+
 			// className={`sm:none ${
 			// 	mini === false ? 'w-[285px]' : mini === true && hovered === true ? 'w-[285px]' : 'w-[285px] xl:!w-[120px]'
-			// } duration-175 linear fixed !z-50 min-h-full transition-all md:!z-50 lg:!z-50 xl:!z-0 ${
-			// 	variant === 'auth' ? 'xl:hidden' : 'xl:block'
-			// } ${open ? '' : '-translate-x-[105%]'}`}
+			// } duration-175 linear fixed !z-50 min-h-full transition-all md:!z-50 lg:!z-50 xl:!z-0  ${open ? '' : '-translate-x-[105%]'}`}
 			// onMouseEnter={() => setHovered(true)}
 			// onMouseLeave={() => setHovered(false)}
 		>
@@ -32,9 +38,6 @@ function SidebarHorizon(props: { open: boolean; onClose: React.MouseEventHandler
 				>
 					<div className='flex h-full flex-col justify-between'>
 						<div>
-							{/* <span className='absolute right-4 top-4 block cursor-pointer xl:hidden' onClick={onClose}>
-								close sidebar
-							</span> */}
 							<div className={`mt-[44px] flex justify-around items-center`}>
 								<div className='flex'>
 									<div
@@ -53,15 +56,17 @@ function SidebarHorizon(props: { open: boolean; onClose: React.MouseEventHandler
 									</div>
 								</div>
 								{/* open and close sidebar */}
-								{/* {mini ? (
-									<PanelRightClose className='cursor-pointer' onClick={() => props.setMini(!props.mini)} />
+								{open ? (
+									mini ? (
+										<PanelRightClose className='cursor-pointer' onClick={() => handleOpenAndCloseSideBar()} />
+									) : (
+										<PanelRightOpen className='cursor-pointer' onClick={() => handleOpenAndCloseSideBar()} />
+									)
 								) : (
-									<PanelRightOpen className='cursor-pointer' onClick={() => props.setMini(!props.mini)} />
-								)} */}
+									''
+								)}
 							</div>
-
 							<div className='mb-7 mt-[44px] h-px bg-gray-200 dark:bg-white/10' />
-
 							{/* Nav item */}
 							<ul>
 								<Links mini={mini} hovered={hovered} routes={RoutesByRole()} />
