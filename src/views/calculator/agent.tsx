@@ -102,6 +102,9 @@ const Agent = () => {
 			},
 		],
 	};
+
+	const divClassName =
+		'w-[150px] h-[150px] bg-black bg-opacity-5 border-4  rounded-full flex flex-col justify-center items-center text-xl font-bold transition-transform transform hover:scale-110 hover:bg-opacity-20 duration-300 ';
 	return (
 		<div className='flex md:flex-row flex-col wrap gap-2'>
 			<div className='md:w-1/2 w-full'>{<FormBuilder {...formBuilderArgs} />}</div>
@@ -111,35 +114,35 @@ const Agent = () => {
 						<span className='font-bold text-xl '>"The calculation is being processed."</span>{' '}
 					</BoxWithLoading>
 				) : earlangAgentMutate?.data?.data?.data?.Agents ? (
-					<div className='flex flex-col items-center justify-center '>
-						<span className='font-bold text-xl '>The final result is</span>
-						<span>
-							<span className='font-bold'>ASA: </span> {earlangAgentMutate?.data?.data?.data?.ASA}
-						</span>
-						<span>
-							<span className='font-bold'>Agents: </span>
-							{earlangAgentMutate?.data?.data?.data?.Agents}
-						</span>
-						<span>
-							<span className='font-bold'>Pw: </span>
-							{earlangAgentMutate?.data?.data?.data?.Pw}
-						</span>
-						<span>
-							<span className='font-bold'>SL: </span>
-							{earlangAgentMutate?.data?.data?.data?.SL}
-						</span>
-						<span>
-							<span className='font-bold'>Service Level: </span>
-							{earlangAgentMutate?.data?.data?.data?.ServiceLevel}
-						</span>
-						<span>
-							<span className='font-bold'>imm answ: </span>
-							{earlangAgentMutate?.data?.data?.data?.imm_answ}
-						</span>
-						<span>
-							<span className='font-bold'>Occ: </span>
-							{earlangAgentMutate?.data?.data?.data?.occ}
-						</span>
+					<div className='flex flex-wrap gap-4 '>
+						<div className={divClassName + ' border-red-400'}>
+							<span>ASA </span>
+							<span className='text-red-400'>{earlangAgentMutate?.data?.data?.data?.ASA} </span>
+						</div>
+						<div className={divClassName + ' border-green-400'}>
+							<span>Agents </span>
+							<span className='text-green-400'>{earlangAgentMutate?.data?.data?.data?.Agents} </span>
+						</div>
+						<div className={divClassName + ' border-blue-400'}>
+							<span>Pw </span>
+							<span className='text-blue-400'>{earlangAgentMutate?.data?.data?.data?.Pw} </span>
+						</div>
+						<div className={divClassName + ' border-fuchsia-400'}>
+							<span>SL </span>
+							<span className='text-fuchsia-400'>{earlangAgentMutate?.data?.data?.data?.SL} </span>
+						</div>
+						<div className={divClassName + ' border-horizonOrange-400'}>
+							<span>Service Level </span>
+							<span className='text-horizonOrange-400'>{earlangAgentMutate?.data?.data?.data?.ServiceLevel} </span>
+						</div>
+						<div className={divClassName + ' border-teal-400'}>
+							<span>Imm answ </span>
+							<span className='text-teal-400'>{earlangAgentMutate?.data?.data?.data?.imm_answ} </span>
+						</div>
+						<div className={divClassName + ' border-purple-400'}>
+							<span>Occupancy </span>
+							<span className='text-purple-400'>{earlangAgentMutate?.data?.data?.data?.occ} </span>
+						</div>
 					</div>
 				) : (
 					<span className='font-bold text-xl '>
