@@ -17,34 +17,34 @@ const StatisticsCard = () => {
 		enableCondition: callCenterId ? true : false,
 	});
 
-	if (statsCallCenterByIdLoading) return <StatissticsCardSkeleton />;
+	if (callCenterId ? statsCallCenterByIdLoading : false) return <StatissticsCardSkeleton numberCell={9} />;
 
 	return (
 		<VStatisticsCard
 			items={[
-				{ name: 'Offered Calls', value: statsCallCenterByIdData?.data?.total_offered, icon: <ChartColumn strokeWidth={2.5} /> },
-				{ name: 'Answered Calls', value: statsCallCenterByIdData?.data?.total_answered, icon: <FolderSync strokeWidth={2.5} /> },
-				{ name: 'Abandoned Calls', value: statsCallCenterByIdData?.data?.total_abandoned, icon: <ChartColumn strokeWidth={2.5} /> },
+				{ name: 'Offered Calls', value: statsCallCenterByIdData?.data?.total_offered ?? 0, icon: <ChartColumn strokeWidth={2.5} /> },
+				{ name: 'Answered Calls', value: statsCallCenterByIdData?.data?.total_answered ?? 0, icon: <FolderSync strokeWidth={2.5} /> },
+				{ name: 'Abandoned Calls', value: statsCallCenterByIdData?.data?.total_abandoned ?? 0, icon: <ChartColumn strokeWidth={2.5} /> },
 				{
 					name: 'Average Service Level',
-					value: (statsCallCenterByIdData?.data?.avg_sl_percentage * 100).toFixed(2) + '%',
+					value: (statsCallCenterByIdData?.data?.avg_sl_percentage ?? 0 * 100).toFixed(2) + '%',
 					icon: <Gauge strokeWidth={2.5} />,
 				},
 				{
 					name: 'Average Service Level',
-					value: (statsCallCenterByIdData?.data?.avg_sl_seconds).toFixed(2) + '%',
+					value: (statsCallCenterByIdData?.data?.avg_sl_seconds ?? 0).toFixed(2) + '%',
 					icon: <Gauge strokeWidth={2.5} />,
 				},
-				{ name: 'Max Agents', value: statsCallCenterByIdData?.data?.max_agents, icon: <ChartColumn strokeWidth={2.5} /> },
-				{ name: 'Avg Asa', value: statsCallCenterByIdData?.data?.avg_asa.toFixed(2), icon: <Percent strokeWidth={2.5} /> },
+				{ name: 'Max Agents', value: statsCallCenterByIdData?.data?.max_agents ?? 0, icon: <ChartColumn strokeWidth={2.5} /> },
+				{ name: 'Avg Asa', value: statsCallCenterByIdData?.data?.avg_asa.toFixed(2) ?? 0, icon: <Percent strokeWidth={2.5} /> },
 				{
 					name: 'Avg Occupency',
-					value: (statsCallCenterByIdData?.data?.avg_occ * 100).toFixed(2) + '%',
+					value: (statsCallCenterByIdData?.data?.avg_occ ?? 0 * 100).toFixed(2) + '%',
 					icon: <Percent strokeWidth={2.5} />,
 				},
 				{
 					name: 'Avg Pw',
-					value: (statsCallCenterByIdData?.data?.avg_pw * 100).toFixed(2) + '%',
+					value: (statsCallCenterByIdData?.data?.avg_pw ?? 0 * 100).toFixed(2) + '%',
 					icon: <Percent strokeWidth={2.5} />,
 				},
 			]}

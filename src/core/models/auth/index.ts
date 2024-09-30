@@ -25,3 +25,18 @@ export interface ResetPassword_Req {
 	password2: string;
 	fullname: string;
 }
+
+export interface Profile_Res {
+	id: number;
+	email: string;
+	fullname: string;
+	profile_image: string;
+	role: string;
+}
+
+export interface Profile_Req {
+	fullname: string;
+}
+export interface Profile_Image_Req {
+	profile_image: string;
+}

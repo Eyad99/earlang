@@ -117,9 +117,9 @@ const Navbar = (props: { brandText: string; [x: string]: any }) => {
 							<div className='mt-3 h-px w-full bg-gray-200 dark:bg-white/20 ' />
 
 							<div className='ml-4 mt-3 flex flex-col'>
-								<a href='/admin/profile' className='text-sm text-gray-800 dark:text-white hover:dark:text-white'>
+								<Link to='/admin/profile' className='text-sm text-gray-800 dark:text-white hover:dark:text-white'>
 									Profile
-								</a>
+								</Link>
 
 								<a href='#' className='mt-3 text-sm font-medium text-red-500 hover:text-red-500' onClick={() => handleLogOutMutate()}>
 									Log Out

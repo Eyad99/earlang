@@ -1,11 +1,11 @@
+import React, { FC, useRef, useState } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Chart_Res } from '@/core';
-import { Line } from 'react-chartjs-2';
-import React, { FC, useRef, useState } from 'react';
-import moment from 'moment';
 import { Maximize } from 'lucide-react';
-import EControlledDialog from '@/components/reusable/dialog/controlled-dialog';
+import { Line } from 'react-chartjs-2';
 import ExportChartAsMultiTypes from '../../charts/export-chart-as-multi-types';
+import EControlledDialog from '@/components/reusable/dialog/controlled-dialog';
+import moment from 'moment';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -161,6 +161,79 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 		/* 7 6 5 2 */
 	}
 	// 3 / 4/ 8 / 11
+
+	const renderExportButtonToChartOne = () => (
+		<ExportChartAsMultiTypes
+			chartRef={chartRefOne}
+			statements={{
+				labels: data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)),
+				datasets: { time_to_abvious: data?.map((item: Chart_Res) => item.totall_abandoned) },
+			}}
+			format={[{ key: 'time_to_abvious', value: '' }]}
+			labelName='from time - to time'
+		/>
+	);
+	const renderExportButtonToChartTow = () => (
+		<ExportChartAsMultiTypes
+			chartRef={chartRefTow}
+			statements={{
+				labels: data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)),
+				datasets: {
+					sl: data?.map((item: Chart_Res) => item.sl * 100),
+					call_avg_abandon: data?.map((item: Chart_Res) => timeToSeconds(item.callavg_abandom)),
+					avg_handle_time: data.map(
+						(item: Chart_Res) => timeToSeconds(item.callavg_talk_time) + timeToSeconds(item.callavg_after_call_work)
+					),
+				},
+			}}
+			format={[
+				{ key: 'sl', value: '' },
+				{ key: 'call_avg_abandon', value: '' },
+				{ key: 'avg_handle_time', value: '' },
+			]}
+			labelName='from time - to time'
+		/>
+	);
+	const renderExportButtonToChartThree = () => (
+		<ExportChartAsMultiTypes
+			chartRef={chartRefThree}
+			statements={{
+				labels: data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)),
+				datasets: {
+					'Total Answered': data?.map((item: Chart_Res) => item.totall_answered),
+					'Total Abandoned': data?.map((item: Chart_Res) => item.totall_abandoned),
+					SL: data?.map((item: Chart_Res) => item.sl * 100),
+					'SL X Seconds': data?.map((item: Chart_Res) => item.sl_xseconds),
+				},
+			}}
+			format={[
+				{ key: 'Total Answered', value: '' },
+				{ key: 'Total Abandoned', value: '' },
+				{ key: 'SL', value: '' },
+				{ key: 'SL X Seconds', value: '' },
+			]}
+			labelName='from time - to time'
+		/>
+	);
+	const renderExportButtonToChartFour = () => (
+		<ExportChartAsMultiTypes
+			chartRef={chartRefFour}
+			statements={{
+				labels: data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)),
+				datasets: {
+					'Total Answered': data?.map((item: Chart_Res) => item.totall_answered),
+					'Total Abandoned': data?.map((item: Chart_Res) => item.totall_abandoned),
+					Occupancy: data?.map((item: Chart_Res) => item.occ * 100),
+				},
+			}}
+			format={[
+				{ key: 'Total Answered', value: '' },
+				{ key: 'Total Abandoned', value: '' },
+				{ key: 'Occupancy', value: '' },
+			]}
+			labelName='from time - to time'
+		/>
+	);
 	return (
 		<React.Fragment>
 			<EControlledDialog
@@ -169,28 +242,42 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 				contentClassName='!max-w-[1200px] sm:max-w-fit sm-max:max-w-fit'
 				dialogBody={
 					<div>
-						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>
-							{isOpen == 1
-								? 'Average Time To Abandon (seconds)'
-								: isOpen == 2
-								? 'SL, Call Avg Abandon, AHT'
-								: isOpen == 3
-								? 'Total Answered, SL, SL X Seconds'
-								: isOpen == 4
-								? 'Total Answered,Total Abandon, Occupancy'
-								: ''}
-							{isOpen == 1 ? (
-								<Line data={chartOne} options={options} />
-							) : isOpen == 2 ? (
-								<Line data={chartTow} options={options} />
-							) : isOpen == 3 ? (
-								<Line data={chartThree} options={options} />
-							) : isOpen == 4 ? (
-								<Line data={chartFour} options={options} />
-							) : (
-								''
-							)}
-						</h2>
+						<div className='flex justify-between'>
+							<h2 className='text-lg font-bold text-navy-700 dark:text-white'>
+								{isOpen == 1
+									? 'Average Time To Abandon (seconds)'
+									: isOpen == 2
+									? 'SL, Call Avg Abandon, AHT'
+									: isOpen == 3
+									? 'Total Answered, SL, SL X Seconds'
+									: isOpen == 4
+									? 'Total Answered,Total Abandon, Occupancy'
+									: ''}
+							</h2>
+							<div className='flex gap-2 items-center'>
+								{isOpen == 1
+									? renderExportButtonToChartOne()
+									: isOpen == 2
+									? renderExportButtonToChartTow()
+									: isOpen == 3
+									? renderExportButtonToChartThree()
+									: isOpen == 4
+									? renderExportButtonToChartFour()
+									: ''}
+							</div>
+						</div>
+
+						{isOpen == 1 ? (
+							<Line data={chartOne} options={options} />
+						) : isOpen == 2 ? (
+							<Line data={chartTow} options={options} />
+						) : isOpen == 3 ? (
+							<Line data={chartThree} options={options} />
+						) : isOpen == 4 ? (
+							<Line data={chartFour} options={options} />
+						) : (
+							''
+						)}
 					</div>
 				}
 			/>
@@ -198,17 +285,9 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
 					<div className='flex justify-between'>
 						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Average Time To Abandon (seconds)</h2>
-						<div className='flex gap-2'>
+						<div className='flex gap-2 items-center'>
 							<Maximize className='cursor-pointer' onClick={() => setIsOpen(1)} />
-							<ExportChartAsMultiTypes
-								chartRef={chartRefOne}
-								statements={{
-									labels: data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)),
-									datasets: { time_to_abvious: data?.map((item: Chart_Res) => item.totall_abandoned) },
-								}}
-								format={[{ key: 'time_to_abvious', value: '' }]}
-								labelName='from time - to time'
-							/>
+							{renderExportButtonToChartOne()}
 						</div>
 					</div>
 					<Line data={chartOne} options={options} ref={chartRefOne} />
@@ -217,28 +296,10 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
 					<div className='flex justify-between'>
 						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>SL, Call Avg Abandon, AHT</h2>
-						<div className='flex gap-2'>
+						<div className='flex gap-2 items-center'>
 							<Maximize className='cursor-pointer' onClick={() => setIsOpen(2)} />
-							<ExportChartAsMultiTypes
-								chartRef={chartRefTow}
-								statements={{
-									labels: data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)),
-									datasets: {
-										sl: data?.map((item: Chart_Res) => item.sl * 100),
-										call_avg_abandon: data?.map((item: Chart_Res) => timeToSeconds(item.callavg_abandom)),
-										avg_handle_time: data.map(
-											(item: Chart_Res) => timeToSeconds(item.callavg_talk_time) + timeToSeconds(item.callavg_after_call_work)
-										),
-									},
-								}}
-								format={[
-									{ key: 'sl', value: '' },
-									{ key: 'call_avg_abandon', value: '' },
-									{ key: 'avg_handle_time', value: '' },
-								]}
-								labelName='from time - to time'
-							/>
-						</div>{' '}
+							{renderExportButtonToChartTow()}
+						</div>
 					</div>
 					<Line data={chartTow} options={options} ref={chartRefTow} />
 				</div>
@@ -246,28 +307,10 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
 					<div className='flex justify-between'>
 						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Total Answered, SL, SL X Seconds</h2>
-						<div className='flex gap-2'>
+						<div className='flex gap-2 items-center'>
 							<Maximize className='cursor-pointer' onClick={() => setIsOpen(3)} />
-							<ExportChartAsMultiTypes
-								chartRef={chartRefThree}
-								statements={{
-									labels: data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)),
-									datasets: {
-										'Total Answered': data?.map((item: Chart_Res) => item.totall_answered),
-										'Total Abandoned': data?.map((item: Chart_Res) => item.totall_abandoned),
-										SL: data?.map((item: Chart_Res) => item.sl * 100),
-										'SL X Seconds': data?.map((item: Chart_Res) => item.sl_xseconds),
-									},
-								}}
-								format={[
-									{ key: 'Total Answered', value: '' },
-									{ key: 'Total Abandoned', value: '' },
-									{ key: 'SL', value: '' },
-									{ key: 'SL X Seconds', value: '' },
-								]}
-								labelName='from time - to time'
-							/>
-						</div>{' '}
+							{renderExportButtonToChartThree()}
+						</div>
 					</div>
 					<Line data={chartThree} options={options} ref={chartRefThree} />
 				</div>
@@ -275,26 +318,10 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
 					<div className='flex justify-between'>
 						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Total Answered,Total Abandon, Occupancy</h2>
-						<div className='flex gap-2'>
+						<div className='flex gap-2 items-center'>
 							<Maximize className='cursor-pointer' onClick={() => setIsOpen(4)} />
-							<ExportChartAsMultiTypes
-								chartRef={chartRefFour}
-								statements={{
-									labels: data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)),
-									datasets: {
-										'Total Answered': data?.map((item: Chart_Res) => item.totall_answered),
-										'Total Abandoned': data?.map((item: Chart_Res) => item.totall_abandoned),
-										Occupancy: data?.map((item: Chart_Res) => item.occ * 100),
-									},
-								}}
-								format={[
-									{ key: 'Total Answered', value: '' },
-									{ key: 'Total Abandoned', value: '' },
-									{ key: 'Occupancy', value: '' },
-								]}
-								labelName='from time - to time'
-							/>
-						</div>{' '}
+							{renderExportButtonToChartFour()}
+						</div>
 					</div>
 					<Line data={chartFour} options={options} ref={chartRefFour} />
 				</div>

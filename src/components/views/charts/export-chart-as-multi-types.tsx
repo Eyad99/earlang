@@ -1,5 +1,5 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Ellipsis } from 'lucide-react';
+import { Download, Ellipsis, FileText, Image, Sheet } from 'lucide-react';
 import { FC } from 'react';
 import downloadFile from '@/utils/helpers/downloadFile';
 import exportAsPdf from '@/utils/helpers/exportAsPdf';
@@ -35,12 +35,31 @@ const ExportChartAsMultiTypes: FC<ExportChartAsMultiTypesProps> = ({ chartRef, s
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger>
-				<Ellipsis />
+				{/* <Ellipsis /> */}
+				<div className='flex gap-2 text-gray-600'>
+					<Download />
+					<span className=''>Export As</span>
+				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
-				<DropdownMenuItem onClick={() => handleExportAsImage()}>Export as image</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => handleExportAsPdf()}>Export as pdf</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => handleExportAsExcel()}>Export as excel</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => handleExportAsImage()}>
+					<div className='flex gap-2'>
+						<Image className='text-blue-400' />
+						<span> Image</span>
+					</div>
+				</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => handleExportAsPdf()}>
+					<div className='flex gap-2'>
+						<FileText className='text-red-400' />
+						<span> Pdf</span>
+					</div>
+				</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => handleExportAsExcel()}>
+					<div className='flex gap-2'>
+						<Sheet className='text-green-400' />
+						<span> Excel</span>
+					</div>
+				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

@@ -68,12 +68,14 @@ const VCallStats: FC<VCountFilesAllCallCentersProps> = ({ statements }) => {
 		},
 	} as any;
 
-	const format = [
+	const exportFormats = [
 		{ key: 'agents', value: '' },
 		{ key: 'service_level', value: '' },
 		{ key: 'average_speed_of_answer', value: '' },
 		{ key: 'occupancy', value: '' },
 	];
+
+	const renderExportButton = () => <ExportChartAsMultiTypes chartRef={chartRef} statements={statements} format={exportFormats} />;
 	return (
 		<React.Fragment>
 			<EControlledDialog
@@ -82,7 +84,10 @@ const VCallStats: FC<VCountFilesAllCallCentersProps> = ({ statements }) => {
 				contentClassName='!max-w-[1200px] sm:max-w-fit sm-max:max-w-fit'
 				dialogBody={
 					<div>
-						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Calls</h2>
+						<div className='flex justify-between'>
+							<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Calls</h2>
+							<div className='flex gap-2 items-center'>{renderExportButton()}</div>
+						</div>{' '}
 						<Line data={lineData} options={options} />
 					</div>
 				}
@@ -90,9 +95,9 @@ const VCallStats: FC<VCountFilesAllCallCentersProps> = ({ statements }) => {
 			<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
 				<div className='flex justify-between'>
 					<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Calls</h2>
-					<div className='flex gap-2'>
+					<div className='flex gap-2 items-center'>
 						<Maximize className='cursor-pointer' onClick={() => setIsOpen(true)} />
-						<ExportChartAsMultiTypes chartRef={chartRef} statements={statements} format={format} />
+						{renderExportButton()}{' '}
 					</div>
 				</div>
 				<Line data={lineData} options={options} ref={chartRef} />
