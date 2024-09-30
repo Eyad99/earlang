@@ -103,6 +103,8 @@ const MaxCalls = () => {
 		],
 	};
 
+	const divClassName =
+		'w-[150px] h-[150px] bg-black bg-opacity-5 border-4  rounded-full flex flex-col justify-center items-center text-xl font-bold transition-transform transform hover:scale-110 hover:bg-opacity-20 duration-300 ';
 	return (
 		<div className='flex md:flex-row flex-col wrap gap-2'>
 			<div className='md:w-1/2 w-full'>{<FormBuilder {...formBuilderArgs} />}</div>
@@ -112,19 +114,19 @@ const MaxCalls = () => {
 						<span className='font-bold text-xl '>"The calculation is being processed."</span>{' '}
 					</BoxWithLoading>
 				) : earlangMaxCallsMutate?.data?.data?.data?.Max_call ? (
-					<div className='flex flex-col items-center justify-center '>
-						<span className='font-bold text-xl '>The final result is</span>
-						<span>
-							<span className='font-bold'>Max call: </span> {earlangMaxCallsMutate?.data?.data?.data?.Max_call}
-						</span>
-						<span>
-							<span className='font-bold'>Numbe calls: </span>
-							{earlangMaxCallsMutate?.data?.data?.data?.N_calls}
-						</span>
-						<span>
-							<span className='font-bold'>Sl: </span>
-							{earlangMaxCallsMutate?.data?.data?.data?.SL}
-						</span>
+					<div className='flex flex-wrap gap-4 '>
+						<div className={divClassName + ' border-red-400'}>
+							<span>Max call </span>
+							<span className='text-red-400'>{earlangMaxCallsMutate?.data?.data?.data?.Max_call} </span>
+						</div>
+						<div className={divClassName + ' border-green-400'}>
+							<span>Numbe calls </span>
+							<span className='text-green-400'>{earlangMaxCallsMutate?.data?.data?.data?.N_calls} </span>
+						</div>
+						<div className={divClassName + ' border-blue-400'}>
+							<span>SL </span>
+							<span className='text-blue-400'>{earlangMaxCallsMutate?.data?.data?.data?.SL} </span>
+						</div>
 					</div>
 				) : (
 					<span className='font-bold text-xl '>
