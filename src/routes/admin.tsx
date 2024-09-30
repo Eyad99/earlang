@@ -1,4 +1,5 @@
 import Dashboard from '@/views/admin/dashboard';
+import CustomerDashboard from '@/views/customer/dashboard';
 import SettingsList from '@/views/admin/settings';
 import MaxCalls from '@/views/calculator/max-calls';
 import Agent from '@/views/calculator/agent';
@@ -84,7 +85,7 @@ const AdminRoutes = [
 	{
 		layout: '/admin',
 		path: '/call-centers/:callCenterId/statistics',
-		component: <Dashboard />,
+		component: <CustomerDashboard />,
 		invisible: true,
 	},
 

@@ -51,15 +51,15 @@ const VCallStats: FC<VCountFilesAllCallCentersProps> = ({ statements }) => {
 
 	const options = {
 		responsive: true,
-		animations: {
-			tension: {
-				duration: 1000,
-				easing: 'linear',
-				from: 1,
-				to: 0,
-				loop: true,
-			},
-		},
+		// animations: {
+		// 	tension: {
+		// 		duration: 1000,
+		// 		easing: 'linear',
+		// 		from: 1,
+		// 		to: 0,
+		// 		loop: true,
+		// 	},
+		// },
 
 		plugins: {
 			legend: {

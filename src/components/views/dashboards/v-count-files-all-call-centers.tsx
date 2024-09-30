@@ -31,10 +31,10 @@ const VCountFilesAllCallCenters: FC<VCountFilesAllCallCentersProps> = ({ stateme
 
 	const options = {
 		responsive: true,
-		animation: {
-			duration: 1000,
-			easing: 'easeOutBounce',
-		},
+		// animation: {
+		// 	duration: 1000,
+		// 	easing: 'easeOutBounce',
+		// },
 		plugins: {
 			legend: {
 				display: false,

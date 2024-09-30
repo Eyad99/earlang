@@ -2,40 +2,52 @@ import { useFetchDataRQ } from '@/hooks/useFetchDataRQ';
 import { dashboardApi } from '@/core';
 import StatissticsCardSkeleton from '@/utils/skeletons/statisstics-card-skeleton';
 import VStatisticsCard from '@/components/views/dashboards/v-statistics-card';
-import { Gauge, ChartColumn, FolderSync, Files, Users } from 'lucide-react';
+import { Gauge, ChartColumn, FolderSync, Files, Users, Percent } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 
 const StatisticsCard = () => {
-	// const {
-	// 	data: statsData,
-	// 	isLoading: statsLoading,
-	// 	isFetching: statsFetching,
-	// } = useFetchDataRQ({
-	// 	queryKey: ['stats'],
-	// 	queryFn: () => dashboardApi.stats(),
-	// });
+	const { callCenterId } = useParams();
+	const {
+		data: statsCallCenterByIdData,
+		isLoading: statsCallCenterByIdLoading,
+		isFetching: statsCallCenterByIdFetching,
+	} = useFetchDataRQ({
+		queryKey: ['statsCallCenters', callCenterId],
+		queryFn: () => dashboardApi.statsCallCenters(callCenterId),
+		enableCondition: callCenterId ? true : false,
+	});
 
-	// const {
-	// 	data: countsData,
-	// 	isLoading: countsLoading,
-	// 	isFetching: countsFetching,
-	// } = useFetchDataRQ({
-	// 	queryKey: ['counts'],
-	// 	queryFn: () => dashboardApi.counts(),
-	// });
-
-	// if (statsLoading) return <StatissticsCardSkeleton />;
+	if (statsCallCenterByIdLoading) return <StatissticsCardSkeleton />;
 
 	return (
 		<VStatisticsCard
 			items={[
-				{ name: 'Offered Calls', value: 15, icon: <ChartColumn strokeWidth={2.5} /> },
-				{ name: 'Answered Calls', value: 155, icon: <FolderSync strokeWidth={2.5} /> },
-				{ name: 'Abandoned Calls', value: 15, icon: <ChartColumn strokeWidth={2.5} /> },
-				{ name: 'Average Service Level', value: 80 + '%', icon: <Gauge strokeWidth={2.5} /> },
-			].concat([
-				{ name: 'Total Staffs', value: 20, icon: <Users strokeWidth={2.5} /> },
-				{ name: 'Uploaded Files', value: 200, icon: <Files strokeWidth={2.5} /> },
-			])}
+				{ name: 'Offered Calls', value: statsCallCenterByIdData?.data?.total_offered, icon: <ChartColumn strokeWidth={2.5} /> },
+				{ name: 'Answered Calls', value: statsCallCenterByIdData?.data?.total_answered, icon: <FolderSync strokeWidth={2.5} /> },
+				{ name: 'Abandoned Calls', value: statsCallCenterByIdData?.data?.total_abandoned, icon: <ChartColumn strokeWidth={2.5} /> },
+				{
+					name: 'Average Service Level',
+					value: (statsCallCenterByIdData?.data?.avg_sl_percentage * 100).toFixed(2) + '%',
+					icon: <Gauge strokeWidth={2.5} />,
+				},
+				{
+					name: 'Average Service Level',
+					value: (statsCallCenterByIdData?.data?.avg_sl_seconds).toFixed(2) + '%',
+					icon: <Gauge strokeWidth={2.5} />,
+				},
+				{ name: 'Max Agents', value: statsCallCenterByIdData?.data?.max_agents, icon: <ChartColumn strokeWidth={2.5} /> },
+				{ name: 'Avg Asa', value: statsCallCenterByIdData?.data?.avg_asa.toFixed(2), icon: <Percent strokeWidth={2.5} /> },
+				{
+					name: 'Avg Occupency',
+					value: (statsCallCenterByIdData?.data?.avg_occ * 100).toFixed(2) + '%',
+					icon: <Percent strokeWidth={2.5} />,
+				},
+				{
+					name: 'Avg Pw',
+					value: (statsCallCenterByIdData?.data?.avg_pw * 100).toFixed(2) + '%',
+					icon: <Percent strokeWidth={2.5} />,
+				},
+			]}
 		/>
 	);
 };
