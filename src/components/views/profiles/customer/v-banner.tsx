@@ -7,6 +7,7 @@ interface VBannerProps {
 	user: any;
 }
 const VBanner: FC<VBannerProps> = ({ user }) => {
+	console.log('user', user);
 	return (
 		<Card extra={'items-center w-full h-full p-[16px] bg-cover'}>
 			{/* Background and profile */}
@@ -18,7 +19,7 @@ const VBanner: FC<VBannerProps> = ({ user }) => {
 
 			{/* Name and position */}
 			<div className='mt-16 flex flex-col items-center'>
-				<h4 className='text-xl font-bold text-navy-700 dark:text-white'>{user?.fullname}</h4>
+				<h4 className='text-xl font-bold text-navy-700 dark:text-white'>{user?.name}</h4>
 				<h5 className='text-base font-normal text-gray-600'>{user?.role}</h5>
 			</div>
 
