@@ -12,13 +12,13 @@ const Information = () => {
 	user = user ? JSON.parse(user) : {};
 
 	const { data, isLoading } = useFetchDataRQ({
-		queryKey: ['callCenterProfile'],
-		queryFn: () => authApi.callCenterProfile('3'),
+		queryKey: ['callCenterProfile', user?.callCenterId],
+		queryFn: () => authApi.callCenterProfile(user?.callCenterId),
 	});
 
 	const updateCallCenterInforationMutate = useMutateData({
-		mutationFn: (data: CallCenter_Profile_Req) => authApi.updateCallCenterProfile(data, '3'),
-		invalidateKeys: ['callCenterProfile', '3'],
+		mutationFn: (data: CallCenter_Profile_Req) => authApi.updateCallCenterProfile(data, user?.callCenterId),
+		invalidateKeys: ['callCenterProfile', user?.callCenterId],
 	});
 
 	const initialValues = {

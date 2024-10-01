@@ -22,7 +22,13 @@ function SignIn() {
 			Cookies.set(KEY_TOKEN_COOKIE, data.data.token?.token);
 			Cookies.set(
 				KEY_USER_COOKIE,
-				JSON.stringify({ id: data?.data?.userId, email: data?.data?.email, role: data?.data?.Role, name: data?.data?.fullname })
+				JSON.stringify({
+					id: data?.data?.userId,
+					email: data?.data?.email,
+					role: data?.data?.Role,
+					name: data?.data?.fullname,
+					callCenterId: data?.data?.['callcenter.id'],
+				})
 			);
 
 			switch (data?.data?.Role) {

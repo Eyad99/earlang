@@ -1,4 +1,4 @@
-import { authApi, CallCenter_Profile_Req } from '@/core';
+import { authApi, CallCenter_Profile_Req, User_Profile_Req } from '@/core';
 import { KEY_USER_COOKIE } from '@/variables/constants';
 import { useFetchDataRQ } from '@/hooks/useFetchDataRQ';
 import { useMutateData } from '@/hooks/useMutateData';
@@ -17,7 +17,7 @@ const Information = () => {
 	});
 
 	const updateUserInforationMutate = useMutateData({
-		mutationFn: (data: CallCenter_Profile_Req) => authApi.updateCallCenterProfile(data, '3'),
+		mutationFn: (data: User_Profile_Req) => authApi.updateUserProfile(data),
 		invalidateKeys: ['userProfile'],
 	});
 
