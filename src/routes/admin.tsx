@@ -8,7 +8,6 @@ import Formula2 from '@/views/formulas/formula-2';
 import Formula3 from '@/views/formulas/formula-3';
 import Formula4 from '@/views/formulas/formula-4';
 import Formula5 from '@/views/formulas/formula-5';
-import Profile from '@/views/profile';
 import { UsersList } from '@/views/users';
 import { Calculator, Headset, LayoutDashboard, Pi, Settings, Users } from 'lucide-react';
 import UserEditor from '@/views/users/editor';
@@ -18,13 +17,14 @@ import UserFiles from '@/views/users/files';
 import CAllCenterFiles from '@/views/admin/call-centers/files';
 import Order from '@/components/views/files/order';
 import Report from '@/views/report';
+import AdminProfile from '@/views/admin/profile';
 
 const AdminRoutes = [
 	{
 		name: 'Profile',
 		layout: '/admin',
 		path: '/profile',
-		component: <Profile />,
+		component: <AdminProfile />,
 		invisible: true,
 	},
 

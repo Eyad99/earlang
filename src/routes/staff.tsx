@@ -1,10 +1,10 @@
 import Dashboard from '@/views/admin/dashboard';
 import OrderAsAStaff from '@/views/customer/staffs/order';
-import Profile from '@/views/profile';
 import Report from '@/views/report';
 import StaffDashboard from '@/views/staff/dashboard';
 import MyFilesAsAStaff from '@/views/staff/files';
 import UploadFilesAsAStaff from '@/views/staff/files/editor';
+import StaffProfile from '@/views/staff/profile';
 import { Files, LayoutDashboard } from 'lucide-react';
 
 const StaffRoutes = [
@@ -12,7 +12,7 @@ const StaffRoutes = [
 		name: 'Profile',
 		layout: '/staff',
 		path: '/profile',
-		component: <Profile />,
+		component: <StaffProfile />,
 		invisible: true,
 	},
 	{

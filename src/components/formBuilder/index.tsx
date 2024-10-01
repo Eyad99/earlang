@@ -6,6 +6,7 @@ import TextField from '../reusable/fields/TextField';
 import PasswordField from '../reusable/fields/PasswordField';
 import Uploader from '../reusable/uploader/inex';
 import SelectField from '../reusable/fields/SelectField';
+import SwitchField from '../reusable/fields/SwitchField';
 
 export type FormBuilderProps = {
 	initialValues: any;
@@ -16,6 +17,7 @@ export type FormBuilderProps = {
 	loading?: boolean;
 	gridClassName?: string;
 	buttonClassName?: string;
+	formClassName?: string;
 };
 
 const FormBuilder: FC<FormBuilderProps> = ({
@@ -27,6 +29,7 @@ const FormBuilder: FC<FormBuilderProps> = ({
 	loading = false,
 	gridClassName = 'grid-cols-2',
 	buttonClassName,
+	formClassName = 'bg-white p-4 rounded-md',
 }) => {
 	const {
 		values,
@@ -84,6 +87,17 @@ const FormBuilder: FC<FormBuilderProps> = ({
 		);
 	};
 
+	const renderSwitchField = (x: any) => {
+		return (
+			<SwitchField
+				label={x.label}
+				onChange={(files: any) => setFieldValue(x.name, files)}
+				checked={values[x.name]}
+				error={!!touched[x.name] && !!errors[x.name]}
+			/>
+		);
+	};
+
 	const renderSelectField = (x: any) => {
 		return (
 			<SelectField
@@ -113,6 +127,7 @@ const FormBuilder: FC<FormBuilderProps> = ({
 		password: renderPasswordField,
 		file: renderFilesField,
 		select: renderSelectField,
+		switch: renderSwitchField,
 	};
 
 	const render = (x: any) => {
@@ -124,7 +139,7 @@ const FormBuilder: FC<FormBuilderProps> = ({
 	};
 
 	return (
-		<form onSubmit={handleSubmitFormik} className='bg-white p-4 rounded-md'>
+		<form onSubmit={handleSubmitFormik} className={formClassName}>
 			<div className={`grid ${gridClassName} gap-3 `}>
 				{formSchema.map((x) => {
 					const element = render(x);

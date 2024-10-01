@@ -2,25 +2,25 @@ import UploadFilesAsACustomer from '@/views/customer/files/editor';
 import MyFilesAsACustomer from '@/views/customer/files';
 import CustomerDashboard from '@/views/customer/dashboard';
 import StaffEditor from '@/views/customer/staffs/editor';
-import Profile from '@/views/profile';
 import { Files, LayoutDashboard, Users } from 'lucide-react';
 import { MyStaffs } from '@/views/customer/staffs';
 import StaffFiles from '@/views/customer/staffs/files';
 import OrderAsCustomer from '@/views/customer/files/order';
 import OrderAsAStaff from '@/views/customer/staffs/order';
 import Report from '@/views/report';
+import CustomerProfile from '@/views/customer/profile';
 
 const CustomerRoutes = [
 	{
 		name: 'Profile',
 		layout: '/customer',
 		path: '/profile',
-		component: <Profile />,
+		component: <CustomerProfile />,
 		invisible: true,
 	},
 	{
 		name: 'Dashboard',
-		layout: '/customer',	
+		layout: '/customer',
 		icon: <LayoutDashboard />,
 		path: '/dashboard',
 		component: <CustomerDashboard />,

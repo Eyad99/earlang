@@ -26,7 +26,7 @@ export interface ResetPassword_Req {
 	fullname: string;
 }
 
-export interface Profile_Res {
+export interface User_Profile_Res {
 	id: number;
 	email: string;
 	fullname: string;
@@ -34,9 +34,33 @@ export interface Profile_Res {
 	role: string;
 }
 
-export interface Profile_Req {
+export interface User_Profile_Req {
 	fullname: string;
 }
-export interface Profile_Image_Req {
+export interface User_Profile_Image_Req {
 	profile_image: string;
+}
+
+export interface CallCenter_Profile_Res extends CallCenter_Profile_Req {
+	user: User_Profile_Res;
+}
+
+export interface CallCenter_Profile_Req {
+	name: string;
+	location: string;
+	number_of_seats: number;
+	number_of_agents: number;
+	number_of_supers: number;
+	number_of_tls: number;
+	total_no_agents: number;
+	staff_dedicated_QA: string;
+	staff_dedicated_scheduling: string;
+	staff_dedicated_training: string;
+	it_staff_available: boolean;
+	Working_hours: number;
+	Working_days: number;
+	number_of_skill_groups: number;
+	list_of_skill_groups: number;
+	notices: string;
+	business_type: string;
 }

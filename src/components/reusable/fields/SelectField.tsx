@@ -30,14 +30,14 @@ const SelectField: FC<SelectFieldProps> = ({
 	onChange,
 }) => {
 	return (
-		<Fragment>
+		<div className='flex flex-col w-full gap-1.5'>
 			{label && (
 				<Label htmlFor={label} className={`ml-1.5 text-sm font-bold capitalize text-navy-700 dark:text-white`}>
 					{label}
 				</Label>
 			)}
 			<Select name={name} value={value} onValueChange={onChange}>
-				<SelectTrigger className={`${triggerClassName} ${error ? 'border-red-500' : ''}`}>
+				<SelectTrigger className={`${triggerClassName} ${error ? 'border-red-500' : ''} h-12 rounded-xl`}>
 					<SelectValue className='text-themeBoldGrey' placeholder={placeholder} />
 				</SelectTrigger>
 				<SelectContent>
@@ -50,7 +50,7 @@ const SelectField: FC<SelectFieldProps> = ({
 			</Select>
 
 			{error && <Label className='ml-1.5 text-red-500'>{errors}</Label>}
-		</Fragment>
+		</div>
 	);
 };
 
