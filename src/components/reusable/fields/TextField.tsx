@@ -44,7 +44,7 @@ const TextField: React.FC<InputProps | TextFieldProps> = ({
 						{...props}
 					/>
 
-					{props?.type == 'password' && (
+					{(props?.type == 'password' || show) && (
 						<div className='absolute top-[12%] left-[88%]'>
 							<EyeToggleButton show={show} click={click} />
 						</div>

@@ -29,35 +29,6 @@ const CustomerRoutes = [
 	},
 
 	{
-		name: 'My Files',
-		layout: '/customer',
-		icon: <Files />,
-		path: '/my-files',
-		component: <MyFilesAsACustomer />,
-	},
-
-	{
-		layout: '/customer',
-		path: '/my-files/:customerId',
-		component: <UploadFilesAsACustomer />,
-		invisible: true,
-	},
-
-	{
-		layout: '/customer',
-		path: '/my-files/order/:orderId',
-		component: <OrderAsCustomer />,
-		invisible: true,
-	},
-
-	{
-		layout: '/customer',
-		path: '/my-files/order/:orderId/report/:fileId',
-		component: <Report />,
-		invisible: true,
-	},
-
-	{
 		name: 'Staffs',
 		layout: '/customer',
 		icon: <Users />,
@@ -90,6 +61,49 @@ const CustomerRoutes = [
 		layout: '/customer',
 		path: '/staffs/:staffId',
 		component: <StaffEditor />,
+		invisible: true,
+	},
+
+	{
+		name: 'My Files',
+		path: '/my-files',
+		icon: <Files />,
+		collapse: true,
+		items: [
+			{
+				name: 'Lister',
+				layout: '/customer',
+				path: '/my-files',
+				component: <MyFilesAsACustomer />,
+			},
+
+			{
+				name: 'Upload Files',
+				layout: '/customer',
+				path: '/upload-files',
+				component: <UploadFilesAsACustomer />,
+			},
+		],
+	},
+
+	{
+		layout: '/customer',
+		path: '/my-files/:customerId',
+		component: <UploadFilesAsACustomer />,
+		invisible: true,
+	},
+
+	{
+		layout: '/customer',
+		path: '/my-files/order/:orderId',
+		component: <OrderAsCustomer />,
+		invisible: true,
+	},
+
+	{
+		layout: '/customer',
+		path: '/my-files/order/:orderId/report/:fileId',
+		component: <Report />,
 		invisible: true,
 	},
 

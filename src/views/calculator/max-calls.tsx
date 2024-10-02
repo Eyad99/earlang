@@ -79,8 +79,13 @@ const MaxCalls = () => {
 
 			{
 				name: 'Period',
-				type: 'number',
+				type: 'select',
 				label: `Period (in minutes)`,
+				elements: [
+					{ id: '15', name: '15' },
+					{ id: '30', name: '30' },
+					{ id: '60', name: '60' },
+				],
 			},
 
 			{
@@ -124,8 +129,8 @@ const MaxCalls = () => {
 							<span className='text-green-400'>{earlangMaxCallsMutate?.data?.data?.data?.N_calls} </span>
 						</div>
 						<div className={divClassName + ' border-blue-400'}>
-							<span>SL </span>
-							<span className='text-blue-400'>{earlangMaxCallsMutate?.data?.data?.data?.SL} </span>
+							<span>Archived service level </span>
+							<span className='text-blue-400'>{earlangMaxCallsMutate?.data?.data?.data?.SL * 100} % </span>
 						</div>
 					</div>
 				) : (

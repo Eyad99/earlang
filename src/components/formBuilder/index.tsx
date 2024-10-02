@@ -72,6 +72,7 @@ const FormBuilder: FC<FormBuilderProps> = ({
 				errors={errors[x.name] as any}
 				name={x.name}
 				label={x.label}
+				placeholder={x.placeholder}
 			/>
 		);
 	};

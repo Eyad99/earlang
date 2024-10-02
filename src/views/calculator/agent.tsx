@@ -20,6 +20,7 @@ const Agent = () => {
 		AHT: '',
 		SLA: '',
 		Time: '',
+		shrinkage: 0,
 	};
 
 	const validationSchema = yup.object().shape({
@@ -57,6 +58,13 @@ const Agent = () => {
 			.positive('Time must be a positive number')
 			.integer('Time must be an integer')
 			.min(1, 'Time must be greater than 0'),
+
+		shrinkage: yup
+			.number()
+			.positive('Shrinkage must be a positive number')
+			.integer('Shrinkage must be an integer')
+			.min(1, 'Shrinkage must be greater than 0')
+			.max(99, 'Number of shrinkage must be less or equal than 99'),
 	});
 
 	const submitHandler = (values: Earlang_Calculator_Normal) => {
@@ -79,8 +87,13 @@ const Agent = () => {
 
 			{
 				name: 'Period',
-				type: 'number',
+				type: 'select',
 				label: `Period (in minutes)`,
+				elements: [
+					{ id: '15', name: '15' },
+					{ id: '30', name: '30' },
+					{ id: '60', name: '60' },
+				],
 			},
 
 			{
@@ -99,6 +112,12 @@ const Agent = () => {
 				name: 'Time',
 				type: 'number',
 				label: `Time a Call Has to Wait (in seconds)`,
+			},
+
+			{
+				name: 'shrinkage',
+				type: 'number',
+				label: `Shrinkage (optional)`,
 			},
 		],
 	};

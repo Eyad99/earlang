@@ -14,6 +14,9 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 	const roundedNumber = (number: number, decimalPlaces: number) => {
 		return parseFloat(number.toFixed(decimalPlaces));
 	};
+
+	const shouldShowShrinkage = data[0]?.shrinkage === 0;
+
 	const headers = [
 		{ header: 'From Time' },
 		{ header: 'To Time' },
@@ -29,6 +32,7 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 		{ header: 'Aggent Logged_in' },
 		{ header: 'Aggent Available' },
 		{ header: 'Agents' },
+		{ header: 'Shrinkage' },
 		{ header: 'Service Level' },
 		{ header: 'Service Level Target' },
 		{ header: 'Asa' },
@@ -42,6 +46,7 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 		{ header: 'From Time' },
 		{ header: 'To Time' },
 		{ header: 'Agents' },
+		{ header: 'Shrinkage' },
 		{ header: 'Service Level' },
 		{ header: 'Service Level Target' },
 		{ header: 'Asa' },
@@ -51,8 +56,8 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 		{ header: 'Max Call' },
 	];
 
-	const headerFields = ['Agents', 'Service Level', 'Asa', 'Imm Answ', 'Pw', 'Occ', 'Max Call'];
-	const bodyCellCassName = 'min-w-[150px] border-white/0 py-3 pr-4 text-[14px] text-navy-700 dark:text-white';
+	const headerFields = ['Agents', 'Shrinkage', 'Service Level', 'Asa', 'Imm Answ', 'Pw', 'Occ', 'Max Call'];
+	const bodyCellCassName = 'min-w-[150px] border-white/0 py-3 pr-4 text-[14px] text-navy-700 dark:text-white text-center';
 
 	const handleExpansionOfColumns = () => setExpansionOfColumns(!expansionOfColumns);
 	return (
@@ -60,17 +65,31 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 			<Table className={' overflow-auto'}>
 				<TableHeader>
 					<TableRow key={'header'}>
-						{(expansionOfColumns ? headers : headers1)?.map((item) => {
+						{(expansionOfColumns
+							? shouldShowShrinkage
+								? headers.filter((item) => item.header !== 'Shrinkage')
+								: headers
+							: shouldShowShrinkage
+							? headers1.filter((item) => item.header !== 'Shrinkage')
+							: headers1
+						)?.map((item) => {
 							return (
 								<TableHead
 									key={item.header}
-									className={`text-sm font-bold text-gray-600 dark:text-white pb-2 pr-4 pt-4 text-start ${
+									className={`text-sm font-bold text-gray-600 dark:text-white pb-2 pr-4 pt-4 text-center ${
 										headerFields?.includes(item.header) ? 'bg-gray-100' : ''
-									} `}
+									}`}
+									style={{
+										width: '50px',
+										position: ['From Time', 'To Time'].includes(item.header) ? 'sticky' : 'relative',
+										left: item.header == 'From Time' ? '0px' : item.header == 'To Time' ? '150px' : '',
+										zIndex: ['From Time', 'To Time'].includes(item.header) ? 10 : 1,
+										background: ['From Time', 'To Time'].includes(item.header) ? 'white' : '',
+									}}
 								>
-									<span className={item.header.toLowerCase() == 'to time' ? 'relative bottom-1' : ''}> {item.header}</span>
+									<span className={item.header.toLowerCase() == 'to time' ? 'relative bottom-1 left-3' : ''}> {item.header}</span>
 									{item.header.toLowerCase() == 'to time' && (
-										<span className='relative left-[57%] cursor-pointer text-green-400'>
+										<span className='relative left-[40%] cursor-pointer text-green-400'>
 											{!expansionOfColumns ? (
 												<TooltipProvider>
 													<Tooltip>
@@ -108,8 +127,18 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 								key={index}
 								className={`${row.totall_answered === 0 ? 'bg-red-200' : row.totall_Offered === 0 ? 'bg-yellow-200' : ''}`}
 							>
-								<TableCell className={bodyCellCassName}>{row.from_time}</TableCell>
-								<TableCell className={bodyCellCassName}>{row.to_time}</TableCell>
+								<TableCell
+									className={`${bodyCellCassName}`}
+									style={{ width: '50px', position: 'sticky', left: '0px', zIndex: 10, background: 'white' }}
+								>
+									{row.from_time}
+								</TableCell>
+								<TableCell
+									className={`${bodyCellCassName}`}
+									style={{ width: '50px', position: 'sticky', left: '150px', zIndex: 10, background: 'white' }}
+								>
+									{row.to_time}
+								</TableCell>
 								{expansionOfColumns ? (
 									<>
 										<TableCell className={bodyCellCassName}>{row.totall_Offered}</TableCell>
@@ -128,6 +157,7 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 									''
 								)}
 								<TableCell className={bodyCellCassName + ' bg-gray-100'}>{row.agents}</TableCell>
+								{row.shrinkage !== 0 && <TableCell className={bodyCellCassName + ' bg-gray-100'}>{row.shrinkage * 100}</TableCell>}
 								<TableCell
 									className={bodyCellCassName + ` bg-gray-100 ${roundedNumber(row.sl * 100, 2) < 80 ? 'bg-red-400' : 'bg-green-400'}`}
 								>

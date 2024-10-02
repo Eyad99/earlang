@@ -27,10 +27,24 @@ const StaffRoutes = [
 
 	{
 		name: 'My Files',
-		layout: '/staff',
-		icon: <Files />,
 		path: '/my-files',
-		component: <MyFilesAsAStaff />,
+		icon: <Files />,
+		collapse: true,
+		items: [
+			{
+				name: 'Lister',
+				layout: '/staff',
+				path: '/my-files',
+				component: <MyFilesAsAStaff />,
+			},
+
+			{
+				name: 'Upload Files',
+				layout: '/staff',
+				path: '/upload-files',
+				component: <UploadFilesAsAStaff />,
+			},
+		],
 	},
 
 	{

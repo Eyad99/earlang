@@ -1,7 +1,9 @@
 import DataTable from '@/components/dataTable/DataTable';
+import moment from 'moment';
 import { DataTableProps } from '@/core';
-import { Button } from '@/components/ui/button';
+import { DEFAULT_DATE } from '@/variables/constants';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const MyFiles = () => {
 	const navigate = useNavigate();
@@ -19,6 +21,8 @@ const MyFiles = () => {
 			{ header: 'Time a Call Has to Wait (in seconds)', accessor: 'tat_in_s' },
 			{ header: 'Average Handled Time (in seconds)', accessor: 'aht_in_s' },
 			{ header: 'Service Level', accessor: 'sla' },
+			{ header: 'Files Count', accessor: 'xlfile.length' },
+			{ header: 'Date of creation', accessor: 'created_at', formatter: (value: any) => moment(value).format(DEFAULT_DATE) },
 		],
 		actions: {
 			add: {},

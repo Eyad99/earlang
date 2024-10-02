@@ -17,9 +17,19 @@ type PasswordFieldProps = {
 	errors?: string;
 	name?: string;
 	label?: string | any;
+	placeholder?: string;
 };
 
-const PasswordField: FC<PasswordFieldProps> = ({ onBlur, onChange, value, touched, errors, name = 'password', label = 'password' }) => {
+const PasswordField: FC<PasswordFieldProps> = ({
+	onBlur,
+	onChange,
+	value,
+	touched,
+	errors,
+	name = 'password',
+	label = 'password',
+	placeholder,
+}) => {
 	const [passwordVisibility, setPasswordVisibility] = useState(false);
 
 	const togglePasswordVisibility = useCallback(() => {
@@ -30,6 +40,7 @@ const PasswordField: FC<PasswordFieldProps> = ({ onBlur, onChange, value, touche
 		<div className='relative'>
 			<TextField
 				label={label}
+				placeholder={placeholder}
 				name={name}
 				autoComplete='on'
 				onBlur={onBlur}

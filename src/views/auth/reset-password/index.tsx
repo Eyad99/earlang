@@ -22,7 +22,13 @@ function ResetPassword() {
 			Cookies.set(KEY_TOKEN_COOKIE, data.data.token?.token);
 			Cookies.set(
 				KEY_USER_COOKIE,
-				JSON.stringify({ id: data?.data?.userId, email: data?.data?.email, role: data?.data?.Role, name: data?.data?.fullname })
+				JSON.stringify({
+					id: data?.data?.userId,
+					email: data?.data?.email,
+					role: data?.data?.Role,
+					name: data?.data?.fullname,
+					callCenterId: data?.data?.['callcenter.id'],
+				})
 			);
 
 			switch (data?.data?.Role) {
@@ -90,6 +96,7 @@ function ResetPassword() {
 								touched={touched.password}
 								errors={errors.password}
 								label={`password`}
+								placeholder={`Password`}
 							/>
 
 							<PasswordField
@@ -99,6 +106,7 @@ function ResetPassword() {
 								touched={touched.password2}
 								errors={errors.password2}
 								label={`confirm password`}
+								placeholder={`Confirm Password`}
 								name={`password2`}
 							/>
 

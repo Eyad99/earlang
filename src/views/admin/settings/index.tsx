@@ -47,7 +47,7 @@ const SettingsList = () => {
 			.positive('Number of files must be a positive number')
 			.integer('Number of files must be an integer')
 			.min(1, 'Number of files must be greater than 0')
-			.max(5, 'Number of users must be less or equal than 1000'),
+			.max(1000, 'Number of files must be less or equal than 1000'),
 	});
 
 	const submitHandler = (values: any) => {

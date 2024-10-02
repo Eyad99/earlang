@@ -26,6 +26,8 @@ const UploadFile = () => {
 		tat_in_s: '',
 		aht_in_s: '',
 		sla: '',
+		occ: 0,
+		shrinkage: 0,
 		file: [],
 	};
 
@@ -58,6 +60,20 @@ const UploadFile = () => {
 			.integer('Service Level must be an integer')
 			.min(1, 'Service Level must be greater than 0'),
 
+		occ: yup
+			.number()
+			.positive('Occupency must be a positive number')
+			.integer('Occupency must be an integer')
+			.min(1, 'Occupency must be greater than 0')
+			.max(99, 'Number of occupency must be less or equal than 99'),
+
+		shrinkage: yup
+			.number()
+			.positive('Shrinkage must be a positive number')
+			.integer('Shrinkage must be an integer')
+			.min(1, 'Shrinkage must be greater than 0')
+			.max(99, 'Number of shrinkage must be less or equal than 99'),
+
 		file: yup.array().min(1, `you need to provide one file at least!`).required(`file field is required`),
 	});
 
@@ -73,8 +89,13 @@ const UploadFile = () => {
 		formSchema: [
 			{
 				name: 'period_in_m',
-				type: 'number',
-				label: `Period in Minutes`,
+				type: 'select',
+				label: `Period (in minutes)`,
+				elements: [
+					{ id: '15', name: '15' },
+					{ id: '30', name: '30' },
+					{ id: '60', name: '60' },
+				],
 			},
 
 			{
@@ -93,6 +114,18 @@ const UploadFile = () => {
 				name: 'sla',
 				type: 'number',
 				label: `Service Level`,
+			},
+
+			{
+				name: 'occ',
+				type: 'number',
+				label: `Occupency (optional)`,
+			},
+
+			{
+				name: 'shrinkage',
+				type: 'number',
+				label: `Shrinkage (optional)`,
 			},
 
 			{

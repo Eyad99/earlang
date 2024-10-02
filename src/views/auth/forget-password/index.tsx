@@ -54,6 +54,7 @@ function ForgetPassword() {
 
 							<TextField
 								label={`email`}
+								placeholder={`Email`}
 								name='email'
 								type='email'
 								onBlur={handleBlur}

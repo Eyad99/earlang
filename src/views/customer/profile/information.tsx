@@ -161,7 +161,7 @@ const Information = () => {
 					{ id: 'Restaurants and Food Services', name: 'Restaurants and Food Services' },
 					{ id: 'Travel and Transportation', name: 'Travel and Transportation' },
 					{ id: 'Retail', name: 'Retail' },
-					{ id: 'Government Sector', name: 'Government Sector' },
+					{ id: 'Federal Government ', name: 'Federal Government ' },
 					{ id: 'Insurance', name: 'Insurance' },
 				],
 			},

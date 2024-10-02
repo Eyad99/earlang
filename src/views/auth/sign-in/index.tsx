@@ -87,6 +87,7 @@ function SignIn() {
 
 							<TextField
 								label={`email`}
+								placeholder={`Email`}
 								name='email'
 								type='email'
 								onBlur={handleBlur}
@@ -103,6 +104,7 @@ function SignIn() {
 								touched={touched.password}
 								errors={errors.password}
 								label={`password`}
+								placeholder={`Password`}
 							/>
 
 							<div className='mb-4 flex items-center justify-end px-2'>

@@ -67,6 +67,7 @@ function SignUp() {
 
 							<TextField
 								label={`name`}
+								placeholder={`Name`}
 								name='fullname'
 								type='text'
 								onBlur={handleBlur}
@@ -78,6 +79,7 @@ function SignUp() {
 
 							<TextField
 								label={`call center`}
+								placeholder={`Call Center`}
 								name='callcenter'
 								type='text'
 								onBlur={handleBlur}
@@ -89,6 +91,7 @@ function SignUp() {
 
 							<TextField
 								label={`email`}
+								placeholder={`Email`}
 								name='email'
 								type='email'
 								onBlur={handleBlur}
@@ -106,6 +109,7 @@ function SignUp() {
 								errors={errors.password}
 								label={`password`}
 								name={`password`}
+								placeholder={`Password`}
 							/>
 
 							<PasswordField
@@ -116,6 +120,7 @@ function SignUp() {
 								errors={errors.password2}
 								label={`confirm password`}
 								name={`password2`}
+								placeholder={`Confirm Password`}
 							/>
 
 							<Button variant={'blue'} className='w-full mt-4' disabled={signUpMutate?.isPending}>

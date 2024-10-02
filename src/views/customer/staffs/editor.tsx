@@ -65,11 +65,13 @@ const StaffEditor = () => {
 				name: 'password',
 				type: 'password',
 				label: `Password`,
+				placeholder: `Password`,
 			},
 			{
 				name: 'password2',
 				type: 'password',
 				label: `Confirm password`,
+				placeholder: `Confirm Password`,
 			},
 		],
 	};
