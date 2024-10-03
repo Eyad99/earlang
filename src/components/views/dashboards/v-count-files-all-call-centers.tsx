@@ -77,7 +77,7 @@ const VCountFilesAllCallCenters: FC<VCountFilesAllCallCentersProps> = ({ stateme
 							<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Files uploaded for each CallCenter</h2>
 							<div className='flex gap-2 items-center'>{renderExportButton()}</div>
 						</div>{' '}
-						<Bar options={options as any} data={barData} />
+						<Bar options={options as any} data={barData} ref={chartRef} />
 					</div>
 				}
 			/>

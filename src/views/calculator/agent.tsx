@@ -63,7 +63,7 @@ const Agent = () => {
 			.number()
 			.positive('Shrinkage must be a positive number')
 			.integer('Shrinkage must be an integer')
-			.min(1, 'Shrinkage must be greater than 0')
+			.min(0, 'Shrinkage must be greater than 0')
 			.max(99, 'Number of shrinkage must be less or equal than 99'),
 	});
 

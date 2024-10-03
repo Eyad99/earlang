@@ -5,6 +5,10 @@ import { fileApi } from '@/core/services/files';
 import FormBuilder from '@/components/formBuilder';
 import Cookies from 'js-cookie';
 import * as yup from 'yup';
+import { Button } from '@/components/ui/button';
+import downloadFile from '@/utils/helpers/downloadFile';
+import ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
 
 const UploadFile = () => {
 	const navigate = useNavigate();
@@ -64,14 +68,14 @@ const UploadFile = () => {
 			.number()
 			.positive('Occupency must be a positive number')
 			.integer('Occupency must be an integer')
-			.min(1, 'Occupency must be greater than 0')
+			.min(0, 'Occupency must be greater than 0')
 			.max(99, 'Number of occupency must be less or equal than 99'),
 
 		shrinkage: yup
 			.number()
 			.positive('Shrinkage must be a positive number')
 			.integer('Shrinkage must be an integer')
-			.min(1, 'Shrinkage must be greater than 0')
+			.min(0, 'Shrinkage must be greater than 0')
 			.max(99, 'Number of shrinkage must be less or equal than 99'),
 
 		file: yup.array().min(1, `you need to provide one file at least!`).required(`file field is required`),
@@ -79,6 +83,31 @@ const UploadFile = () => {
 
 	const submitHandler = (values: Files_Req) => {
 		addFilesMutate.mutate(values);
+	};
+
+	const handleDownloadTemplate = () => {
+		const workbook = new ExcelJS.Workbook();
+		const worksheet = workbook.addWorksheet('Template');
+		worksheet.columns = [
+			{ header: 'From', key: 'From', width: 10 },
+			{ header: 'To', key: 'To', width: 10 },
+			{ header: 'Offered', key: 'Offered', width: 10 },
+			{ header: 'Answered', key: 'Answered', width: 10 },
+			{ header: 'Abandoned', key: 'Abandoned', width: 10 },
+			{ header: 'x%', key: 'x%', width: 10 },
+			{ header: 'y secs', key: 'y secs', width: 10 },
+			{ header: 'Talk time', key: 'Talk time', width: 10 },
+			{ header: 'After Call Work', key: 'After Call Work', width: 10 },
+			{ header: 'Time to Abandon', key: 'Time to Abandon', width: 10 },
+			{ header: 'Scheduled', key: 'Scheduled', width: 10 },
+			{ header: 'Logged in', key: 'Logged in', width: 10 },
+			{ header: 'Available', key: 'Available', width: 10 },
+		];
+
+		workbook.xlsx.writeBuffer().then((buffer) => {
+			const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+			saveAs(blob, 'template.xlsx');
+		});
 	};
 
 	const formBuilderArgs = {
@@ -126,6 +155,18 @@ const UploadFile = () => {
 				name: 'shrinkage',
 				type: 'number',
 				label: `Shrinkage (optional)`,
+			},
+			{
+				type: 'component',
+				commponent: () => (
+					<div className='flex flex-col md:flex-row items-center md:gap-[8rem]'>
+						<span>"Download the Excel template to upload your data." </span>
+						<Button type='button' variant={'defaultOutline'} onClick={handleDownloadTemplate}>
+							Download Template
+						</Button>
+					</div>
+				),
+				colSpan: 'col-span-2',
 			},
 
 			{

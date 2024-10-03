@@ -93,7 +93,7 @@ const VDemonstratingOffered: FC<VDemonstratingOfferedProps> = ({}) => {
 							<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Demonstrating Offered</h2>
 							<div className='flex gap-2 items-center'>{renderExportButton()}</div>{' '}
 						</div>
-						<Line data={statementsData} options={options as any} />
+						<Line data={statementsData} options={options as any} ref={chartRef} />
 					</div>
 				}
 			/>

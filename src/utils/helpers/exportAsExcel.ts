@@ -16,7 +16,7 @@ const exportAsExcel = (
 	const worksheet = workbook.addWorksheet('Chart Data');
 
 	worksheet.columns = [
-		{ header: labelName.toUpperCase(), key: 'lebel', width: 20 }, // Always have a date column
+		{ header: labelName.toUpperCase(), key: 'lebel', width: 20 },
 		...format.map((f) => ({
 			header: f.key.includes('_') ? f.key.replace(/_/g, ' ').toUpperCase() : f.key.toUpperCase(),
 			key: f.key,

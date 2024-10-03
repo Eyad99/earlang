@@ -268,13 +268,13 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 						</div>
 
 						{isOpen == 1 ? (
-							<Line data={chartOne} options={options} />
+							<Line data={chartOne} options={options} ref={chartRefOne} />
 						) : isOpen == 2 ? (
-							<Line data={chartTow} options={options} />
+							<Line data={chartTow} options={options} ref={chartRefTow} />
 						) : isOpen == 3 ? (
-							<Line data={chartThree} options={options} />
+							<Line data={chartThree} options={options} ref={chartRefThree} />
 						) : isOpen == 4 ? (
-							<Line data={chartFour} options={options} />
+							<Line data={chartFour} options={options} ref={chartRefFour} />
 						) : (
 							''
 						)}

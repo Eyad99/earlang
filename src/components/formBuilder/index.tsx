@@ -117,6 +117,10 @@ const FormBuilder: FC<FormBuilderProps> = ({
 		);
 	};
 
+	const renderComponent = (x: any) => {
+		return x.commponent();
+	};
+
 	const itemToRendererMap: any = {
 		text: renderInputField,
 		number: renderInputField,
@@ -129,6 +133,7 @@ const FormBuilder: FC<FormBuilderProps> = ({
 		file: renderFilesField,
 		select: renderSelectField,
 		switch: renderSwitchField,
+		component: renderComponent,
 	};
 
 	const render = (x: any) => {

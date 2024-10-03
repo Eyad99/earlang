@@ -36,7 +36,7 @@ const Information = () => {
 		Working_hours: (data && data?.data?.Working_hours) || '',
 		Working_days: (data && data?.data?.Working_days) || '',
 		number_of_skill_groups: (data && data?.data?.number_of_skill_groups) || 0,
-		list_of_skill_groups: (data && data?.data?.list_of_skill_groups) || 0,
+		list_of_skill_groups: (data && data?.data?.list_of_skill_groups) || '',
 		notices: (data && data?.data?.notices) || '',
 		business_type: (data && data?.data?.business_type) || '',
 	};
@@ -167,8 +167,8 @@ const Information = () => {
 			},
 			{
 				name: 'it_staff_available',
-				type: 'switch',
-				label: `Staff Available`,
+				type: 'text',
+				label: `Available Staff`,
 			},
 		],
 	};

@@ -88,7 +88,7 @@ const VCallStats: FC<VCountFilesAllCallCentersProps> = ({ statements }) => {
 							<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Calls (Monthly Calls)</h2>
 							<div className='flex gap-2 items-center'>{renderExportButton()}</div>
 						</div>{' '}
-						<Line data={lineData} options={options} />
+						<Line data={lineData} options={options} ref={chartRef} />
 					</div>
 				}
 			/>
