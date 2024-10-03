@@ -22,6 +22,8 @@ const VCallcenterValumes = () => {
 		],
 	};
 
+	const totalVolume = initialValues.est.reduce((acc, item) => acc + item.volume, 0);
+
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
 		initialValues,
 		onSubmit: () => {},
@@ -72,6 +74,16 @@ const VCallcenterValumes = () => {
 							</TableCell>
 						</TableRow>
 					))}
+					<TableRow key={'total'}>
+						<TableCell className={`${bodyCellCassName}`}></TableCell>
+						<TableCell className={`${bodyCellCassName} font-bold`}>Total {totalVolume}</TableCell>
+						<TableCell className={`${bodyCellCassName}`}></TableCell>
+					</TableRow>
+					<TableRow key={'avg'}>
+						<TableCell className={`${bodyCellCassName}`}></TableCell>
+						<TableCell className={`${bodyCellCassName} font-bold`}>Avg {(totalVolume / 12).toFixed(2)}</TableCell>
+						<TableCell className={`${bodyCellCassName}`}></TableCell>
+					</TableRow>
 				</TableBody>
 			</Table>
 		</Card>

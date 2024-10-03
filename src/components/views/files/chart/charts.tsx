@@ -19,6 +19,10 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 	const chartRefTow = useRef(null);
 	const chartRefThree = useRef(null);
 	const chartRefFour = useRef(null);
+	const chartRefFive = useRef(null);
+	const chartRefSix = useRef(null);
+	const chartRefSeven = useRef(null);
+	const chartRefEight = useRef(null);
 
 	const [isOpen, setIsOpen] = useState<any>(null);
 
@@ -137,6 +141,84 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 		],
 	};
 
+	const chartFive = {
+		labels: data ? data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)) : [],
+		datasets: [
+			{
+				label: 'Current occupency w/email',
+				data: [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150],
+				borderColor: 'blue',
+				backgroundColor: 'rgba(0, 0, 255, 0.1)',
+			},
+			{
+				label: 'Erlang occupency w/email',
+				data: [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200],
+				borderColor: 'red',
+				backgroundColor: 'rgba(255, 0, 0, 0.1)',
+			},
+		],
+	};
+
+	const chartSix = {
+		labels: data ? data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)) : [],
+		datasets: [
+			{
+				label: 'Logged in',
+				data: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+				borderColor: 'blue',
+				backgroundColor: 'rgba(0, 0, 255, 0.1)',
+			},
+			{
+				label: 'Shrink adjusted',
+				data: [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30],
+				borderColor: 'red',
+				backgroundColor: 'rgba(255, 0, 0, 0.1)',
+			},
+		],
+	};
+
+	const chartSeven = {
+		labels: [3, 5, 7, 10, 13, 15, 20, 25],
+		datasets: [
+			{
+				label: 'Time to abandon',
+				data: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+				borderColor: 'blue',
+				backgroundColor: 'rgba(0, 0, 255, 0.1)',
+			},
+		],
+	};
+
+	const chartEight = {
+		labels: data ? data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)) : [],
+		datasets: [
+			{
+				label: 'Erlang',
+				data: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+				borderColor: 'blue',
+				backgroundColor: 'rgba(0, 0, 255, 0.1)',
+			},
+			{
+				label: 'Current',
+				data: [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30],
+				borderColor: 'red',
+				backgroundColor: 'rgba(0, 0, 255, 0.1)',
+			},
+			{
+				label: 'Current Abandonds',
+				data: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+				borderColor: 'green',
+				backgroundColor: 'rgba(0, 0, 255, 0.1)',
+			},
+			{
+				label: 'Current Vol (adj)',
+				data: [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30],
+				borderColor: 'yellow',
+				backgroundColor: 'rgba(0, 0, 255, 0.1)',
+			},
+		],
+	};
+
 	const options = {
 		responsive: true,
 		// animations: {
@@ -234,6 +316,79 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 			labelName='from time - to time'
 		/>
 	);
+
+	const renderExportButtonToChartFive = () => (
+		<ExportChartAsMultiTypes
+			chartRef={chartRefFive}
+			statements={{
+				labels: data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)),
+				datasets: {
+					'Current Occupancy': [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150],
+					'Erlang Occupancy': [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200],
+				},
+			}}
+			format={[
+				{ key: 'Current Occupancy', value: '' },
+				{ key: 'Erlang Occupancy', value: '' },
+			]}
+			labelName='from time - to time'
+		/>
+	);
+
+	const renderExportButtonToChartSix = () => (
+		<ExportChartAsMultiTypes
+			chartRef={chartRefSix}
+			statements={{
+				labels: data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)),
+				datasets: {
+					'Logged In': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+					'Shrink Adjusted': [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30],
+				},
+			}}
+			format={[
+				{ key: 'Logged In', value: '' },
+				{ key: 'Shrink Adjusted', value: '' },
+			]}
+			labelName='from time - to time'
+		/>
+	);
+
+	const renderExportButtonToChartSeven = () => (
+		<ExportChartAsMultiTypes
+			chartRef={chartRefSix}
+			statements={{
+				labels: [3, 5, 7, 10, 13, 15, 20, 25],
+				datasets: {
+					'Time to abandon': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+				},
+			}}
+			format={[{ key: 'Time to abandon', value: '' }]}
+			labelName='Seconds'
+		/>
+	);
+
+	const renderExportButtonToChartEight = () => (
+		<ExportChartAsMultiTypes
+			chartRef={chartRefSix}
+			statements={{
+				labels: data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)),
+				datasets: {
+					Erlang: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+					Current: [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30],
+					'Current Abandonds': [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30],
+					'Current Vol (adj)': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+				},
+			}}
+			format={[
+				{ key: 'Erlang', value: '' },
+				{ key: 'Current', value: '' },
+				{ key: 'Current Abandonds', value: '' },
+				{ key: 'Current Vol (adj)', value: '' },
+			]}
+			labelName='Seconds'
+		/>
+	);
+
 	return (
 		<React.Fragment>
 			<EControlledDialog
@@ -252,6 +407,14 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 									? 'Total Answered, SL, SL X Seconds'
 									: isOpen == 4
 									? 'Total Answered,Total Abandon, Occupancy'
+									: isOpen == 5
+									? 'Current Occupancy , Erlang Occupancy'
+									: isOpen == 6
+									? 'Staff Required'
+									: isOpen == 7
+									? 'Time To Abandon'
+									: isOpen == 8
+									? 'Total Answered,Total Abandon, Occupancy'
 									: ''}
 							</h2>
 							<div className='flex gap-2 items-center'>
@@ -263,6 +426,14 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 									? renderExportButtonToChartThree()
 									: isOpen == 4
 									? renderExportButtonToChartFour()
+									: isOpen == 5
+									? renderExportButtonToChartFive()
+									: isOpen == 6
+									? renderExportButtonToChartSix()
+									: isOpen == 7
+									? renderExportButtonToChartSeven()
+									: isOpen == 8
+									? renderExportButtonToChartEight()
 									: ''}
 							</div>
 						</div>
@@ -275,6 +446,14 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 							<Line data={chartThree} options={options} ref={chartRefThree} />
 						) : isOpen == 4 ? (
 							<Line data={chartFour} options={options} ref={chartRefFour} />
+						) : isOpen == 5 ? (
+							<Line data={chartFive} options={options} ref={chartRefFive} />
+						) : isOpen == 6 ? (
+							<Line data={chartSix} options={options} ref={chartRefSix} />
+						) : isOpen == 7 ? (
+							<Line data={chartSeven} options={options} ref={chartRefSeven} />
+						) : isOpen == 8 ? (
+							<Line data={chartEight} options={options} ref={chartRefEight} />
 						) : (
 							''
 						)}
@@ -324,6 +503,50 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 						</div>
 					</div>
 					<Line data={chartFour} options={options} ref={chartRefFour} />
+				</div>
+
+				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
+					<div className='flex justify-between'>
+						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Current Occupancy , Erlang Occupancy</h2>
+						<div className='flex gap-2 items-center'>
+							<Maximize className='cursor-pointer' onClick={() => setIsOpen(5)} />
+							{renderExportButtonToChartFive()}
+						</div>
+					</div>
+					<Line data={chartFive} options={options} ref={chartRefFive} />
+				</div>
+
+				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
+					<div className='flex justify-between'>
+						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Staff Required</h2>
+						<div className='flex gap-2 items-center'>
+							<Maximize className='cursor-pointer' onClick={() => setIsOpen(6)} />
+							{renderExportButtonToChartSix()}
+						</div>
+					</div>
+					<Line data={chartSix} options={options} ref={chartRefSix} />
+				</div>
+
+				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
+					<div className='flex justify-between'>
+						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Time To Abandon</h2>
+						<div className='flex gap-2 items-center'>
+							<Maximize className='cursor-pointer' onClick={() => setIsOpen(7)} />
+							{renderExportButtonToChartSeven()}
+						</div>
+					</div>
+					<Line data={chartSeven} options={options} ref={chartRefSeven} />
+				</div>
+
+				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
+					<div className='flex justify-between'>
+						<h2 className='text-lg font-bold text-navy-700 dark:text-white'></h2>
+						<div className='flex gap-2 items-center'>
+							<Maximize className='cursor-pointer' onClick={() => setIsOpen(8)} />
+							{renderExportButtonToChartEight()}
+						</div>
+					</div>
+					<Line data={chartEight} options={options} ref={chartRefEight} />
 				</div>
 			</div>
 		</React.Fragment>

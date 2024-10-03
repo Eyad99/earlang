@@ -14,6 +14,7 @@ export const CallCentersList = () => {
 			{ header: 'Name', accessor: 'name' },
 			{ header: 'Owner Name', accessor: 'user.fullname' },
 			{ header: 'Owner Email', accessor: 'user.email' },
+			{ header: 'Account Type', accessor: 'free', formatter: (value: any) => 'free' },
 		],
 		actions: {
 			custom: {
@@ -62,3 +63,7 @@ export const CallCentersList = () => {
 		</div>
 	);
 };
+
+// account type
+// free
+// commershal

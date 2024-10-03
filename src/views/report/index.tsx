@@ -1,5 +1,4 @@
 import withLoading from '@/hooks/withLoader';
-import ChartLister from '@/components/views/files/chart/lister';
 import Charts from '@/components/views/files/chart/charts';
 import Card from '@/components/reusable/card';
 import * as XLSX from 'xlsx';

@@ -142,6 +142,12 @@ const Agent = () => {
 							<span>Agents </span>
 							<span className='text-green-400'>{earlangAgentMutate?.data?.data?.data?.Agents} </span>
 						</div>
+						{earlangAgentMutate?.data?.data?.data?.Agents_with_shrinkage && (
+							<div className={divClassName + ' border-yellow-400'}>
+								<span>Agents with shrinkage </span>
+								<span className='text-yellow-400'>{earlangAgentMutate?.data?.data?.data?.Agents_with_shrinkage} </span>
+							</div>
+						)}
 						<div className={divClassName + ' border-blue-400'}>
 							<span>Pw </span>
 							<span className='text-blue-400'>{earlangAgentMutate?.data?.data?.data?.Pw} </span>

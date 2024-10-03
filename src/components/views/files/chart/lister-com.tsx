@@ -15,7 +15,7 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 		return parseFloat(number.toFixed(decimalPlaces));
 	};
 
-	const shouldShowShrinkage = data[0]?.shrinkage === 0;
+	const shouldShowShrinkage = data[0]?.shrinkage === 0 || data[0]?.shrinkage === null;
 
 	const headers = [
 		{ header: 'From Time' },
@@ -32,6 +32,7 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 		{ header: 'Aggent Logged_in' },
 		{ header: 'Aggent Available' },
 		{ header: 'Agents' },
+		{ header: 'Agents With Shrinkage' },
 		{ header: 'Shrinkage' },
 		{ header: 'Service Level' },
 		{ header: 'Service Level Target' },
@@ -46,6 +47,7 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 		{ header: 'From Time' },
 		{ header: 'To Time' },
 		{ header: 'Agents' },
+		{ header: 'Agents With Shrinkage' },
 		{ header: 'Shrinkage' },
 		{ header: 'Service Level' },
 		{ header: 'Service Level Target' },
@@ -56,7 +58,7 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 		{ header: 'Max Call' },
 	];
 
-	const headerFields = ['Agents', 'Shrinkage', 'Service Level', 'Asa', 'Imm Answ', 'Pw', 'Occ', 'Max Call'];
+	const headerFields = ['Agents', 'Agents With Shrinkage', 'Shrinkage', 'Service Level', 'Asa', 'Imm Answ', 'Pw', 'Occ', 'Max Call'];
 	const bodyCellCassName = 'min-w-[150px] border-white/0 py-3 pr-4 text-[14px] text-navy-700 dark:text-white text-center';
 
 	const handleExpansionOfColumns = () => setExpansionOfColumns(!expansionOfColumns);
@@ -157,7 +159,12 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 									''
 								)}
 								<TableCell className={bodyCellCassName + ' bg-gray-100'}>{row.agents}</TableCell>
-								{row.shrinkage !== 0 && <TableCell className={bodyCellCassName + ' bg-gray-100'}>{row.shrinkage * 100}</TableCell>}
+								<TableCell className={bodyCellCassName + ' bg-gray-100'}>{row.agents_with_shrinkage}</TableCell>
+								{row.shrinkage === 0 || row.shrinkage === null ? (
+									''
+								) : (
+									<TableCell className={bodyCellCassName + ' bg-gray-100'}>{row?.shrinkage * 100}</TableCell>
+								)}
 								<TableCell
 									className={bodyCellCassName + ` bg-gray-100 ${roundedNumber(row.sl * 100, 2) < 80 ? 'bg-red-400' : 'bg-green-400'}`}
 								>
