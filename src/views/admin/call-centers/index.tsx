@@ -1,12 +1,11 @@
 import DataTable from '@/components/dataTable/DataTable';
 import { Button } from '@/components/ui/button';
 import { DataTableProps } from '@/core';
-import { CallCenter_Res } from '@/core/models/users';
 import { useNavigate } from 'react-router-dom';
 
 export const CallCentersList = () => {
 	const navigate = useNavigate();
-	// const tableProps: DataTableProps<CallCenter_Res> = {
+	// const tableProps: DataTableProps<> = {
 	const tableProps: DataTableProps = {
 		fetchUrl: 'auth/callcenters/',
 		queryKey: 'callcenters',
@@ -14,7 +13,7 @@ export const CallCentersList = () => {
 			{ header: 'Name', accessor: 'name' },
 			{ header: 'Owner Name', accessor: 'user.fullname' },
 			{ header: 'Owner Email', accessor: 'user.email' },
-			{ header: 'Account Type', accessor: 'free', formatter: (value: any) => 'free' },
+			{ header: 'Account Type', accessor: 'free', formatter: () => 'free' },
 		],
 		actions: {
 			custom: {
@@ -28,7 +27,7 @@ export const CallCentersList = () => {
 									navigate(`/admin/call-centers/${rowData.row.original.id}/staffs`);
 								}}
 							>
-								View Staffs
+								View Agents
 							</Button>
 
 							<Button

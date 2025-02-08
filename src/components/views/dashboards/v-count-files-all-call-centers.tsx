@@ -31,23 +31,24 @@ const VCountFilesAllCallCenters: FC<VCountFilesAllCallCentersProps> = ({ stateme
 
 	const options = {
 		responsive: true,
-		// animation: {
-		// 	duration: 1000,
-		// 	easing: 'easeOutBounce',
-		// },
 		plugins: {
 			legend: {
 				display: false,
 				position: 'top',
 			},
-			// title: {
-			// 	display: true,
-			// 	text: 'Monthly Sales for 2023', // Title of the chart
-			// },
 		},
 		scales: {
+			x: {
+				title: {
+					display: true,
+					text: 'CallCenter Names',
+				},
+			},
 			y: {
-				beginAtZero: true,
+				title: {
+					display: true,
+					text: 'Number of uploaded files',
+				},
 			},
 		},
 	};
@@ -63,6 +64,7 @@ const VCountFilesAllCallCenters: FC<VCountFilesAllCallCentersProps> = ({ stateme
 			}}
 			format={exportFormats}
 			labelName='Callcenter Name'
+			fileName='Files uploaded for each CallCenter'
 		/>
 	);
 	return (

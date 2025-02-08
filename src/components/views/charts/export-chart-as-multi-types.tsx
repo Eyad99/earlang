@@ -10,13 +10,22 @@ interface ExportChartAsMultiTypesProps {
 	statements: any;
 	format: { key: string; value: string }[];
 	labelName?: string;
+	fileName?: string;
+	removeFirstCallByDefault?: boolean;
 }
-const ExportChartAsMultiTypes: FC<ExportChartAsMultiTypesProps> = ({ chartRef, statements, format, labelName = 'Date' }) => {
+const ExportChartAsMultiTypes: FC<ExportChartAsMultiTypesProps> = ({
+	chartRef,
+	statements,
+	format,
+	labelName = 'Date',
+	fileName = 'chart-data',
+	removeFirstCallByDefault,
+}) => {
 	const handleExportAsImage = () => {
 		if (chartRef.current) {
 			const chart = chartRef.current as any;
 			const url = chart.toBase64Image();
-			downloadFile(url);
+			downloadFile(url, fileName);
 		}
 	};
 
@@ -24,12 +33,12 @@ const ExportChartAsMultiTypes: FC<ExportChartAsMultiTypesProps> = ({ chartRef, s
 		if (chartRef.current) {
 			const chart = chartRef.current as any;
 			const url = chart.toBase64Image();
-			exportAsPdf(url);
+			exportAsPdf(url, fileName);
 		}
 	};
 
 	const handleExportAsExcel = () => {
-		exportAsExcel(statements.labels, statements, format, labelName);
+		exportAsExcel(statements.labels, statements, format, labelName, fileName, removeFirstCallByDefault);
 	};
 
 	return (

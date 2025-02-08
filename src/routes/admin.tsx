@@ -9,7 +9,7 @@ import Formula3 from '@/views/formulas/formula-3';
 import Formula4 from '@/views/formulas/formula-4';
 import Formula5 from '@/views/formulas/formula-5';
 import { UsersList } from '@/views/users';
-import { Calculator, Headset, LayoutDashboard, Pi, Settings, Users } from 'lucide-react';
+import { Calculator, Headset, LayoutDashboard, Pi, Settings, TrendingUpDown, Users } from 'lucide-react';
 import UserEditor from '@/views/users/editor';
 import { CallCentersList } from '@/views/admin/call-centers';
 import AllStaffsCallCenter from '@/views/admin/call-centers/staffs';
@@ -18,6 +18,10 @@ import CAllCenterFiles from '@/views/admin/call-centers/files';
 import Order from '@/components/views/files/order';
 import Report from '@/views/report';
 import AdminProfile from '@/views/admin/profile';
+import Forecast from '@/views/forecast';
+import ForecastEditor from '@/views/forecast/editor';
+import ForecastViewer from '@/views/forecast/view';
+import VForecast from '@/components/views/forecast/v-forecast';
 
 const AdminRoutes = [
 	{
@@ -157,24 +161,54 @@ const AdminRoutes = [
 	// },
 
 	{
+		name: 'Forecast',
+		layout: '/admin',
+		icon: <TrendingUpDown />,
+		path: '/forecast',
+		component: <Forecast />,
+	},
+
+	{
+		name: 'Uploading a file',
+		layout: '/admin',
+		path: '/forecast-by-uploading-a-file',
+		component: <VForecast />,
+		invisible: true,
+	},
+
+	{
+		layout: '/admin',
+		path: '/forecast/:forecastId',
+		component: <ForecastEditor />,
+		invisible: true,
+	},
+
+	{
+		layout: '/admin',
+		path: '/forecast/:forecastId/:forecastType',
+		component: <ForecastViewer />,
+		invisible: true,
+	},
+
+	{
 		name: 'Calculators',
 		path: '/max-calls',
 		icon: <Calculator />,
 		collapse: true,
 		items: [
 			{
-				name: 'Agent',
+				name: 'Agents Required',
 				layout: '/admin',
 				path: '/agent',
 				component: <Agent />,
 			},
 
-			{
-				name: 'Max Calls',
-				layout: '/admin',
-				path: '/max-calls',
-				component: <MaxCalls />,
-			},
+			// {
+			// 	name: 'Max Calls',
+			// 	layout: '/admin',
+			// 	path: '/max-calls',
+			// 	component: <MaxCalls />,
+			// },
 		],
 	},
 

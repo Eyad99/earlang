@@ -56,4 +56,6 @@ export interface Chart_Res {
 	occ: number;
 	max_call: number;
 	created_at: string;
+	occ_max_call: number;
+	occ_n_call: number;
 }

@@ -10,7 +10,6 @@ import { authApi } from '@/core';
 
 const Navbar = (props: { brandText: string; [x: string]: any }) => {
 	const { brandText, mini, hovered = true, open, handleOpenAndCloseSideBar } = props;
-	console.log('navvvvvvv mini', mini);
 
 	let user: any = Cookies.get(KEY_USER_COOKIE);
 	user = user ? JSON.parse(user) : {};

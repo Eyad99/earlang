@@ -1,5 +1,5 @@
 import Footer from '@/components/widgets/footer';
-import insightsWhiteImg from '@/assets/img/others/insights-white.png';
+import insightsWhiteImg from '@/assets/img/others/insights-logo-white.png';
 
 function Default(props: { maincard: JSX.Element }) {
 	const { maincard } = props;

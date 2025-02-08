@@ -7,6 +7,8 @@ import PasswordField from '../reusable/fields/PasswordField';
 import Uploader from '../reusable/uploader/inex';
 import SelectField from '../reusable/fields/SelectField';
 import SwitchField from '../reusable/fields/SwitchField';
+import { Textarea } from '../ui/textarea';
+import TextAreaField from '../reusable/fields/TextAreaField';
 
 export type FormBuilderProps = {
 	initialValues: any;
@@ -25,11 +27,11 @@ const FormBuilder: FC<FormBuilderProps> = ({
 	handleSubmit,
 	validationSchema,
 	formSchema,
-	submitButtonText = 'submit',
+	submitButtonText = 'Submit',
 	loading = false,
 	gridClassName = 'grid-cols-2',
 	buttonClassName,
-	formClassName = 'bg-white p-4 rounded-md',
+	formClassName = 'bg-white p-4 rounded-md dark:!bg-navy-800 dark:text-white',
 }) => {
 	const {
 		values,
@@ -51,12 +53,29 @@ const FormBuilder: FC<FormBuilderProps> = ({
 				name={x.name}
 				label={x.label}
 				type={x.type}
+				min={x.min}
+				max={x.max}
 				onBlur={handleBlur}
 				onChange={handleChange}
 				value={values[x.name]}
 				placeholder={x.placeholder}
 				error={!!touched[x.name] && !!errors[x.name]}
 				helperText={touched[x.name] && errors[x.name]}
+				disabled={x.disabled || false}
+			/>
+		);
+	};
+	const renderTextAreaField = (x: any) => {
+		return (
+			<TextAreaField
+				name={x.name}
+				label={x.label}
+				onBlur={handleBlur}
+				onChange={handleChange}
+				value={values[x.name]}
+				error={!!touched[x.name] && !!errors[x.name]}
+				helperText={touched[x.name] && errors[x.name]}
+				placeholder={x.placeholder}
 				disabled={x.disabled || false}
 			/>
 		);
@@ -84,6 +103,9 @@ const FormBuilder: FC<FormBuilderProps> = ({
 				fileTypes={x.fileTypes}
 				errors={errors[x.name] as any}
 				error={!!touched[x.name] && !!errors[x.name]}
+				singleFile={x.singleFile}
+				fileSize={x.fileSize}
+				placeholder={x.placeholder}
 			/>
 		);
 	};
@@ -106,13 +128,14 @@ const FormBuilder: FC<FormBuilderProps> = ({
 				value={values[x.name]}
 				label={x.label}
 				elements={x.elements}
-				onChange={(files: any) => setFieldValue(x.name, files)}
+				onChange={(itam: any) => setFieldValue(x.name, itam)}
 				errors={errors[x.name] as any}
 				error={!!touched[x.name] && !!errors[x.name]}
 				helperText={touched[x.name] && errors[x.name]}
 				disabled={x.disabled || false}
 				triggerClassName={x.triggerClassName}
 				placeholder={x.placeholder}
+				chosenFieldName={x.chosenFieldName}
 			/>
 		);
 	};
@@ -123,6 +146,7 @@ const FormBuilder: FC<FormBuilderProps> = ({
 
 	const itemToRendererMap: any = {
 		text: renderInputField,
+		textarea: renderTextAreaField,
 		number: renderInputField,
 		email: renderInputField,
 		url: renderInputField,
@@ -161,11 +185,11 @@ const FormBuilder: FC<FormBuilderProps> = ({
 				<Button variant={'blue'} className={`mt-4 ${buttonClassName}`} disabled={loading}>
 					{loading ? (
 						<div className='flex gap-2'>
-							<span>{submitButtonText ?? 'submit'}</span>
+							<span>{submitButtonText}</span>
 							<LoaderIcon className='animate-spin' />
 						</div>
 					) : (
-						<span>{submitButtonText ?? 'submit'}</span>
+						<span>{submitButtonText}</span>
 					)}
 				</Button>
 			</div>

@@ -21,6 +21,7 @@ import withLoading from '@/hooks/withLoader';
 import TableSkeleton from '@/utils/skeletons/table-skeleton';
 import moment from 'moment';
 import { DEFAULT_DATE } from '@/variables/constants';
+import { useFormik } from 'formik';
 
 const BoxWithLoading = withLoading(Card);
 
@@ -50,8 +51,25 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 		start_date: null,
 		end_date: null,
 	});
+
 	/* - - - - - - - - Query - - - - - - - - */
-	const { data, isPending, isLoading, isFetching, isError, error } = useDataTableFetch({
+
+	const initialValues = {
+		data: [],
+	};
+
+	const { values, setFieldValue } = useFormik({
+		initialValues,
+		onSubmit: () => {},
+	});
+
+	const {
+		data: result,
+		isLoading,
+		isFetching,
+		isError,
+		isSuccess,
+	} = useDataTableFetch({
 		queryKey,
 		url: fetchUrl,
 		page,
@@ -62,6 +80,14 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 		setPage,
 		searchKey,
 	});
+
+	React.useEffect(() => {
+		if (isSuccess) {
+			setFieldValue('data', result);
+		} else {
+			setFieldValue('data', []);
+		}
+	}, [isLoading, isFetching]);
 
 	/* - - - - - - - - useReactTable - - - - - - - - */
 
@@ -103,42 +129,11 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 		  })
 		: ([] as any);
 
-	// Filtering function based on start and end date
-	// const filterByDate1 = (row: any, columnId: string, filterValue: any) => {
-	// 	const { start_date, end_date } = dateQuery;
-
-	// 	const rowDate = new Date(row.original.created_at); // Ensure this is the correct date field in your row data
-	// 	const startDate = start_date ? new Date(start_date.setHours(0, 0, 0, 0)) : null;
-	// 	const endDate = end_date ? new Date(end_date.setHours(23, 59, 59, 999)) : null;
-
-	// 	console.log('Row date:', rowDate);
-	// 	console.log('Start date:', startDate);
-	// 	console.log('End date:', endDate);
-
-	// 	// // If only start_date is provided, return rows that match the exact start_date
-	// 	// if (startDate && !endDate) {
-	// 	// 	return rowDate.toDateString() === startDate.toDateString();
-	// 	// }
-
-	// 	// // If both start_date and end_date are provided, return rows between the two dates
-	// 	// if (startDate && endDate) {
-	// 	// 	return rowDate >= startDate && rowDate <= endDate;
-	// 	// }
-
-	// 	// // If no valid date filter is applied, return true (include all rows)
-	// 	// return true;
-	// };
-
 	const table = useReactTable({
-		data: data,
+		data: values.data,
 		columns: mappedColumns.concat(actionColumn) as any,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
-		// getFilteredRowModel: getFilteredRowModel(),
-		// state: {
-		// 	globalFilter: dateQuery,
-		// },
-		// globalFilterFn: filterByDate1 as any,
 		debugTable: false,
 	});
 
@@ -160,18 +155,59 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 
 	// - - - Date [In the future, merge it with the filter and specify the type of filter before sending it to distinguish if it is a select, date or name ] - - -
 
+	// const handleFilterByDate = (name: string, date: Date) => {
+	// 	setDateQuery((prevDate) => ({
+	// 		...prevDate,
+	// 		[name]: date,
+	// 	}));
+	// 	const filteredData = filterByDate1();
+	// };
+
+	// const filterByDate1 = () => {
+	// 	const { start_date, end_date } = dateQuery;
+
+	// 	// Set time for start and end dates for accurate filtering
+	// 	const startDate = start_date ? new Date(start_date.setHours(0, 0, 0, 0)) : null;
+	// 	const endDate = end_date ? new Date(end_date.setHours(23, 59, 59, 999)) : null;
+
+	// 	// Return filtered data
+	// 	return values?.data.filter((row: any) => {
+	// 		const rowDate = new Date(row.created_at); // Assuming 'date' is the date field in your data
+
+	// 		// If only start_date is provided
+	// 		if (startDate && !endDate) {
+	// 			return rowDate >= startDate;
+	// 		}
+
+	// 		// If both start_date and end_date are provided
+	// 		if (startDate && endDate) {
+	// 			return rowDate >= startDate && rowDate <= endDate;
+	// 		}
+
+	// 		// If no date filter is applied, return all rows
+	// 		return true;
+	// 	});
+	// };
+
 	const handleFilterByDate = (name: string, date: Date) => {
-		setDateQuery((prevDate) => ({
-			...prevDate,
-			[name]: date,
-		}));
+		console.log('name', name);
+		const filteredData = filterByDate1(date);
+		setFieldValue('data', filteredData);
 	};
 
-	const handleFilterByDate1 = (name: string, date: Date) => {
-		setDateQuery((prevDate) => ({
-			...prevDate,
-			[name]: date,
-		}));
+	const filterByDate1 = (date: any) => {
+		return result.filter((row: any) => {
+			const rowDate = moment(new Date(row.created_at)).format(DEFAULT_DATE);
+
+			// If only start_date is provided
+			if (date) {
+				// return rowDate >= date;
+				return rowDate == date;
+			}
+
+			// If no date filter is applied, return all rows
+			return true;
+		});
 	};
 
 	// - - - Filter - - -
@@ -207,7 +243,7 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 						actions,
 						filterByDate,
 					}}
-					handlers={{ handleSearch, handleFilter, handleFilterByDate, handleFilterByDate1 }}
+					handlers={{ handleSearch, handleFilter, handleFilterByDate }}
 				/>
 
 				{/* - - - - - - - - Table - - - - - - - - */}
@@ -224,12 +260,21 @@ export const DataTable: (p: DataTableProps) => React.ReactElement<DataTableProps
 											onClick={header.column.getToggleSortingHandler()}
 											className='cursor-pointer border-b-[1px] border-gray-200 pb-2 pr-4 pt-4 text-start'
 										>
-											<div className='items-center justify-between text-xs text-gray-200'>
+											<div className='flex items-center gap-2 text-xs text-gray-200'>
 												{flexRender(header.column.columnDef.header, header.getContext())}
-												{{
-													asc: '',
-													desc: '',
-												}[header.column.getIsSorted() as string] ?? null}
+												{header?.id !== 'actions' && (
+													<span className='text-black font-bold'>
+														{header.column.getIsSorted() ? (
+															header.column.getIsSorted() === 'asc' ? (
+																<span>↑</span>
+															) : (
+																<span>↓</span>
+															)
+														) : (
+															<span>⇅</span>
+														)}
+													</span>
+												)}
 											</div>
 										</TableHead>
 									);

@@ -32,7 +32,7 @@ const StaffRoutes = [
 		collapse: true,
 		items: [
 			{
-				name: 'Lister',
+				name: 'Activities',
 				layout: '/staff',
 				path: '/my-files',
 				component: <MyFilesAsAStaff />,
@@ -75,18 +75,18 @@ const StaffRoutes = [
 		collapse: true,
 		items: [
 			{
-				name: 'Agent',
+				name: 'Agents Required',
 				layout: '/staff',
 				path: '/agent',
 				component: <Agent />,
 			},
 
-			{
-				name: 'Max Calls',
-				layout: '/staff',
-				path: '/max-calls',
-				component: <MaxCalls />,
-			},
+			// {
+			// 	name: 'Max Calls',
+			// 	layout: '/staff',
+			// 	path: '/max-calls',
+			// 	component: <MaxCalls />,
+			// },
 		],
 	},
 ];

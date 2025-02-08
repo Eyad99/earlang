@@ -8,7 +8,7 @@ export interface DataTableProps {
 	searchKey?: string;
 	filterByDate?: boolean;
 	cardClassName?: string;
-}
+ }
 
 interface ActionDetails {
 	text?: string;

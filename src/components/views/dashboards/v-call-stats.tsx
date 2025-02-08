@@ -66,6 +66,21 @@ const VCallStats: FC<VCountFilesAllCallCentersProps> = ({ statements }) => {
 				position: 'top',
 			},
 		},
+
+		scales: {
+			x: {
+				title: {
+					display: true,
+					text: 'Date',
+				},
+			},
+			y: {
+				title: {
+					display: true,
+					text: 'Number of calls',
+				},
+			},
+		},
 	} as any;
 
 	const exportFormats = [
@@ -75,7 +90,9 @@ const VCallStats: FC<VCountFilesAllCallCentersProps> = ({ statements }) => {
 		{ key: 'occupancy', value: '' },
 	];
 
-	const renderExportButton = () => <ExportChartAsMultiTypes chartRef={chartRef} statements={statements} format={exportFormats} />;
+	const renderExportButton = () => (
+		<ExportChartAsMultiTypes chartRef={chartRef} statements={statements} format={exportFormats} fileName='Calls (Monthly Calls)' />
+	);
 	return (
 		<React.Fragment>
 			<EControlledDialog
@@ -92,7 +109,8 @@ const VCallStats: FC<VCountFilesAllCallCentersProps> = ({ statements }) => {
 					</div>
 				}
 			/>
-			<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
+
+			<div className=' p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
 				<div className='flex justify-between'>
 					<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Calls (Monthly Calls)</h2>
 					<div className='flex gap-2 items-center'>

@@ -15,17 +15,7 @@ export type useDataTableFetchProps = {
 	searchKey?: string;
 };
 
-export function useDataTableFetch({
-	queryKey,
-	url = '',
-	page,
-	search,
-	filter,
-	filterByDate,
-}: // setTotalPages,
-// setPage,
-// searchKey,
-useDataTableFetchProps) {
+export function useDataTableFetch({ queryKey, url = '', page, search, filter, filterByDate }: useDataTableFetchProps) {
 	const data = useQuery({
 		queryKey: [queryKey, page, search, filter, filterByDate],
 		queryFn: async () => {
@@ -42,7 +32,6 @@ useDataTableFetchProps) {
 			// 	setTotalPages(res.data.meta.totalPages);
 			// 	setPage(res.data.meta.currentPage);
 			// }
-			console.log('resssss', res);
 			return res.data.data as any[];
 		},
 		refetchOnWindowFocus: false,

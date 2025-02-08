@@ -38,10 +38,10 @@ const UploadFile = () => {
 	const validationSchema = yup.object().shape({
 		period_in_m: yup
 			.number()
-			.required('Period in Minutes is required')
-			.positive('Period in Minutes must be a positive number')
-			.integer('Period in Minutes must be an integer')
-			.min(1, 'Period in Minutes must be greater than 0'),
+			.required('Interval in Minutes is required')
+			.positive('Interval in Minutes must be a positive number')
+			.integer('Interval in Minutes must be an integer')
+			.min(1, 'Interval in Minutes must be greater than 0'),
 
 		tat_in_s: yup
 			.number()
@@ -59,23 +59,23 @@ const UploadFile = () => {
 
 		sla: yup
 			.number()
-			.required('Service Level is required')
-			.positive('Service Level must be a positive number')
-			.integer('Service Level must be an integer')
-			.min(1, 'Service Level must be greater than 0'),
+			.required('Targeted Service Level is required')
+			.positive('Targeted Service Level must be a positive number')
+			.integer('Targeted Service Level must be an integer')
+			.min(1, 'Targeted Service Level must be greater than 0'),
 
 		occ: yup
 			.number()
-			.positive('Occupency must be a positive number')
-			.integer('Occupency must be an integer')
-			.min(0, 'Occupency must be greater than 0')
-			.max(99, 'Number of occupency must be less or equal than 99'),
+			.positive('Maximum Targeted Occupancy must be a positive number')
+			.integer('Maximum Targeted Occupancy must be an integer')
+			.min(0, 'Maximum Targeted Occupancy must be greater than 0')
+			.max(99, 'Number of Occupancy must be less or equal than 99'),
 
 		shrinkage: yup
 			.number()
-			.positive('Shrinkage must be a positive number')
-			.integer('Shrinkage must be an integer')
-			.min(0, 'Shrinkage must be greater than 0')
+			.positive('Targeted Shrinkage Percentage must be a positive number')
+			.integer('Targeted Shrinkage Percentage must be an integer')
+			.min(0, 'Targeted Shrinkage Percentage must be greater than 0')
 			.max(99, 'Number of shrinkage must be less or equal than 99'),
 
 		file: yup.array().min(1, `you need to provide one file at least!`).required(`file field is required`),
@@ -119,7 +119,7 @@ const UploadFile = () => {
 			{
 				name: 'period_in_m',
 				type: 'select',
-				label: `Period (in minutes)`,
+				label: `Interval (in minutes)`,
 				elements: [
 					{ id: '15', name: '15' },
 					{ id: '30', name: '30' },
@@ -130,31 +130,37 @@ const UploadFile = () => {
 			{
 				name: 'tat_in_s',
 				type: 'number',
-				label: `Time a Call Has to Wait (in seconds)`,
+				label: `Service Level Threshold (in seconds)`,
+				min: 1,
 			},
 
 			{
 				name: 'aht_in_s',
 				type: 'number',
 				label: `Average Handled Time (in seconds)`,
+				min: 1,
 			},
 
 			{
 				name: 'sla',
 				type: 'number',
-				label: `Service Level`,
+				label: `Targeted Service Level`,
+				min: 1,
 			},
 
 			{
 				name: 'occ',
 				type: 'number',
-				label: `Occupency (optional)`,
+				label: `Maximum Targeted Occupancy (optional)`,
+				min: 0,
+				max: 99,
 			},
 
 			{
 				name: 'shrinkage',
 				type: 'number',
-				label: `Shrinkage (optional)`,
+				label: `Targeted Shrinkage Percentage (optional)`,
+				min: 0,
 			},
 			{
 				type: 'component',

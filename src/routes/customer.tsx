@@ -2,7 +2,7 @@ import UploadFilesAsACustomer from '@/views/customer/files/editor';
 import MyFilesAsACustomer from '@/views/customer/files';
 import CustomerDashboard from '@/views/customer/dashboard';
 import StaffEditor from '@/views/customer/staffs/editor';
-import { Calculator, Files, LayoutDashboard, Users } from 'lucide-react';
+import { Calculator, Files, Headset, LayoutDashboard, TrendingUpDown, Users } from 'lucide-react';
 import { MyStaffs } from '@/views/customer/staffs';
 import StaffFiles from '@/views/customer/staffs/files';
 import OrderAsCustomer from '@/views/customer/files/order';
@@ -11,6 +11,12 @@ import Report from '@/views/report';
 import CustomerProfile from '@/views/customer/profile';
 import Agent from '@/views/calculator/agent';
 import MaxCalls from '@/views/calculator/max-calls';
+import Forecast from '@/views/forecast';
+import { CallCenters } from '@/views/customer/callCenters';
+import CallCenterEditor from '@/views/customer/callCenters/editor';
+import ForecastEditor from '@/views/forecast/editor';
+import ForecastViewer from '@/views/forecast/view';
+import VForecast from '@/components/views/forecast/v-forecast';
 
 const CustomerRoutes = [
 	{
@@ -29,7 +35,22 @@ const CustomerRoutes = [
 	},
 
 	{
-		name: 'Staffs',
+		name: 'Call Centers',
+		layout: '/customer',
+		icon: <Headset />,
+		path: '/call-centers',
+		component: <CallCenters />,
+	},
+
+	{
+		layout: '/customer',
+		path: '/call-centers/:callCenterId',
+		component: <CallCenterEditor />,
+		invisible: true,
+	},
+
+	{
+		name: 'Agent',
 		layout: '/customer',
 		icon: <Users />,
 		path: '/staffs',
@@ -71,7 +92,7 @@ const CustomerRoutes = [
 		collapse: true,
 		items: [
 			{
-				name: 'Lister',
+				name: 'Activities',
 				layout: '/customer',
 				path: '/my-files',
 				component: <MyFilesAsACustomer />,
@@ -108,24 +129,53 @@ const CustomerRoutes = [
 	},
 
 	{
+		name: 'Forecast',
+		layout: '/customer',
+		icon: <TrendingUpDown />,
+		path: '/forecast',
+		component: <Forecast />,
+	},
+
+	{
+		name: 'Uploading a file',
+		layout: '/customer',
+		path: '/forecast-by-uploading-a-file',
+		component: <VForecast />,
+		invisible: true,
+	},
+
+	{
+		layout: '/customer',
+		path: '/forecast/:forecastId',
+		component: <ForecastEditor />,
+		invisible: true,
+	},
+	{
+		layout: '/customer',
+		path: '/forecast/:forecastId/:forecastType',
+		component: <ForecastViewer />,
+		invisible: true,
+	},
+
+	{
 		name: 'Calculators',
 		path: '/max-calls',
 		icon: <Calculator />,
 		collapse: true,
 		items: [
 			{
-				name: 'Agent',
+				name: 'Agents Required',
 				layout: '/customer',
 				path: '/agent',
 				component: <Agent />,
 			},
 
-			{
-				name: 'Max Calls',
-				layout: '/customer',
-				path: '/max-calls',
-				component: <MaxCalls />,
-			},
+			// {
+			// 	name: 'Max Calls',
+			// 	layout: '/customer',
+			// 	path: '/max-calls',
+			// 	component: <MaxCalls />,
+			// },
 		],
 	},
 ];

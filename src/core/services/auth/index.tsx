@@ -1,4 +1,5 @@
 import {
+	Approve_Customer_To_join_Req,
 	CallCenter_Profile_Req,
 	ForgetPassword_Req,
 	ResetPassword_Req,
@@ -23,4 +24,8 @@ export const authApi = {
 	userProfile: () => get(`auth/user/my-profile/`),
 	updateUserProfile: (data: User_Profile_Req) => put(`auth/user/my-profile/update/`, data),
 	updateUserImage: (data: User_Profile_Image_Req) => put(`auth/user/update-image/`, data),
+
+	busnissTypes: () => get(`auth/users/economics/`),
+	plans: () => get(`auth/users/plans/`),
+	approveCustomerTojoin: (data: Approve_Customer_To_join_Req, customerId: string) => post(`auth/approve-user/${customerId}/`, data),
 };

@@ -4,14 +4,88 @@ import FormBuilder from '@/components/formBuilder';
 import withLoading from '@/hooks/withLoader';
 import Card from '@/components/reusable/card';
 import * as yup from 'yup';
+import { useFormik } from 'formik';
+import { Activity, BarChart, PhoneCall } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Card as CardShadCn, CardContent } from '@/components/ui/card';
 
 const BoxWithLoading = withLoading(Card);
 
 const MaxCalls = () => {
+	const initialMetricsValues = {
+		metrics: [
+			{
+				id: 'Max_call',
+				title: 'Max call',
+				value: 2.96,
+				icon: PhoneCall,
+				color: 'text-red-500',
+				progressColor: '#eee',
+				tooltip: 'Average Speed of Answer (in seconds)',
+			},
+			{
+				id: 'N_calls',
+				title: 'Number calls',
+				value: 2,
+				icon: PhoneCall,
+				color: 'text-green-500',
+				progressColor: '#eee',
+				tooltip: 'Number of active agents',
+			},
+
+			{
+				id: 'SL',
+				title: 'Archived service level',
+				value: 86.73,
+				icon: BarChart,
+				color: 'text-pink-500',
+				progressColor: '#FF0080',
+				tooltip: 'Service Level',
+			},
+
+			{
+				id: 'occ_Max_call',
+				title: 'Occupancy max calls',
+				value: 13.44,
+				icon: Activity,
+				color: 'text-purple-500',
+				progressColor: '#A855F7',
+				tooltip: 'Occupancy max calls',
+			},
+			{
+				id: 'occ_N_call',
+				title: 'Occupancy calls',
+				value: 13.44,
+				icon: Activity,
+				color: 'text-indigo-500',
+				progressColor: '#7073F2',
+				tooltip: 'Occupancy calls',
+			},
+		],
+	};
+
+	const { values, setFieldValue } = useFormik({
+		initialValues: initialMetricsValues,
+		onSubmit: () => {},
+	});
 	const earlangMaxCallsMutate = useMutateData({
 		mutationFn: (data) => calculatorApi.earlangMaxCalls(data),
 		invalidateKeys: ['earlangMaxCalls'],
 		displaySuccess: true,
+		onSuccessFn: ({ data }) => {
+			const updatedMetrics = values.metrics.map((metric) => {
+				const matchedValue = data.data[metric.id];
+				if (matchedValue !== undefined) {
+					return {
+						...metric,
+						value: parseFloat(matchedValue),
+					};
+				}
+				return metric;
+			});
+
+			setFieldValue('metrics', updatedMetrics);
+		},
 	});
 
 	const initialValues = {
@@ -108,33 +182,62 @@ const MaxCalls = () => {
 		],
 	};
 
-	const divClassName =
-		'w-[150px] h-[150px] bg-black bg-opacity-5 border-4  rounded-full flex flex-col justify-center items-center text-xl font-bold transition-transform transform hover:scale-110 hover:bg-opacity-20 duration-300 ';
+	const roundedNumber = (number: number, decimalPlaces: number) => {
+		return parseFloat(number.toFixed(decimalPlaces));
+	};
+	const ProgressCircle = ({ value, color }: { value: number; color: string }) => (
+		<div className='relative w-16 h-16'>
+			<svg className='w-full h-full' viewBox='0 0 36 36'>
+				<path d='M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831' fill='none' stroke='#eee' strokeWidth='3' />
+				<path
+					d='M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831'
+					fill='none'
+					stroke={color}
+					strokeWidth='3'
+					strokeDasharray={`${value}, 100`}
+				/>
+			</svg>
+			<div className='absolute inset-0 flex items-center justify-center text-sm font-semibold'>{value} %</div>
+		</div>
+	);
+
 	return (
 		<div className='flex md:flex-row flex-col wrap gap-2'>
 			<div className='md:w-1/2 w-full'>{<FormBuilder {...formBuilderArgs} />}</div>
 			<div className='md:w-1/2 w-full bg-white flex items-center justify-center text-center p-6'>
 				{earlangMaxCallsMutate?.isPending ? (
 					<BoxWithLoading loading={earlangMaxCallsMutate?.isPending}>
-						<span className='font-bold text-xl '>"The calculation is being processed."</span>{' '}
+						<span className='font-bold text-xl text-navy-700'>"The calculation is being processed."</span>{' '}
 					</BoxWithLoading>
 				) : earlangMaxCallsMutate?.data?.data?.data?.Max_call ? (
-					<div className='flex flex-wrap gap-4 '>
-						<div className={divClassName + ' border-red-400'}>
-							<span>Max call </span>
-							<span className='text-red-400'>{earlangMaxCallsMutate?.data?.data?.data?.Max_call} </span>
-						</div>
-						<div className={divClassName + ' border-green-400'}>
-							<span>Numbe calls </span>
-							<span className='text-green-400'>{earlangMaxCallsMutate?.data?.data?.data?.N_calls} </span>
-						</div>
-						<div className={divClassName + ' border-blue-400'}>
-							<span>Archived service level </span>
-							<span className='text-blue-400'>{earlangMaxCallsMutate?.data?.data?.data?.SL * 100} % </span>
-						</div>
+					<div className='grid grid-cols-2 md:grid-cols-2 gap-4 w-full'>
+						{values.metrics
+							.filter((item) => item.value !== null)
+							.map((metric, index) => (
+								<TooltipProvider key={index}>
+									<Tooltip key={index}>
+										<TooltipTrigger>
+											<CardShadCn className='overflow-hidden transition-all hover:shadow-lg'>
+												<CardContent className='p-4 flex flex-col items-center'>
+													<metric.icon className={`${metric.color} h-6 w-6 mb-2`} />
+													<h3 className='font-semibold text-sm mb-2'>{metric.title}</h3>
+													{typeof metric.value === 'number' && metric.value <= 100 ? (
+														<ProgressCircle value={roundedNumber(metric.value * 100, 2)} color={metric.progressColor} />
+													) : (
+														<p className={`text-2xl font-bold ${metric.color}`}>{metric.value}</p>
+													)}
+												</CardContent>
+											</CardShadCn>
+										</TooltipTrigger>
+										<TooltipContent>
+											<p>{metric.tooltip}</p>
+										</TooltipContent>
+									</Tooltip>
+								</TooltipProvider>
+							))}
 					</div>
 				) : (
-					<span className='font-bold text-xl '>
+					<span className='font-bold text-xl text-navy-700'>
 						"Fill the fields to see the result, which will be updated automatically after calculation."
 					</span>
 				)}

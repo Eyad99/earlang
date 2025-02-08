@@ -1,6 +1,6 @@
 import DataTable from '@/components/dataTable/DataTable';
 import moment from 'moment';
-import { DEFAULT_DATE_TIME } from '@/variables/constants';
+import { DEFAULT_DATE, DEFAULT_DATE_TIME } from '@/variables/constants';
 import { DataTableProps } from '@/core';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -14,7 +14,7 @@ const Order = () => {
 		queryKey: `my-order-${orderId}`,
 		columns: [
 			{ header: 'Name', accessor: `xlfile`, formatter: (value: any) => value.split('/')?.[value.split('/')?.length - 1] },
-			{ header: 'Date of creation', accessor: 'created_at', formatter: (value: any) => moment(value).format(DEFAULT_DATE_TIME) },
+			{ header: 'Date of creation', accessor: 'created_at', formatter: (value: any) => moment(value).format(DEFAULT_DATE) },
 		],
 		actions: {
 			custom: {

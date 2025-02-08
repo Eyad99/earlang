@@ -9,20 +9,29 @@ const exportAsExcel = (
 	data: any[], // Array of dates or labels
 	statements: any, // Data that contains datasets
 	format: { key: string; value: string }[], // Format array that defines the key-value mapping
-	labelName: string
+	labelName: string,
+	fileName: string,
+	removeFirstCallByDefault?: boolean
 ) => {
-	// console.log('data', data, statements, format);
+ 
 	const workbook = new ExcelJS.Workbook();
 	const worksheet = workbook.addWorksheet('Chart Data');
 
-	worksheet.columns = [
-		{ header: labelName.toUpperCase(), key: 'lebel', width: 20 },
-		...format.map((f) => ({
-			header: f.key.includes('_') ? f.key.replace(/_/g, ' ').toUpperCase() : f.key.toUpperCase(),
-			key: f.key,
-			width: 20,
-		})),
-	];
+	worksheet.columns = removeFirstCallByDefault
+		? [
+				...format.map((f) => ({
+					header: f.key.includes('_') ? f.key.replace(/_/g, ' ').toUpperCase() : f.key.toUpperCase(),
+					key: f.key,
+					width: 20,
+				})),
+		  ]
+		: [{ header: labelName.toUpperCase(), key: 'lebel', width: 20 }].concat([
+				...format.map((f) => ({
+					header: f.key.includes('_') ? f.key.replace(/_/g, ' ').toUpperCase() : f.key.toUpperCase(),
+					key: f.key,
+					width: 20,
+				})),
+		  ]);
 
 	data.forEach((item: any, index: number) => {
 		const row: { [key: string]: any } = { lebel: item };
@@ -36,7 +45,7 @@ const exportAsExcel = (
 
 	workbook.xlsx.writeBuffer().then((buffer) => {
 		const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-		saveAs(blob, 'chart-data.xlsx');
+		saveAs(blob, `${fileName}.xlsx`);
 	});
 };
 

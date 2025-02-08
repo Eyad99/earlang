@@ -10,7 +10,6 @@ import insightsIcon from '@/assets/img/others/logo-icon.png';
 function SidebarHorizon(props: { open: boolean; [x: string]: any }) {
 	const { open, mini, hovered = false, handleOpenAndCloseSideBar } = props;
 
-	console.log('sidebarrr mini', mini);
 	return (
 		<div
 			// className={`sm:none ${

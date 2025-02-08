@@ -38,7 +38,7 @@ const StatisticsCard = () => {
 				{ name: 'Max Agents', value: statsCallCenterByIdData?.data?.max_agents ?? 0, icon: <ChartColumn strokeWidth={2.5} /> },
 				{ name: 'Avg Asa', value: statsCallCenterByIdData?.data?.avg_asa.toFixed(2) ?? 0, icon: <Percent strokeWidth={2.5} /> },
 				{
-					name: 'Avg Occupency',
+					name: 'Avg Occupancy',
 					value: (statsCallCenterByIdData?.data?.avg_occ ?? 0 * 100).toFixed(2) + '%',
 					icon: <Percent strokeWidth={2.5} />,
 				},

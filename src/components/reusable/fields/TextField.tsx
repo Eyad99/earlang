@@ -49,6 +49,7 @@ const TextField: React.FC<InputProps | TextFieldProps> = ({
 							<EyeToggleButton show={show} click={click} />
 						</div>
 					)}
+					{props.name === 'occ' && props.value > 0 && <div className='absolute top-[25%] right-[91%]'>%</div>}
 				</div>
 			</div>
 			{error && <Label className='ml-1.5 text-red-500'>{helperText}</Label>}

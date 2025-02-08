@@ -5,3 +5,5 @@ export * from './dataTable';
 export * from './users';
 export * from './files';
 export * from './dashboards';
+export * from './forecast';
+export * from './callCenter';

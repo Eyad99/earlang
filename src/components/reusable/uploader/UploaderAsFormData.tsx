@@ -21,7 +21,7 @@ const UploaderAsFormData = ({
 	const [files, setFiles] = useState(value);
 
 	useEffect(() => {
-		if (onChange) onChange(singleFile ? files[0] : files);
+		if (onChange) onChange(files);
 	}, [files]);
 
 	useEffect(() => {
@@ -70,6 +70,7 @@ const UploaderAsFormData = ({
 				placeholder={placeholder}
 				errors={errors}
 				error={error}
+				singleFile={singleFile}
 			/>
 		</React.Fragment>
 	);

@@ -14,6 +14,7 @@ interface SelectFieldProps {
 	triggerClassName?: string;
 	placeholder?: string;
 	onChange: any;
+	chosenFieldName?: string;
 }
 
 const SelectField: FC<SelectFieldProps> = ({
@@ -28,6 +29,7 @@ const SelectField: FC<SelectFieldProps> = ({
 	triggerClassName,
 	placeholder,
 	onChange,
+	chosenFieldName = 'name',
 }) => {
 	return (
 		<div className='flex flex-col w-full gap-1.5'>
@@ -42,7 +44,7 @@ const SelectField: FC<SelectFieldProps> = ({
 				</SelectTrigger>
 				<SelectContent>
 					{elements.map((item: any) => (
-						<SelectItem key={item.id} value={item.name}>
+						<SelectItem key={item.id} value={String(item?.[chosenFieldName])}>
 							{item.name}
 						</SelectItem>
 					))}

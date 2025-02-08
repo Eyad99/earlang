@@ -32,7 +32,7 @@ const Information = () => {
 		staff_dedicated_QA: (data && data?.data?.staff_dedicated_QA) || '',
 		staff_dedicated_scheduling: (data && data?.data?.staff_dedicated_scheduling) || '',
 		staff_dedicated_training: (data && data?.data?.staff_dedicated_training) || '',
-		it_staff_available: (data && data?.data?.it_staff_available) || false,
+		it_staff_available: (data && data?.data?.it_staff_available) || '',
 		Working_hours: (data && data?.data?.Working_hours) || '',
 		Working_days: (data && data?.data?.Working_days) || '',
 		number_of_skill_groups: (data && data?.data?.number_of_skill_groups) || 0,
@@ -101,20 +101,20 @@ const Information = () => {
 			{
 				name: 'staff_dedicated_QA',
 				type: 'text',
-				label: `Staff Dedicated Qa`,
-				placeholder: `Staff Dedicated Qa`,
+				label: `Agent Dedicated Qa`,
+				placeholder: `Agent Dedicated Qa`,
 			},
 			{
 				name: 'staff_dedicated_scheduling',
 				type: 'text',
-				label: `Staff Dedicated Scheduling`,
-				placeholder: `Staff Dedicated Scheduling`,
+				label: `Agent Dedicated Scheduling`,
+				placeholder: `Agent Dedicated Scheduling`,
 			},
 			{
 				name: 'staff_dedicated_training',
 				type: 'text',
-				label: `Staff Dedicated Training`,
-				placeholder: `Staff Dedicated Training`,
+				label: `Agent Dedicated Training`,
+				placeholder: `Agent Dedicated Training`,
 			},
 			{
 				name: 'Working_hours',
@@ -168,7 +168,7 @@ const Information = () => {
 			{
 				name: 'it_staff_available',
 				type: 'text',
-				label: `Available Staff`,
+				label: `Available Agent`,
 			},
 		],
 	};

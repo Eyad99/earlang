@@ -23,10 +23,10 @@ function SignUp() {
 
 	const initialValues = {
 		fullname: '',
-		callcenter: '',
 		email: '',
 		password: '',
 		password2: '',
+		is_approved: 0,
 	};
 
 	const handleFormSubmit = (values: any) => {
@@ -35,7 +35,6 @@ function SignUp() {
 
 	const formSchema = yup.object().shape({
 		fullname: yup.string().required(`name is required`),
-		callcenter: yup.string().required(`call center is required`),
 		email: yup.string().required(`email address is required`),
 		password: yup
 			.string()
@@ -75,18 +74,6 @@ function SignUp() {
 								onChange={handleChange}
 								error={!!touched.fullname && !!errors.fullname}
 								helperText={touched.fullname && errors.fullname}
-							/>
-
-							<TextField
-								label={`call center`}
-								placeholder={`Call Center`}
-								name='callcenter'
-								type='text'
-								onBlur={handleBlur}
-								value={values.callcenter}
-								onChange={handleChange}
-								error={!!touched.callcenter && !!errors.callcenter}
-								helperText={touched.callcenter && errors.callcenter}
 							/>
 
 							<TextField

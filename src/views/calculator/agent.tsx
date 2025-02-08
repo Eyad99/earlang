@@ -1,17 +1,122 @@
-import { useMutateData } from '@/hooks/useMutateData';
+import { Activity, Clock, HeadphonesIcon, Percent, Users, UserMinus, PhoneCall, BarChart } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { calculatorApi, Earlang_Calculator_Normal } from '@/core';
+import { Card as CardShadCn, CardContent } from '@/components/ui/card';
+import { useMutateData } from '@/hooks/useMutateData';
+import { useFormik } from 'formik';
 import FormBuilder from '@/components/formBuilder';
 import withLoading from '@/hooks/withLoader';
 import Card from '@/components/reusable/card';
 import * as yup from 'yup';
+import React from 'react';
 
 const BoxWithLoading = withLoading(Card);
 
 const Agent = () => {
+	const initialMetricsValues = {
+		metrics: [
+			{
+				id: 'ASA',
+				title: 'ASA',
+				value: 2.96,
+				icon: Clock,
+				color: 'text-red-500',
+				progressColor: '#eee',
+				tooltip: 'Average Speed of Answer (in seconds)',
+			},
+			{
+				id: 'Agents',
+				title: 'Agents',
+				value: 2,
+				icon: Users,
+				color: 'text-green-500',
+				progressColor: '#eee',
+				tooltip: 'Number of active agents',
+			},
+			{
+				id: 'Agents_with_shrinkage',
+				title: 'Agents with shrinkage',
+				value: null,
+				icon: UserMinus,
+				color: 'text-yellow-500',
+				progressColor: '#EAB308',
+				tooltip: 'Agents accounting for shrinkage',
+			},
+			// {
+			// 	id: 'Pw',
+			// 	title: 'Pw',
+			// 	value: 13.44,
+			// 	icon: Percent,
+			// 	color: 'text-purple-500',
+			// 	progressColor: '#A855F7',
+			// 	tooltip: 'Percentage of calls waiting',
+			// },
+			{
+				id: 'SL',
+				title: 'SL',
+				value: 86.73,
+				icon: BarChart,
+				color: 'text-pink-500',
+				progressColor: '#FF0080',
+				tooltip: 'Calculated Service Level',
+			},
+			{
+				id: 'ServiceLevel',
+				title: 'Service Level',
+				value: 88.27,
+				icon: Percent,
+				color: 'text-orange-500',
+				progressColor: '#F97316',
+				tooltip: 'Calculated Service Level within threshold',
+			},
+			{
+				id: 'imm_answ',
+				title: 'Imm answ',
+				value: 86.56,
+				icon: PhoneCall,
+				color: 'text-teal-500',
+				progressColor: '#14B8A6',
+				tooltip: 'Percentage of calls answered immediately',
+			},
+			{
+				id: 'occ',
+				title: 'Calculated Occupancy',
+				value: 13.44,
+				icon: Activity,
+				color: 'text-indigo-500',
+				progressColor: '#7073F2',
+				tooltip: 'Calculated Occupancy',
+			},
+		],
+	};
+
+	const { values, setFieldValue } = useFormik({
+		initialValues: initialMetricsValues,
+		onSubmit: () => {},
+	});
+
 	const earlangAgentMutate = useMutateData({
 		mutationFn: (data) => calculatorApi.earlangNormal(data),
 		invalidateKeys: ['earlangNormal'],
 		displaySuccess: true,
+		onSuccessFn: ({ data }) => {
+			const updatedMetrics = values.metrics.map((metric) => {
+				const matchedValue = data.data[metric.id];
+				if (matchedValue !== undefined) {
+					return {
+						...metric,
+						value: ['ASA', 'Agents'].includes(metric.id) ? String(matchedValue) : parseFloat(matchedValue),
+					};
+				} else {
+					return {
+						...metric,
+						value: null,
+					};
+				}
+			});
+
+			setFieldValue('metrics', updatedMetrics);
+		},
 	});
 
 	const initialValues = {
@@ -26,17 +131,17 @@ const Agent = () => {
 	const validationSchema = yup.object().shape({
 		NCalls: yup
 			.number()
-			.required('Number Calls is required')
-			.positive('Number Calls must be a positive number')
-			.integer('Number Calls must be an integer')
-			.min(1, 'Number Calls must be greater than 0'),
+			.required('Calls Volume is required')
+			.positive('Calls Volume must be a positive number')
+			.integer('Calls Volume must be an integer')
+			.min(1, 'Calls Volume must be greater than 0'),
 
 		Period: yup
 			.number()
-			.required('Period is required')
-			.positive('Period must be a positive number')
-			.integer('Period must be an integer')
-			.min(1, 'Period must be greater than 0'),
+			.required('Interval is required')
+			.positive('Interval must be a positive number')
+			.integer('Interval must be an integer')
+			.min(1, 'Interval must be greater than 0'),
 
 		AHT: yup
 			.number()
@@ -47,10 +152,10 @@ const Agent = () => {
 
 		SLA: yup
 			.number()
-			.required('Service Level is required')
-			.positive('Service Level must be a positive number')
-			.integer('Service Level must be an integer')
-			.min(1, 'Service Level must be greater than 0'),
+			.required('Targeted Service Level is required')
+			.positive('Targeted Service Level must be a positive number')
+			.integer('Targeted Service Level must be an integer')
+			.min(1, 'Targeted Service Level must be greater than 0'),
 
 		Time: yup
 			.number()
@@ -67,7 +172,7 @@ const Agent = () => {
 			.max(99, 'Number of shrinkage must be less or equal than 99'),
 	});
 
-	const submitHandler = (values: Earlang_Calculator_Normal) => {
+	const submitHandler = (values: Earlang_Calculator_Normal | any) => {
 		earlangAgentMutate.mutate(values);
 	};
 
@@ -82,13 +187,14 @@ const Agent = () => {
 			{
 				name: 'NCalls',
 				type: 'number',
-				label: `Number of Calls`,
+				label: `Calls Volume`,
+				min: 1,
 			},
 
 			{
 				name: 'Period',
 				type: 'select',
-				label: `Period (in minutes)`,
+				label: `Interval (in minutes)`,
 				elements: [
 					{ id: '15', name: '15' },
 					{ id: '30', name: '30' },
@@ -100,82 +206,99 @@ const Agent = () => {
 				name: 'AHT',
 				type: 'number',
 				label: `Average Handled Time (in seconds)`,
+				min: 1,
 			},
 
 			{
 				name: 'SLA',
 				type: 'number',
-				label: `Service Level`,
+				label: `Targeted Service Level`,
+				min: 1,
 			},
 
 			{
 				name: 'Time',
 				type: 'number',
-				label: `Time a Call Has to Wait (in seconds)`,
+				label: `Targeted Threshold (in seconds)`,
+				min: 1,
 			},
 
 			{
 				name: 'shrinkage',
 				type: 'number',
-				label: `Shrinkage (optional)`,
+				label: `Targeted Shrinkage (optional)`,
 			},
 		],
 	};
 
-	const divClassName =
-		'w-[150px] h-[150px] bg-black bg-opacity-5 border-4  rounded-full flex flex-col justify-center items-center text-xl font-bold transition-transform transform hover:scale-110 hover:bg-opacity-20 duration-300 ';
-	return (
-		<div className='flex md:flex-row flex-col wrap gap-2'>
-			<div className='md:w-1/2 w-full'>{<FormBuilder {...formBuilderArgs} />}</div>
-			<div className='md:w-1/2 w-full bg-white flex items-center justify-center text-center p-6'>
-				{earlangAgentMutate?.isPending ? (
-					<BoxWithLoading loading={earlangAgentMutate?.isPending}>
-						<span className='font-bold text-xl '>"The calculation is being processed."</span>{' '}
-					</BoxWithLoading>
-				) : earlangAgentMutate?.data?.data?.data?.Agents ? (
-					<div className='flex flex-wrap gap-4 '>
-						<div className={divClassName + ' border-red-400'}>
-							<span>ASA </span>
-							<span className='text-red-400'>{earlangAgentMutate?.data?.data?.data?.ASA} </span>
-						</div>
-						<div className={divClassName + ' border-green-400'}>
-							<span>Agents </span>
-							<span className='text-green-400'>{earlangAgentMutate?.data?.data?.data?.Agents} </span>
-						</div>
-						{earlangAgentMutate?.data?.data?.data?.Agents_with_shrinkage && (
-							<div className={divClassName + ' border-yellow-400'}>
-								<span>Agents with shrinkage </span>
-								<span className='text-yellow-400'>{earlangAgentMutate?.data?.data?.data?.Agents_with_shrinkage} </span>
-							</div>
-						)}
-						<div className={divClassName + ' border-blue-400'}>
-							<span>Pw </span>
-							<span className='text-blue-400'>{earlangAgentMutate?.data?.data?.data?.Pw} </span>
-						</div>
-						<div className={divClassName + ' border-fuchsia-400'}>
-							<span>SL </span>
-							<span className='text-fuchsia-400'>{earlangAgentMutate?.data?.data?.data?.SL} </span>
-						</div>
-						<div className={divClassName + ' border-horizonOrange-400'}>
-							<span>Service Level </span>
-							<span className='text-horizonOrange-400'>{earlangAgentMutate?.data?.data?.data?.ServiceLevel} </span>
-						</div>
-						<div className={divClassName + ' border-teal-400'}>
-							<span>Imm answ </span>
-							<span className='text-teal-400'>{earlangAgentMutate?.data?.data?.data?.imm_answ} </span>
-						</div>
-						<div className={divClassName + ' border-purple-400'}>
-							<span>Occupancy </span>
-							<span className='text-purple-400'>{earlangAgentMutate?.data?.data?.data?.occ} </span>
-						</div>
-					</div>
-				) : (
-					<span className='font-bold text-xl '>
-						"Fill the fields to see the result, which will be updated automatically after calculation."
-					</span>
-				)}
+	const ProgressCircle = ({ value, color, removePercentage }: { value: number; color: string; removePercentage: boolean }) => (
+		<div className='relative w-16 h-16'>
+			<svg className='w-full h-full' viewBox='0 0 36 36'>
+				<path d='M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831' fill='none' stroke='#eee' strokeWidth='3' />
+				<path
+					d='M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831'
+					fill='none'
+					stroke={color}
+					strokeWidth='3'
+					strokeDasharray={`${value}, 100`}
+				/>
+			</svg>
+			<div className='absolute inset-0 flex items-center justify-center text-sm font-semibold'>
+				{value}
+				{!removePercentage && '%'}
 			</div>
 		</div>
+	);
+
+	return (
+		<React.Fragment>
+			<h3 className='mb-4 font-bold text-navy-700'>"Calculate the number of agent required to reach an agreed service level"</h3>
+			<div className='flex md:flex-row flex-col wrap gap-2'>
+				<div className='md:w-1/2 w-full'>{<FormBuilder {...formBuilderArgs} />}</div>
+				<div className='md:w-1/2 w-full bg-white flex items-center justify-center text-center p-6'>
+					{earlangAgentMutate?.isPending ? (
+						<BoxWithLoading loading={earlangAgentMutate?.isPending}>
+							<span className='font-bold text-xl text-navy-700'>"The calculation is being processed."</span>{' '}
+						</BoxWithLoading>
+					) : earlangAgentMutate?.data?.data?.data?.Agents ? (
+						<div className='grid grid-cols-2 md:grid-cols-2 gap-4 w-full'>
+							{values.metrics
+								.filter((item) => item.value !== null)
+								.map((metric, index) => (
+									<TooltipProvider key={index}>
+										<Tooltip key={index}>
+											<TooltipTrigger>
+												<CardShadCn className='overflow-hidden transition-all hover:shadow-lg'>
+													<CardContent className='p-4 flex flex-col items-center'>
+														<metric.icon className={`${metric.color} h-6 w-6 mb-2`} />
+														<h3 className='font-semibold text-sm mb-2'>{metric.title}</h3>
+														{typeof metric.value === 'number' && metric.value <= 100 ? (
+															<ProgressCircle
+																value={metric.value}
+																color={metric.progressColor}
+																removePercentage={metric.id === 'ASA' || metric.id === 'Agents' || metric.id === 'Agents_with_shrinkage'}
+															/>
+														) : (
+															<p className={`text-2xl font-bold ${metric.color}`}>{metric.value}</p>
+														)}
+													</CardContent>
+												</CardShadCn>
+											</TooltipTrigger>
+											<TooltipContent>
+												<p>{metric.tooltip}</p>
+											</TooltipContent>
+										</Tooltip>
+									</TooltipProvider>
+								))}
+						</div>
+					) : (
+						<span className='font-bold text-xl text-navy-700 '>
+							"Fill the fields to see the result, which will be updated automatically after calculation."
+						</span>
+					)}
+				</div>
+			</div>
+		</React.Fragment>
 	);
 };
 

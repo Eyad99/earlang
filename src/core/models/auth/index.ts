@@ -56,11 +56,16 @@ export interface CallCenter_Profile_Req {
 	staff_dedicated_QA: string;
 	staff_dedicated_scheduling: string;
 	staff_dedicated_training: string;
-	it_staff_available: boolean;
+	it_staff_available: string;
 	Working_hours: number;
 	Working_days: number;
 	number_of_skill_groups: number;
 	list_of_skill_groups: number;
 	notices: string;
 	business_type: string;
+}
+
+export interface Approve_Customer_To_join_Req {
+	plan: number;
+	economice: number;
 }

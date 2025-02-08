@@ -1,5 +1,5 @@
 export interface Earlang_Calculator_Normal {
-	NCalls: number | string;
+ 	NCalls: number | string;
 	Period: number | string;
 	AHT: number | string;
 	SLA: number | string;

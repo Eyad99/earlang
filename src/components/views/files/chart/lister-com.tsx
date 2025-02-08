@@ -23,39 +23,41 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 		{ header: 'Total Offered' },
 		{ header: 'Total Answered' },
 		{ header: 'Total Abandoned' },
-		{ header: 'Sl Xpercentage' },
-		{ header: 'Sl xseconds' },
-		{ header: 'Callavg Talk Time' },
-		{ header: 'Callavg After Call Work' },
-		{ header: 'Callavg Abandom' },
-		{ header: 'Aggent Scheduled' },
-		{ header: 'Aggent Logged_in' },
-		{ header: 'Aggent Available' },
-		{ header: 'Agents' },
-		{ header: 'Agents With Shrinkage' },
+		{ header: 'SL Achieved' },
+		{ header: 'Targeted Threshold' },
+		{ header: 'Average Talk Time' },
+		{ header: 'Average After Call Work Time' },
+		{ header: 'Average Abandoment Time' },
+		{ header: 'Agents Scheduled' },
+		{ header: 'Agents Logged_in' },
+		{ header: 'Agents Available' },
+		{ header: 'Agents Required' },
+		{ header: 'Agents Required After Shrinkage' },
 		{ header: 'Shrinkage' },
-		{ header: 'Service Level' },
+		{ header: 'Calculated Service Level' },
 		{ header: 'Service Level Target' },
-		{ header: 'Asa' },
-		{ header: 'Imm Answ' },
-		{ header: 'Pw' },
-		{ header: 'Occ' },
-		{ header: 'Max Call' },
+		{ header: 'Calculated Average Speed Of Answer' },
+		{ header: 'Calculated Percentage Of Immediately Answered Calls' },
+		{ header: 'Propopelity Of Calls Waiting' },
+		{ header: 'Calculated Occupancy' },
+		{ header: 'Actual Occupancy' },
+		{ header: 'Maximum Calls Agents Available Can Answer' },
 	];
 
 	const headers1 = [
 		{ header: 'From Time' },
 		{ header: 'To Time' },
-		{ header: 'Agents' },
-		{ header: 'Agents With Shrinkage' },
+		{ header: 'Agents Required' },
+		{ header: 'Agents Required After Shrinkage' },
 		{ header: 'Shrinkage' },
-		{ header: 'Service Level' },
+		{ header: 'Calculated Service Level' },
 		{ header: 'Service Level Target' },
-		{ header: 'Asa' },
-		{ header: 'Imm Answ' },
-		{ header: 'Pw' },
-		{ header: 'Occ' },
-		{ header: 'Max Call' },
+		{ header: 'Calculated Average Speed Of Answer' },
+		{ header: 'Calculated Percentage Of Immediately Answered Calls' },
+		{ header: 'Propopelity Of Calls Waiting' },
+		{ header: 'Calculated Occupancy' },
+		{ header: 'Actual Occupancy' },
+		{ header: 'Maximum Calls Agents Available Can Answer' },
 	];
 
 	const headerFields = ['Agents', 'Agents With Shrinkage', 'Shrinkage', 'Service Level', 'Asa', 'Imm Answ', 'Pw', 'Occ', 'Max Call'];
@@ -159,7 +161,7 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 									''
 								)}
 								<TableCell className={bodyCellCassName + ' bg-gray-100'}>{row.agents}</TableCell>
-								<TableCell className={bodyCellCassName + ' bg-gray-100'}>{row.agents_with_shrinkage}</TableCell>
+								<TableCell className={bodyCellCassName + ' bg-gray-100'}>{row.agents_with_shrinkage ?? 'NA'}</TableCell>
 								{row.shrinkage === 0 || row.shrinkage === null ? (
 									''
 								) : (
@@ -179,6 +181,7 @@ const ListerCom: FC<listerCom> = ({ data }) => {
 								>
 									{roundedNumber(row.occ * 100, 2) + ' %'}
 								</TableCell>
+								<TableCell className={bodyCellCassName + ` bg-gray-100 `}>{roundedNumber(row.occ_n_call * 100, 2) + ' %'}</TableCell>
 								<TableCell className={bodyCellCassName + ' bg-gray-100'}> {row.max_call}</TableCell>
 							</TableRow>
 						))

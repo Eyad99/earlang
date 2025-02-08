@@ -6,14 +6,14 @@ const DefaultFileUploaderTheme = ({
 	getRootProps,
 	getInputProps,
 	files,
-	fileSize,
+	// fileSize,
 	// removeFile,
 	style,
 	// placeholder,
 	errors,
 	error,
+	singleFile,
 }: any) => {
-	console.log('error', error, errors);
 	return (
 		<section>
 			<div {...getRootProps({ style })} className='mb-2 cursor-pointer'>
@@ -24,14 +24,14 @@ const DefaultFileUploaderTheme = ({
 						<span className={'text-blue-300'}>{`Browse files`}</span>
 						<span className={'text-black'}>{`or Drag your file to start uploading`}</span>
 					</div>
-					<span className={'text-gray-600'}>
+					{/* <span className={'text-gray-600'}>
 						{`max uploading size is`} {fileSize / 1000} GB
-					</span>
+					</span> */}
 				</div>
 			</div>
 			{error && <Label className='ml-1.5 text-red-500'>{errors}</Label>}
 
-			<FileLists files={files} />
+			<FileLists files={files} singleFile={singleFile} />
 		</section>
 	);
 };

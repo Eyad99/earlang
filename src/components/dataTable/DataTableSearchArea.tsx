@@ -13,7 +13,7 @@ interface DataTableSearchAreaProps {
 		handleSearch: (text: string) => void;
 		handleFilter: (data: SelectType) => void;
 		handleFilterByDate: (name: string, data: Date) => void;
-		handleFilterByDate1: (name: string, data: Date) => void;
+		// handleFilterByDate1: (name: string, data: Date) => void;
 	};
 }
 const DataTableSearchArea: FC<DataTableSearchAreaProps> = ({ data, handlers }) => {
@@ -21,7 +21,7 @@ const DataTableSearchArea: FC<DataTableSearchAreaProps> = ({ data, handlers }) =
 	const location = useLocation();
 
 	return (
-		<header className='flex flex-col flex-wrap items-center justify-end gap-2 pt-6 sm:flex-row'>
+		<header className='flex flex-col flex-wrap items-center justify-end gap-2 pt-6 sm:flex-row mb-2'>
 			{/* <div className='flex w-[400px] max-w-full items-center rounded-xl'>
 				<div className='flex h-[38px] w-[400px] flex-grow items-center rounded-xl bg-lightPrimary text-sm text-gray-600 dark:!bg-navy-900 dark:text-white'>
 					<Search />
@@ -34,7 +34,7 @@ const DataTableSearchArea: FC<DataTableSearchAreaProps> = ({ data, handlers }) =
 				</div>
 			</div> */}
 
-			<div className='flex flex-wrap items-center justify-center gap-2'>
+			<div className={`flex flex-wrap items-center justify-between ${data?.filterByDate ? 'w-full' : ''} gap-2`}>
 				{/* select */}
 				{data?.selectArray && (
 					<div className='flex flex-wrap gap-2'>
@@ -70,22 +70,26 @@ const DataTableSearchArea: FC<DataTableSearchAreaProps> = ({ data, handlers }) =
 				)}
 
 				{data?.filterByDate && (
-					<div className='flex gap-2'>
-						<TextField
-							name='start_date'
-							type='date'
-							// label='Start Date'
-							divClassName='mb-0'
-							onChange={(event: any) => handlers.handleFilterByDate('start_date', event.target.value)}
-						/>
+					<div className='flex gap-2  flex-col md:flex-row'>
+						<div className='flex items-center gap-2'>
+							{/* <Label>Start Date</Label> */}
+							<TextField
+								name='start_date'
+								type='date'
+								divClassName='mb-0 w-[160px]'
+								onChange={(event: any) => handlers.handleFilterByDate('start_date', event.target.value)}
+							/>
+						</div>
 
-						<TextField
-							name='end_date'
-							type='date'
-							// label='End Date'
-							divClassName='mb-0'
-							onChange={(event: any) => handlers.handleFilterByDate1('end_date', event.target.value)}
-						/>
+						{/* <div className='flex items-center gap-2'>
+							<Label>End Date</Label>
+							<TextField
+								name='end_date'
+								type='date'
+								divClassName='mb-0 w-[160px]'
+								onChange={(event: any) => handlers.handleFilterByDate('end_date', event.target.value)}
+							/>
+						</div> */}
 					</div>
 				)}
 
@@ -94,6 +98,8 @@ const DataTableSearchArea: FC<DataTableSearchAreaProps> = ({ data, handlers }) =
 						Add
 					</Button>
 				)}
+
+				{data.actions?.customInSearchArea && data.actions?.customInSearchArea?.component()}
 			</div>
 		</header>
 	);

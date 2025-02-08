@@ -145,14 +145,14 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 		labels: data ? data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)) : [],
 		datasets: [
 			{
-				label: 'Current occupency w/email',
-				data: [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150],
+				label: 'Actual Occupancy w/email',
+				data: data ? data?.map((item: Chart_Res) => item.occ) : [],
 				borderColor: 'blue',
 				backgroundColor: 'rgba(0, 0, 255, 0.1)',
 			},
 			{
-				label: 'Erlang occupency w/email',
-				data: [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200],
+				label: 'Calculated occupancy w/email',
+				data: data ? data?.map((item: Chart_Res) => item.occ_n_call) : [],
 				borderColor: 'red',
 				backgroundColor: 'rgba(255, 0, 0, 0.1)',
 			},
@@ -221,20 +221,24 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 
 	const options = {
 		responsive: true,
-		// animations: {
-		// 	tension: {
-		// 		duration: 1000,
-		// 		easing: 'linear',
-		// 		from: 1,
-		// 		to: 0,
-		// 		loop: true,
-		// 	},
-		// },
-		// maintainAspectRatio: false, // Disable default aspect ratio
-		// height: 500, // Set desired height
 		plugins: {
 			legend: {
 				position: 'top',
+			},
+		},
+
+		scales: {
+			x: {
+				title: {
+					display: true,
+					text: 'Seconds',
+				},
+			},
+			y: {
+				title: {
+					display: true,
+					text: 'Interval',
+				},
 			},
 		},
 	} as any;
@@ -253,6 +257,7 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 			}}
 			format={[{ key: 'time_to_abvious', value: '' }]}
 			labelName='from time - to time'
+			fileName='Average Time To Abandon (seconds)'
 		/>
 	);
 	const renderExportButtonToChartTow = () => (
@@ -274,6 +279,7 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 				{ key: 'avg_handle_time', value: '' },
 			]}
 			labelName='from time - to time'
+			fileName='SL, Call Avg Abandon, AHT'
 		/>
 	);
 	const renderExportButtonToChartThree = () => (
@@ -295,6 +301,7 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 				{ key: 'SL X Seconds', value: '' },
 			]}
 			labelName='from time - to time'
+			fileName='Total Answered, SL, SL X Seconds'
 		/>
 	);
 	const renderExportButtonToChartFour = () => (
@@ -314,6 +321,7 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 				{ key: 'Occupancy', value: '' },
 			]}
 			labelName='from time - to time'
+			fileName='Total Answered,Total Abandon, Occupancy'
 		/>
 	);
 
@@ -323,15 +331,16 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 			statements={{
 				labels: data.flatMap((item: Chart_Res) => generateHalfHourLabels(item.from_time, item.to_time)),
 				datasets: {
-					'Current Occupancy': [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150],
-					'Erlang Occupancy': [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200],
+					'Actual Occupancy': data?.map((item: Chart_Res) => item.occ),
+					'Calculated Occupancy': data?.map((item: Chart_Res) => item.occ_n_call),
 				},
 			}}
 			format={[
-				{ key: 'Current Occupancy', value: '' },
-				{ key: 'Erlang Occupancy', value: '' },
+				{ key: 'Actual Occupancy', value: '' },
+				{ key: 'Calculated Occupancy', value: '' },
 			]}
 			labelName='from time - to time'
+			fileName='Actual Occupancy , Calculated Occupancy'
 		/>
 	);
 
@@ -350,6 +359,7 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 				{ key: 'Shrink Adjusted', value: '' },
 			]}
 			labelName='from time - to time'
+			fileName='Agent Required'
 		/>
 	);
 
@@ -364,6 +374,7 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 			}}
 			format={[{ key: 'Time to abandon', value: '' }]}
 			labelName='Seconds'
+			fileName='Time To Abandon'
 		/>
 	);
 
@@ -386,6 +397,7 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 				{ key: 'Current Vol (adj)', value: '' },
 			]}
 			labelName='Seconds'
+			fileName='Agents Available'
 		/>
 	);
 
@@ -408,13 +420,13 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 									: isOpen == 4
 									? 'Total Answered,Total Abandon, Occupancy'
 									: isOpen == 5
-									? 'Current Occupancy , Erlang Occupancy'
+									? 'Actual Occupancy , Calculated Occupancy'
 									: isOpen == 6
-									? 'Staff Required'
+									? 'Agent Required'
 									: isOpen == 7
 									? 'Time To Abandon'
 									: isOpen == 8
-									? 'Total Answered,Total Abandon, Occupancy'
+									? 'Agents Available'
 									: ''}
 							</h2>
 							<div className='flex gap-2 items-center'>
@@ -507,7 +519,7 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 
 				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
 					<div className='flex justify-between'>
-						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Current Occupancy , Erlang Occupancy</h2>
+						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Actual Occupancy , Calculated Occupancy</h2>
 						<div className='flex gap-2 items-center'>
 							<Maximize className='cursor-pointer' onClick={() => setIsOpen(5)} />
 							{renderExportButtonToChartFive()}
@@ -518,7 +530,7 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 
 				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
 					<div className='flex justify-between'>
-						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Staff Required</h2>
+						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Agent Required</h2>
 						<div className='flex gap-2 items-center'>
 							<Maximize className='cursor-pointer' onClick={() => setIsOpen(6)} />
 							{renderExportButtonToChartSix()}
@@ -540,7 +552,7 @@ const Charts: FC<ChartsProps> = ({ data }) => {
 
 				<div className='p-[20px] flex flex-col gap-4 col-span-1 md:col-span-1 sm:col-span-2 sm-max:col-span-2 rounded-[20px] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none  transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-[0_0_40px_rgba(8,21,66,0.05)] '>
 					<div className='flex justify-between'>
-						<h2 className='text-lg font-bold text-navy-700 dark:text-white'></h2>
+						<h2 className='text-lg font-bold text-navy-700 dark:text-white'>Agents Available</h2>
 						<div className='flex gap-2 items-center'>
 							<Maximize className='cursor-pointer' onClick={() => setIsOpen(8)} />
 							{renderExportButtonToChartEight()}

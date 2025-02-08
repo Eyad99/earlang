@@ -17,7 +17,7 @@ import {
 	zipIcon,
 } from '@/variables/mimeTypes';
 
-const FileLists = ({ files }: any) => {
+const FileLists = ({ files, singleFile }: { files: any; singleFile: boolean }) => {
 	const thumbs = files?.map((fileObj: any, index: number) => {
 		const type = fileObj?.type;
 		const fileName = fileObj?.name;
@@ -50,7 +50,7 @@ const FileLists = ({ files }: any) => {
 
 				<div className={'m-w-[100px] text-center'}>
 					{/* <i className={"fa fa-trash"} onClick={() => removeFile(index, fileName)} style={{ color: "#fb404b", cursor: "pointer" }} /> */}
-					<p>{fileName?.length > 10 ? `${fileName.substring(0, 10)} ..` : fileName}</p>
+					<p>{fileName?.length > 10 && !singleFile ? `${fileName.substring(0, 10)} ..` : fileName}</p>
 				</div>
 			</div>
 		);

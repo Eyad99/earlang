@@ -51,7 +51,6 @@ const SettingsList = () => {
 	});
 
 	const submitHandler = (values: any) => {
-		console.log('values', values);
 		values?.id ? updateSettingMutate.mutate(values) : addSettingMutate.mutate(values);
 	};
 
